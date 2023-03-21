@@ -119,4 +119,40 @@
 }
 
 
+.col-sm-12{
+    padding-left: 15px;
+}
 
+.footer-container{
+    text-align: center;
+    color: #ad1f91;
+}
+
+.info-section-wrap{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    height:100vh;
+}
+
+.info-section-container{
+    margin-top:35px;
+    padding:30px;
+    display: flex;
+    align-items: center;
+}
+.text-container h1{
+    color:#fa04fb;
+}
+
+.info-section-container p{
+    font-size:28px;
+}
+.info-section-img-container{
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info-section-img-container img {
+    height:450px;
+}
