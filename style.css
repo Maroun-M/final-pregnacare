@@ -1,0 +1,112 @@
+
+.front{
+    background: url("preg.jpeg")  no-repeat;
+    background-size: auto;
+    color:white;
+    font-family: 'Source Sans Pro', sans-serif;
+    height:100vh;
+}
+.content{
+    font-weight: 200;
+}
+.navbar {
+    background-color: rgba(0, 0, 0, 0.396);
+    color:white;
+}
+.btn-ouva-pink{
+    color:white;
+    background-color: deeppink;
+}
+.btn-ouva-purple{
+    background: rgb(179, 0, 255);
+    color:white;
+    border:0;
+    box-shadow: 10px 10px 8px #88888888;
+    transition: 0.3s;
+}
+.btn-ouva-purple:hover{
+    background: transparent;
+    color:rgb(179, 0, 255);
+    border: 2px solid black  rgb(179, 0, 255);
+    box-shadow: 10px 10px 8px #88888800;
+
+}
+
+
+
+.logos-wrap{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 5px 0 5px;
+    column-gap: 10px;
+
+}
+.logo-container{
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+.logo-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    width: 310px;
+
+}
+.logo-div img{
+    width: 60px;
+    height: 60px;
+}
+.header-container{
+    width: 310px;
+}
+
+.header-container h1{
+    text-align: center;
+    color: #fa04fb;
+}
+
+
+@media screen and (max-width: 650px){
+    .logos-wrap{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.last-div{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #ad1f91;
+    
+    background: -webkit-linear-gradient(to bottom right, rgb(197, 45, 154), rgb(199, 44, 176));
+    
+    background: linear-gradient(to bottom right, rgb(172, 33, 172), rgb(160, 29, 154));
+    }
+    
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+    top: 13px;
+    }
+
