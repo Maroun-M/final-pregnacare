@@ -98,6 +98,7 @@
     background: -webkit-linear-gradient(to bottom right, rgb(197, 45, 154), rgb(199, 44, 176));
     
     background: linear-gradient(to bottom right, rgb(172, 33, 172), rgb(160, 29, 154));
+    margin-top:50px;
     }
     
     .card-registration .select-input.form-control[readonly]:not([disabled]) {
@@ -109,4 +110,13 @@
     .card-registration .select-arrow {
     top: 13px;
     }
+
+
+.navbar-nav p{
+    cursor: pointer;
+    font-size: 16px;
+
+}
+
+
 
