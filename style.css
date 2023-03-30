@@ -1,3 +1,5 @@
+
+
 .front {
     background: url("preg.jpeg") no-repeat;
     background-size: auto;
@@ -14,6 +16,7 @@
 .navbar {
     background-color: rgba(0, 0, 0, 0.396);
     color: white;
+    height:65px
 }
 
 .btn-ouva-pink {
@@ -245,6 +248,7 @@
     font-weight: 600;
     text-align: center;
     height: 40px;
+    padding-top:10px;
 }
 
 
@@ -303,4 +307,184 @@
 
 body {
     max-width: 100%;
+}
+
+.navbar-nav a{
+    all: unset;
+}
+
+.navbar-nav a:hover{
+    all: unset;
+}
+
+
+
+
+.gradient-custom-login {
+    /* fallback for old browsers */
+    background: #c2109f;
+
+    background: -webkit-linear-gradient(to bottom right, rgb(255, 0, 179), rgb(199, 157, 193));
+
+    background: linear-gradient(to bottom right, rgb(230, 79, 230), rgb(179, 32, 196));
+}
+
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    width: 100%;
+}
+
+.login-form-container{
+    background: white;
+    /* border:2px solid black; */
+    border-radius: 10px;
+    height:90vh;
+    width: 30%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top:35px;
+}
+.header .logo-img-container {
+    
+    width: 80px;
+    height: 70px;
+}
+.logo-img-container img{
+    width: 100%;
+    height:100%;
+}
+.header p{
+    font-weight: 400;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 35px;
+}
+.input-container input{
+    
+    width:80%;
+    height:45px;
+    border: 1px solid #858282;
+    border-radius: 3px;
+    padding-left: 10px;
+}
+
+.reset-login-container{
+    text-align: center;
+    padding-top: 20px;
+}
+
+.reset-login-container p{
+    color: #858282;
+    transition: 0.3s ease-in-out;
+    font-size: 14px;
+}
+
+
+.reset-login-container a{
+    all: unset;
+    transition: ease-in-out 0.2s;
+}
+
+.reset-login-container a:hover{
+    all: unset;
+    cursor: pointer;
+
+}
+
+.reset-login-container p:hover{
+    color: #6b6464;
+    
+}
+
+.login-btn-container {
+    padding-top:25px;
+}
+
+.login-btn-container button{
+    all: unset;
+    border: 2px solid #ad1f91;
+    padding: 8px 45px;
+    border-radius: 4px;
+    transition: 0.5s ease-in-out;
+    font-weight: 600;
+}
+
+.login-btn-container button:hover{
+    border: 2px solid #842d74;
+    background-color: #f9a1e9;
+    
+}
+
+.signup-prompt-container{
+    padding-top:100px;
+    text-align: center;
+    font-weight: 400;
+    font-size:15px;
+}
+
+.signup-prompt-container a{
+    all: unset;
+    
+}
+
+.signup-prompt-container a:hover {
+    all:unset;
+}
+
+.sign-up-btn{
+    cursor: pointer;
+    color:#272626;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+@media screen and (min-width:550px) and (max-width:800px) {
+    .login-form-container{
+        width:60%
+    }
+    
+}
+
+@media screen and (min-width:800px) and (max-width:1000px) {
+    .login-form-container{
+        width:50%
+    }
+    
+}
+
+
+@media screen and (min-width:1000px) and (max-width:1200px) {
+    .login-form-container{
+        width:40%;
+    }
+    
+}
+
+
+@media screen and (max-width:550px) {
+    .login-form-container{
+        width:90%;
+        border: 1px solid rgba(16, 15, 15, 0.511);
+    }
+
+    .wrapper{
+        background: white;
+    }
+    
 }
