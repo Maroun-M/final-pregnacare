@@ -1,7 +1,13 @@
 <?php
-
+include("../PHPMailer-master/src/PHPMailer.php");
+include("../PHPMailer-master/src/SMTP.php");
+include("../PHPMailer-master/src/Exception.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 class Registration
 {  
+    
     private $firstName;
     private $lastName;
     private $phoneNumber;
@@ -31,28 +37,28 @@ class Registration
         } elseif (!preg_match("/^[a-zA-Z ]*$/", $this->firstName)) {
             $errors['firstName'] = "Only letters allowed.";
         }
-
+        
         // Validate last name
         if (empty($this->lastName)) {
             $errors['lastName'] = "Last name is required.";
         } elseif (!preg_match("/^[a-zA-Z ]*$/", $this->lastName)) {
             $errors['lastName'] = "Only letters allowed.";
         }
-
+        
         // Validate phone number
         if (empty($this->phoneNumber)) {
             $errors['phoneNumber'] = "Phone number is required.";
         } elseif (!preg_match("/^\+(?:[0-9] ?){6,14}[0-9]$/", $this->phoneNumber)) {
             $errors['phoneNumber'] = "Invalid phone number.";
         }
-
+        
         // Validate email
         if (empty($this->email)) {
             $errors['email'] = "Email is required.";
         } elseif (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "Invalid email format.";
         }
-
+        
         // Validate password
         if (empty($this->password)) {
             $errors['password'] = "Password is required.";
@@ -77,7 +83,7 @@ class Registration
         ];
         return password_hash($password, PASSWORD_BCRYPT, $options);
     }
-
+    
     private function generateConfirmationCode()
     {
         $length = 6;
@@ -88,13 +94,13 @@ class Registration
         }
         return $code;
     }
-
+    
     public function register()
     {
-    // Validate form data
-    $errors = $this->validate();
-    if (!empty($errors)) {
-        return $errors;
+        // Validate form data
+        $errors = $this->validate();
+        if (!empty($errors)) {
+            return $errors;
     }
     
     // Check for duplicate email
@@ -109,7 +115,7 @@ class Registration
     
     // Hash password
     $hashedPassword = $this->hashPassword($this->password);
-
+    
     // Generate confirmation code
     $confirmationCode = $this->generateConfirmationCode();
     
@@ -118,18 +124,32 @@ class Registration
     $lastName = $this->conn->real_escape_string($this->lastName);
     $phoneNumber = $this->conn->real_escape_string($this->phoneNumber);
     $email = $this->conn->real_escape_string($this->email);
-    $query = "INSERT INTO users (first_name, last_name, phone_number, email, account_password, confirmation_code) 
-              VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$hashedPassword', '$confirmationCode')";
+    $query = "INSERT INTO users (first_name, last_name, phone_number, email, account_password, confirmation_code, access_level) 
+              VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$hashedPassword', '$confirmationCode', '1')";
     $result = $this->conn->query($query);
     
     // Send confirmation email
-    $to = $email;
-    $subject = "Confirm your registration";
-    $message = "Thank you for registering! Your confirmation code is: $confirmationCode, or confirm by clicking on the link below";
-    $message .= "http://example.com/confirm.php?email=$email&confirmationCode=$confirmationCode";
     
-    mail($to, $subject, $message);
-    
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'maroun233245@gmail.com';
+    $mail->Password = 'maroun00';
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+    $to = $this->email;
+    $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
+    $mail->addAddress($to);
+    $mail->Subject = "Confirm your registration";
+    $mail->Body = "Thank you for registering! Your confirmation code is: $confirmationCode, or confirm by clicking on the link below:";
+    $mail->Body .= "http://example.com/confirm.php?email=$email&confirmationCode=$confirmationCode";
+    if (!$mail->send()) {
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        
+    } else {
+        echo 'Message sent!';
+    }
     return true;
 }
 
