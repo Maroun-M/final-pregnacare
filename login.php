@@ -19,8 +19,8 @@
 </head>
 
 <body>
-    <div class="wrapper  gradient-custom-login">
-        <!-- <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+  <div class="wrapper  gradient-custom-login">
+    <!-- <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
           <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
               aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,44 +45,59 @@
             </div>
           </div>
         </nav> -->
-        
 
-        <div class="login-form-container">
-            <div class="header">
-                <div class="logo-img-container">
-                    <img src="./logo.jfif" alt="">
-                </div>
-                <h2>LOGIN</h2>
-                <p>Please enter your email and password</p>
-            </div>
-            <div class="input-container">
-                <input type="email" placeholder="Email"> <br>
-                <input type="password" placeholder="Password">
-            </div>
-            <div class="reset-login-container">
-              <a href=""><p>Forgot Password?</p></a>  
-              <div class="login-btn-container">
-                  <button class="login-btn">LOGIN</button>
+    <?php
+    // Start session
+    session_start();
+    // Generate CSRF token
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+    ?>
 
-              </div>
-            </div>
-            <div class="signup-prompt-container">
-                <p>Don't have an account? <span class="sign-up-btn">
-                    <a href="./index.html">Sign Up</a>
-                </span></p> 
-            </div>
-            
+
+
+    <div class="login-form-container">
+      <div class="header">
+        <div class="logo-img-container">
+          <img src="./logo.jfif" alt="">
         </div>
-       
-        <!-- footer container -->
-        <!-- <hr />
+        <h2>LOGIN</h2>
+        <p>Please enter your email and password</p>
+      </div>
+      <form action="./src/userLogin.php" method="POST" enctype="multipart/form-data">
+        <div class="input-container">
+          <input type="email" name="email" placeholder="Email"> <br>
+          <input type="password" name="password" placeholder="Password"><br>
+          <input type="hidden" name="token" value="<?php
+
+          echo $_SESSION['token']; ?>">
+
+        </div>
+        <div class="reset-login-container">
+          <a href="">
+            <p>Forgot Password?</p>
+          </a>
+          <div class="login-btn-container">
+            <button class="login-btn">LOGIN</button>
+      </form>
+
+    </div>
+  </div>
+  <div class="signup-prompt-container">
+    <p>Don't have an account? <span class="sign-up-btn">
+        <a href="./index.html">Sign Up</a>
+      </span></p>
+  </div>
+
+  </div>
+  <!-- footer container -->
+  <!-- <hr />
         <div class="footer-container">
           <div class="footer-content">
             <p>Ouvatech© 2023. All rights reserved.</p>
           </div>
         </div> -->
 
-    </div>
+  </div>
   <!-- footer container end -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
     integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"

@@ -5,6 +5,7 @@ include("../PHPMailer-master/src/Exception.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 class Registration
 {  
     
@@ -127,7 +128,7 @@ class Registration
     $query = "INSERT INTO users (first_name, last_name, phone_number, email, account_password, confirmation_code, access_level) 
               VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$hashedPassword', '$confirmationCode', '1')";
     $result = $this->conn->query($query);
-    
+    $this->conn->close();
     // Send confirmation email
     
     $mail = new PHPMailer();
@@ -136,14 +137,16 @@ class Registration
     $mail->SMTPAuth = true;
     $mail->Username = 'maroun233245@gmail.com';
     $mail->Password = 'maroun00';
-    $mail->SMTPSecure = 'tls';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
     $to = $this->email;
     $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
     $mail->addAddress($to);
+    $mail->isHTML(true);
     $mail->Subject = "Confirm your registration";
     $mail->Body = "Thank you for registering! Your confirmation code is: $confirmationCode, or confirm by clicking on the link below:";
     $mail->Body .= "http://example.com/confirm.php?email=$email&confirmationCode=$confirmationCode";
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
         
