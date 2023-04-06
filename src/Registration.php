@@ -129,14 +129,14 @@ class Registration
               VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$hashedPassword', '$confirmationCode', '1')";
     $result = $this->conn->query($query);
     $this->conn->close();
-    // Send confirmation email
+    // Send confirmation email  
     
-    $mail = new PHPMailer();
+    $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'maroun233245@gmail.com';
-    $mail->Password = 'maroun00';
+    $mail->Password = 'kheqpudxbrnxadlc';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
     $to = $this->email;
@@ -144,9 +144,8 @@ class Registration
     $mail->addAddress($to);
     $mail->isHTML(true);
     $mail->Subject = "Confirm your registration";
-    $mail->Body = "Thank you for registering! Your confirmation code is: $confirmationCode, or confirm by clicking on the link below:";
-    $mail->Body .= "http://example.com/confirm.php?email=$email&confirmationCode=$confirmationCode";
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->Body = "Thank you for registering! Your confirmation code is: <p color='blue'><bold>$confirmationCode</bold></p> Or confirm by clicking on the link below:";
+    $mail->Body .= "http://localhost/ouvatech/src/confirm.php?email=$email&confirmationCode=$confirmationCode";
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
         
