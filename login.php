@@ -78,15 +78,14 @@
           </a>
           <div class="login-btn-container">
             <button class="login-btn">LOGIN</button>
+          </div>
+        </div>
+        <div class="signup-prompt-container">
+          <p>Don't have an account? <span class="sign-up-btn">
+            <a href="./index.html">Sign Up</a>
+          </span></p>
+        </div>
       </form>
-
-    </div>
-  </div>
-  <div class="signup-prompt-container">
-    <p>Don't have an account? <span class="sign-up-btn">
-        <a href="./index.html">Sign Up</a>
-      </span></p>
-  </div>
 
   </div>
   <!-- footer container -->

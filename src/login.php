@@ -41,11 +41,12 @@ class Login
                 echo "Registration not confirmed";
                 exit();
             } else {
-                // Start session and set user information
+                //  Set user information
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_email'] = $row['email'];
     
                
+                // header('Location: ../userInfo.html');
                 echo 'Logged in successfully';
                 // Redirect user to index page
                 // header('Location: index.php');

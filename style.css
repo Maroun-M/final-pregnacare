@@ -1,4 +1,8 @@
-
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
 .front {
     background: url("preg.jpeg") no-repeat;
@@ -16,7 +20,7 @@
 .navbar {
     background-color: rgba(0, 0, 0, 0.396);
     color: white;
-    height:65px
+    height: 65px
 }
 
 .btn-ouva-pink {
@@ -248,7 +252,7 @@
     font-weight: 600;
     text-align: center;
     height: 40px;
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 
@@ -274,34 +278,36 @@
 
     .info-wrapper {
         grid-template-columns: 1fr;
-        
-        row-gap: 40px;;
+
+        row-gap: 40px;
+        ;
         margin-top: 50px;
         height: unset;
-     
+
         background: rgb(255, 255, 255);
         background: radial-gradient(circle, rgba(219, 137, 219, 0.622) 4%, rgba(225, 179, 225, 0.58) 13%, rgb(242, 212, 242) 40%, rgb(253, 228, 255) 63%, rgb(254, 242, 255) 71%);
     }
 
-    .info-col-container{
-        padding:30px 15px 30px 15px;
+    .info-col-container {
+        padding: 30px 15px 30px 15px;
     }
 }
 
 @media screen and (min-width: 730px) and (max-width: 1140px) {
     .info-wrapper {
         grid-template-columns: 1fr 1fr;
-        
-        row-gap: 40px;;
+
+        row-gap: 40px;
+        ;
         margin-top: 50px;
         height: unset;
-     
+
         background: rgb(255, 255, 255);
         background: radial-gradient(circle, rgba(239, 130, 239, 0.622) 4%, rgba(237, 116, 236, 0.5803571428571428) 13%, rgb(239, 226, 239) 40%, rgb(251, 225, 255) 63%, rgb(255, 235, 255) 71%);
     }
 
-    .info-col-container{
-        padding:30px 15px 30px 15px;
+    .info-col-container {
+        padding: 30px 15px 30px 15px;
     }
 }
 
@@ -309,11 +315,11 @@ body {
     max-width: 100%;
 }
 
-.navbar-nav a{
+.navbar-nav a {
     all: unset;
 }
 
-.navbar-nav a:hover{
+.navbar-nav a:hover {
     all: unset;
 }
 
@@ -330,41 +336,44 @@ body {
 }
 
 
-.wrapper{
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    height:100vh;
+    height: 100vh;
     width: 100%;
 }
 
-.login-form-container{
+.login-form-container {
     background: white;
     /* border:2px solid black; */
     border-radius: 10px;
-    height:90vh;
+    height: 90vh;
     width: 30%;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 
-.header{
+.header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top:35px;
+    padding-top: 35px;
 }
+
 .header .logo-img-container {
-    
+
     width: 80px;
     height: 70px;
 }
-.logo-img-container img{
+
+.logo-img-container img {
     width: 100%;
-    height:100%;
+    height: 100%;
 }
-.header p{
+
+.header p {
     font-weight: 400;
 }
 
@@ -375,48 +384,49 @@ body {
     align-items: center;
     padding-top: 35px;
 }
-.input-container input{
-    
-    width:80%;
-    height:45px;
+
+.input-container input {
+
+    width: 80%;
+    height: 45px;
     border: 1px solid #858282;
     border-radius: 3px;
     padding-left: 10px;
 }
 
-.reset-login-container{
+.reset-login-container {
     text-align: center;
     padding-top: 20px;
 }
 
-.reset-login-container p{
+.reset-login-container p {
     color: #858282;
     transition: 0.3s ease-in-out;
     font-size: 14px;
 }
 
 
-.reset-login-container a{
+.reset-login-container a {
     all: unset;
     transition: ease-in-out 0.2s;
 }
 
-.reset-login-container a:hover{
+.reset-login-container a:hover {
     all: unset;
     cursor: pointer;
 
 }
 
-.reset-login-container p:hover{
+.reset-login-container p:hover {
     color: #6b6464;
-    
+
 }
 
 .login-btn-container {
-    padding-top:25px;
+    padding-top: 25px;
 }
 
-.login-btn-container button{
+.login-btn-container button {
     all: unset;
     border: 2px solid #ad1f91;
     padding: 8px 45px;
@@ -425,66 +435,220 @@ body {
     font-weight: 600;
 }
 
-.login-btn-container button:hover{
+.login-btn-container button:hover {
     border: 2px solid #842d74;
-    background-color: #f9a1e9;
-    
+    background-color: #e213d4;
+
 }
 
-.signup-prompt-container{
-    padding-top:100px;
+.signup-prompt-container {
+    padding-top: 100px;
     text-align: center;
     font-weight: 400;
-    font-size:15px;
+    font-size: 15px;
 }
 
-.signup-prompt-container a{
+.signup-prompt-container a {
     all: unset;
-    
+
 }
 
 .signup-prompt-container a:hover {
-    all:unset;
+    all: unset;
 }
 
-.sign-up-btn{
+.sign-up-btn {
     cursor: pointer;
-    color:#272626;
+    color: #272626;
     font-weight: 500;
     text-decoration: underline;
 }
 
+.user-info-container {
+    font-size: 17px;
+    width: 32%;
+
+
+}
+
 @media screen and (min-width:550px) and (max-width:800px) {
-    .login-form-container{
-        width:60%
+    .login-form-container {
+        width: 60%
     }
-    
+
 }
 
 @media screen and (min-width:800px) and (max-width:1000px) {
-    .login-form-container{
-        width:50%
+    .login-form-container {
+        width: 50%
     }
-    
+
 }
 
 
 @media screen and (min-width:1000px) and (max-width:1200px) {
-    .login-form-container{
-        width:40%;
+    .login-form-container {
+        width: 40%;
     }
-    
+
 }
 
 
 @media screen and (max-width:550px) {
-    .login-form-container{
-        width:90%;
+    .login-form-container {
+        width: 90%;
         border: 1px solid rgba(16, 15, 15, 0.511);
     }
 
-    .wrapper{
+    .wrapper {
         background: white;
     }
-    
+
 }
+
+
+/*  app userinfo page styles */
+
+.user-info-wrap {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background: #c2109f;
+    background: -webkit-linear-gradient(to bottom right, rgb(255, 0, 179), rgb(199, 157, 193));
+
+    background: linear-gradient(to bottom right, rgb(230, 79, 230), rgb(179, 32, 196));
+}
+
+
+.user-info-header {
+    margin-top: 50px;
+
+}
+
+.user-info-container form {
+    line-height: 40px;
+}
+
+.user-info-container p{
+    margin-left: 35px;
+
+}
+
+.user-info-container form input[name="dob"] {
+    width: 40%;
+    height: 25px;
+}
+
+.user-info-container form select[name="location"] {
+    margin-top: 10px;
+    width: 40.6%;
+    height: 26.5px;
+    margin-left: 26px;
+}
+
+.user-info-container form input[name="previous-pregnancies"] {
+    margin-left: 10px;
+}
+
+.stages-container-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.stages-container {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    gap: 20px;
+}
+
+.disease-container {
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    gap: 35px;
+}
+
+.update-btn-container {
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+
+.update-btn-container button{
+margin:0;
+
+font-size: 15px;
+padding:0px  30px;
+cursor: pointer;
+
+}
+
+.form-labels{
+    margin-left: 35px;;
+}
+
+.checkbox-label {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    
+  }
+  
+  .checkbox-custom {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #c5bfbf;
+    transition: background-color 0.3s ease;
+    border-radius: 3px;
+  }
+  
+  .checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom {
+    background-color: #9b59b6;
+  }
+  
+  .checkbox-custom:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .checkbox-label input[type="checkbox"]:checked ~ .checkbox-custom:after {
+    display: block;
+  }
+  
+  .checkbox-label .checkbox-custom:after {
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  
+
+.red {
+    color:red;
+}
+  
