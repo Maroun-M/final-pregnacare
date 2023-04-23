@@ -155,7 +155,66 @@ class Patient
     $stmt->bind_param("si", $hypertension, $this->userId);
     $stmt->execute();
   }
+  public function getAllInfo()
+  {
+    $data = array(
+      'dob' => $this->getDateOfBirth(),
+      'location' => $this->getLocation(),
+      'prevPreg' => $this->getPreviousPregnancies(),
+      'stage' => $this->getPregnancyStage(),
+      'diabetic' => $this->getDiabetic(),
+      'hypertension' => $this->getHypertension()
+    );
+    return $data;
+  }
 
+  public function insert_hr_bp($bpm, $systolic, $diastolic, $user_id) {
+    // Validate that inputs are integers
+    $bpm = (int) $bpm;
+    $systolic = (int) $systolic;
+    $diastolic = (int) $diastolic;
+    
+    // Sanitize inputs
+    $bpm = filter_var($bpm, FILTER_SANITIZE_NUMBER_INT);
+    $systolic = filter_var($systolic, FILTER_SANITIZE_NUMBER_INT);
+    $diastolic = filter_var($diastolic, FILTER_SANITIZE_NUMBER_INT);
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+    
+    // Validate bpm is within reasonable range
+    if ($bpm < 40 || $bpm > 200) {
+      return "Error: Invalid BPM value.";
+    }
+    
+    // Validate systolic and diastolic are within reasonable range
+    if ($systolic < 70 || $systolic > 200 || $diastolic < 40 || $diastolic > 120) {
+      return "Error: Invalid systolic or diastolic blood pressure value.";
+    }
+    
+    // Prepare and bind statement
+    $stmt = $this->conn->prepare("INSERT INTO hr_bp (user_id, bpm, systolic, diastolic) VALUES (?, ?, ?, ?)");
+    
+    if (!$stmt) {
+      printf("Query Prep Failed: %s\n", $this->conn->error);
+      exit;
+    }
+    
+    $stmt->bind_param("iiii", $user_id, $bpm, $systolic, $diastolic);
+    
+    
+    // Execute statement and check for errors
+    if ($stmt->execute() === TRUE) {
+      // Close statement and connection
+      
+      $stmt->close();
+      $this->conn->close();
+      header("LOCATION: ../../heartRate.php");
+      return "Success: New record created successfully.";
+    } else {
+      return "Error: " . $stmt->error;
+    }
+  }
+  
+  
 }
 
 ?>

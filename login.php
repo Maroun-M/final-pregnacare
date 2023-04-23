@@ -63,7 +63,7 @@
         <h2>LOGIN</h2>
         <p>Please enter your email and password</p>
       </div>
-      <form action="./src/userLogin.php" method="POST" enctype="multipart/form-data">
+      <form action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
         <div class="input-container">
           <input type="email" name="email" placeholder="Email"> <br>
           <input type="password" name="password" placeholder="Password"><br>

@@ -44,12 +44,12 @@ class Login
                 //  Set user information
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_email'] = $row['email'];
-    
+                include_once("");
                
                 // header('Location: ../userInfo.html');
                 echo 'Logged in successfully';
-                // Redirect user to index page
-                // header('Location: index.php');
+                // Redirect user to menu page
+                header('Location: ../../patientMainMenu.php');
                 // Close statement
                 $stmt->close();
                 $this->conn->close();

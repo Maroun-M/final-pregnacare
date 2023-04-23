@@ -1,6 +1,6 @@
 <?php
 // Include the Login class file
-require_once('../src/login.php');
+require_once('./login.php');
 // Create a new Login object
 session_start();
 $login = new Login();

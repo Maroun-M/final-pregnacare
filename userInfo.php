@@ -10,6 +10,8 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
     rel="stylesheet" />
+    <script src="./patientApp.js" defer></script>
+
 </head>
 
 <body>
@@ -19,7 +21,7 @@
   <div class="user-info-wrap">
 
     <div class="login-form-container user-info-container">
-      <form action="./src/updateUserInfo.php" method="POST" enctype="multipart/form-data">
+      <form action="./src/patient/updateUserInfo.php" method="POST" enctype="multipart/form-data">
       <div class="user-info-header">
         <p>Hello, fName</p>
         <p>Please enter more details:</p>
@@ -88,7 +90,7 @@
                Diabetics
             </label>
             <label class="checkbox-label">
-              <input type="checkbox" name="hypertension" value="false"><span class="checkbox-custom"></span>
+              <input type="checkbox" name="hypertension" value="true"><span class="checkbox-custom"></span>
                Hypertension
             </label>
           </div>
