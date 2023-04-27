@@ -717,7 +717,9 @@ body {
    
 
 }
-
+.patient-menu-container .options-container .options-title-container{
+    height: 40px;
+}
 .options-container .options-logo-container:hover {
     transform: scale(1.1);
     background-color: #d3d3d34d;

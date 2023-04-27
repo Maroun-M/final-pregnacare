@@ -58,7 +58,7 @@
     <div class="login-form-container">
       <div class="header">
         <div class="logo-img-container">
-          <img src="./logo.jfif" alt="">
+          <img src="./images/logo.jfif" alt="">
         </div>
         <h2>LOGIN</h2>
         <p>Please enter your email and password</p>

@@ -24,27 +24,19 @@
         <div class="login-form-container user-info-container heart-rate-inputs-container">
             <form action="./src/patient/patientEntries.php" method="POST" enctype="multipart/form-data" class="heart-rate-form">
                 <div class="info-update-logo-container">
-                    <img src="./icons/heartRate.svg" alt="">
+                    <img src="./icons/glucose.svg" alt="">
                 </div>
                 <div class="form-inputs-container">
                     <div class="inputs-header-title">
-                        <p>Please insert your heart rate:</p>
-                        <p class="heart-rate-detail"></p>
+                        <p>Please insert your blood glucose level:</p>
+                        <p class="glucose-detail"></p>
 
                     </div>
                     <div class="rates-input">
-                        <input type="number" id="heart-rate" name="heart-rate" placeholder="70" required>
-                        <span class="measure-units">BPM</span>
+                        <input type="text" id="glucose" name="glucose" placeholder="95" required>
+                        <span class="measure-units">mmol/L</span>
                     </div>
-                    <br>
-                    <div class="inputs-header-title">
-                        <p>Please insert your blood pressure:</p>
-                        <p class="blood-pressure-detail"></p>
-                    </div>
-                    <div class="rates-input">
-                        <input type="number" name="systolic" id="systolic" placeholder="Systolic: 120" required> / <input type="number" name="diastolic"
-                            id="diastolic" placeholder="Diastolic: 80" required> <span class="measure-units">mmHG</span> 
-                    </div>
+                    
                 </div>
                 <div class="login-btn-container update-btn-container">
                     <button class="login-btn update-btn add-btn">ADD</button>

@@ -30,42 +30,42 @@
         </div>
         <div class="options-container">
           <div class="options-logo-container">
-            <img src="./icons/temp.svg" alt="" />
+            <img src="./icons/temp.svg" alt="" onclick="window.location.href = './temperature.php'"/>
           </div>
           <div class="options-title-container">
-            <p>Temperature</p>
+            <p onclick="window.location.href = './temperature.php'">Temperature</p>
           </div>
         </div>
         <div class="options-container">
           <div class="options-logo-container">
-            <img src="./icons/glucose.svg" alt="" />
+            <img src="./icons/glucose.svg" alt="" onclick="window.location.href = './bloodGlucose.php'"/>
           </div>
           <div class="options-title-container">
-            <p>Blood Glucose</p>
+            <p onclick="window.location.href = './bloodGlucose.php'">Blood Glucose</p>
           </div>
         </div>
         <div class="options-container">
           <div class="options-logo-container">
-            <img src="./icons/labtest.svg" alt="" />
+            <img src="./icons/labtest.svg" alt="" onclick="window.location.href = './labTests.php'"/>
           </div>
           <div class="options-title-container">
-            <p>Lab Test</p>
+            <p onclick="window.location.href = './labTests.php'">Lab Test</p>
           </div>
         </div>
         <div class="options-container">
           <div class="options-logo-container">
-            <img src="./icons/spo2.svg" alt="" />
+            <img src="./icons/spo2.svg" alt="" onclick="window.location.href = './bloodOxygen.php'"/>
           </div>
           <div class="options-title-container">
-            <p>SpO2</p>
+            <p onclick="window.location.href = './bloodOxygen.php'">SpO2</p>
           </div>
         </div>
         <div class="options-container">
           <div class="options-logo-container">
-            <img src="./icons/fetus.svg" alt="" />
+            <img src="./icons/fetus.svg" alt="" onclick="window.location.href = './fetus.php'"/>
           </div>
           <div class="options-title-container">
-            <p>Fetus</p>
+            <p onclick="window.location.href = './fetus.php'">Fetus</p>
           </div>
         </div>
         <div class="options-container">
@@ -78,10 +78,10 @@
         </div>
         <div class="options-container">
             <div class="options-logo-container">
-                <img src="./icons/logout.svg" alt="" class="logout-btn">
+                <img src="./icons/logout.svg" alt="" class="logout-btn" >
             </div>
             <div class="options-title-container">
-                <p class="logout-btn">Log Out</p>
+                <p class="logout-btn" >Log Out</p>
             </div>
         </div>
       </div>

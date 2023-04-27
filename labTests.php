@@ -22,29 +22,17 @@
     <div class="user-info-wrap">
 
         <div class="login-form-container user-info-container heart-rate-inputs-container">
-            <form action="./src/patient/patientEntries.php" method="POST" enctype="multipart/form-data" class="heart-rate-form">
+            <form action="./src/patient/upload.php" method="POST" enctype="multipart/form-data" class="heart-rate-form">
                 <div class="info-update-logo-container">
-                    <img src="./icons/heartRate.svg" alt="">
+                    <img src="./icons/labtest.svg" alt="">
                 </div>
                 <div class="form-inputs-container">
                     <div class="inputs-header-title">
-                        <p>Please insert your heart rate:</p>
-                        <p class="heart-rate-detail"></p>
-
+                        <p>Please upload your lab tests:</p>
                     </div>
-                    <div class="rates-input">
-                        <input type="number" id="heart-rate" name="heart-rate" placeholder="70" required>
-                        <span class="measure-units">BPM</span>
-                    </div>
-                    <br>
-                    <div class="inputs-header-title">
-                        <p>Please insert your blood pressure:</p>
-                        <p class="blood-pressure-detail"></p>
-                    </div>
-                    <div class="rates-input">
-                        <input type="number" name="systolic" id="systolic" placeholder="Systolic: 120" required> / <input type="number" name="diastolic"
-                            id="diastolic" placeholder="Diastolic: 80" required> <span class="measure-units">mmHG</span> 
-                    </div>
+                    <div class="file-container">
+                        <input type="file" id="lab-tests" name="lab-tests" required>
+                    </div>       
                 </div>
                 <div class="login-btn-container update-btn-container">
                     <button class="login-btn update-btn add-btn">ADD</button>

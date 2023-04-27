@@ -168,43 +168,44 @@ class Patient
     return $data;
   }
 
-  public function insert_hr_bp($bpm, $systolic, $diastolic, $user_id) {
+  public function insert_hr_bp($bpm, $systolic, $diastolic, $user_id)
+  {
     // Validate that inputs are integers
     $bpm = (int) $bpm;
     $systolic = (int) $systolic;
     $diastolic = (int) $diastolic;
-    
+
     // Sanitize inputs
     $bpm = filter_var($bpm, FILTER_SANITIZE_NUMBER_INT);
     $systolic = filter_var($systolic, FILTER_SANITIZE_NUMBER_INT);
     $diastolic = filter_var($diastolic, FILTER_SANITIZE_NUMBER_INT);
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
-    
+
     // Validate bpm is within reasonable range
     if ($bpm < 40 || $bpm > 200) {
       return "Error: Invalid BPM value.";
     }
-    
+
     // Validate systolic and diastolic are within reasonable range
     if ($systolic < 70 || $systolic > 200 || $diastolic < 40 || $diastolic > 120) {
       return "Error: Invalid systolic or diastolic blood pressure value.";
     }
-    
+
     // Prepare and bind statement
     $stmt = $this->conn->prepare("INSERT INTO hr_bp (user_id, bpm, systolic, diastolic) VALUES (?, ?, ?, ?)");
-    
+
     if (!$stmt) {
       printf("Query Prep Failed: %s\n", $this->conn->error);
       exit;
     }
-    
+
     $stmt->bind_param("iiii", $user_id, $bpm, $systolic, $diastolic);
-    
-    
+
+
     // Execute statement and check for errors
     if ($stmt->execute() === TRUE) {
       // Close statement and connection
-      
+
       $stmt->close();
       $this->conn->close();
       header("LOCATION: ../../heartRate.php");
@@ -213,7 +214,132 @@ class Patient
       return "Error: " . $stmt->error;
     }
   }
-  
+
+  public function addTemperature($temperature, $userId)
+  {
+    // Validate temperature
+    if (!is_numeric($temperature) || $temperature < 34 || $temperature > 43) {
+      return false;
+    }
+
+    // Sanitize input
+    $temperature = filter_var($temperature, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $userId = filter_var($userId, FILTER_SANITIZE_NUMBER_INT);
+
+    // Insert into database
+
+
+    $stmt = $this->conn->prepare("INSERT INTO temperature (user_id, temp) VALUES (?, ?)");
+    $stmt->bind_param("sd", $userId, $temperature);
+
+    // Execute statement and check for errors
+    if ($stmt->execute() === TRUE) {
+      // Close statement and connection
+      $stmt->close();
+      $this->conn->close();
+      header("LOCATION: ../../temperature.php");
+      return true;
+    } else {
+      return "Error: " . $stmt->error;
+    }
+  }
+
+  public function insert_blood_oxygen($blood_oxygen, $user_id)
+  {
+    // Validate input
+    if (!is_numeric($blood_oxygen) || $blood_oxygen < 0 || $blood_oxygen > 100) {
+      return false; // Invalid input
+    }
+
+    // Sanitize input
+    $blood_oxygen = filter_var($blood_oxygen, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+
+    // Prepare and bind SQL statement
+    $stmt = $this->conn->prepare("INSERT INTO blood_oxygen (user_id, percentage) VALUES (?, ?)");
+    $stmt->bind_param("id", $user_id, $blood_oxygen);
+
+    // Execute SQL statement and check for errors
+    if (!$stmt->execute()) {
+      $stmt->close();
+      $this->conn->close();
+      return false; // SQL error
+    }
+
+    $stmt->close();
+    $this->conn->close();
+    header("LOCATION: ../../bloodOxygen.php");
+
+    return true; // Success
+  }
+
+  public function insertBloodGlucose($blood_glucose, $user_id)
+  {
+
+    // Sanitize blood glucose level
+    $blood_glucose = filter_var($blood_glucose, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+    // Validate blood glucose level
+    if (!is_numeric($blood_glucose) || $blood_glucose < 0 || $blood_glucose > 100) {
+      return false;
+    }
+
+    // Prepare and bind the insert statement
+    $stmt = $this->conn->prepare("INSERT INTO blood_glucose(user_id, glucose_level) VALUES (?, ?)");
+    $stmt->bind_param("id", $user_id, $blood_glucose);
+
+    // Execute SQL statement and check for errors
+    if (!$stmt->execute()) {
+      $stmt->close();
+      $this->conn->close();
+      return false; // SQL error
+    }
+
+    $stmt->close();
+    $this->conn->close();
+    header("LOCATION: ../../bloodGlucose.php");
+    return true; // Success
+  }
+
+  function insertOrUpdateFetusRecord($user_id, $gestational_age, $weight, $heart_rate) {
+    // Validate inputs
+    if (!is_numeric($gestational_age) || $gestational_age <= 0 || !ctype_digit($gestational_age)) {
+      return false;
+    }
+    
+    // Check that weight is a positive float or integer within a reasonable range
+    if (!is_numeric($weight) || $weight <= 0 || $weight > 5000) {
+      return false;
+    }
+    
+    // Check that heart rate is a positive integer within a reasonable range
+    if (!is_numeric($heart_rate) || $heart_rate <= 0 || $heart_rate > 200) {
+      return false;
+    }
+    
+    // Sanitize inputs
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+    $gestational_age = filter_var($gestational_age, FILTER_SANITIZE_NUMBER_INT);
+    $weight = filter_var($weight, FILTER_SANITIZE_NUMBER_INT);
+    $heart_rate = filter_var($heart_rate, FILTER_SANITIZE_NUMBER_INT);
+    
+    // Insert data into database
+
+  $stmt = $this->conn->prepare("INSERT INTO fetus (user_id, gestational_age, weight, heart_rate) VALUES (?, ?, ?, ?)");
+  $stmt->bind_param("iddd", $user_id, $gestational_age, $weight, $heart_rate);
+
+  if (!$stmt->execute()) {
+    $stmt->close();
+    $this->conn->close();
+    return false; // SQL error
+  }
+
+  $stmt->close();
+  $this->conn->close();
+  header("LOCATION: ../../fetus.php");
+  return true; // Success
+    
+  }
   
 }
 
