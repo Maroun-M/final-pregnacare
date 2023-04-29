@@ -34,27 +34,14 @@ class Login
         $row = $result->fetch_assoc();
     
         if ($result->num_rows == 1 && password_verify($password, $row['account_password'])) {
-            // Check if user is confirmed
-            if ($row['confirmed'] == 0) {
-                // Redirect user to confirmation page
-                // header('Location: confirm.php');
-                echo "Registration not confirmed";
-                exit();
-            } else {
+            
                 //  Set user information
                 $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_email'] = $row['email'];
-                include_once("");
-               
-                // header('Location: ../userInfo.html');
-                echo 'Logged in successfully';
-                // Redirect user to menu page
-                header('Location: ../../patientMainMenu.php');
-                // Close statement
+                $_SESSION['user_email'] = $row['email'];            
                 $stmt->close();
                 $this->conn->close();
                 return true;
-            }
+            
         } else {
             // Invalid email or password
             echo 'Invalid email or password';
@@ -62,6 +49,32 @@ class Login
         }
     
     }
+
+    public function confirmUser($email, $confirmationCode)
+    {
+        $email = $this->conn->real_escape_string($email);
+        $confirmationCode = $this->conn->real_escape_string($confirmationCode);
+        
+        // Check if the confirmation code belongs to the email
+        $query = "SELECT * FROM users WHERE email = ? AND confirmation_code = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ss", $email, $confirmationCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if (!$result || $result->num_rows == 0) {
+            return false;
+        }
+        
+        // Update the confirmation status
+        $query = "UPDATE users SET confirmed = 1 WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        header("location: ../../index.html?account=confirmed");
+        return true;
+    }
+    
     
 }
 ?>

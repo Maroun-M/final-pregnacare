@@ -301,46 +301,90 @@ class Patient
     return true; // Success
   }
 
-  function insertOrUpdateFetusRecord($user_id, $gestational_age, $weight, $heart_rate) {
+  function insertOrUpdateFetusRecord($user_id, $gestational_age, $weight, $heart_rate)
+  {
     // Validate inputs
     if (!is_numeric($gestational_age) || $gestational_age <= 0 || !ctype_digit($gestational_age)) {
       return false;
     }
-    
+
     // Check that weight is a positive float or integer within a reasonable range
     if (!is_numeric($weight) || $weight <= 0 || $weight > 5000) {
       return false;
     }
-    
+
     // Check that heart rate is a positive integer within a reasonable range
     if (!is_numeric($heart_rate) || $heart_rate <= 0 || $heart_rate > 200) {
       return false;
     }
-    
+
     // Sanitize inputs
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
     $gestational_age = filter_var($gestational_age, FILTER_SANITIZE_NUMBER_INT);
     $weight = filter_var($weight, FILTER_SANITIZE_NUMBER_INT);
     $heart_rate = filter_var($heart_rate, FILTER_SANITIZE_NUMBER_INT);
-    
+
     // Insert data into database
 
-  $stmt = $this->conn->prepare("INSERT INTO fetus (user_id, gestational_age, weight, heart_rate) VALUES (?, ?, ?, ?)");
-  $stmt->bind_param("iddd", $user_id, $gestational_age, $weight, $heart_rate);
+    $stmt = $this->conn->prepare("INSERT INTO fetus (user_id, gestational_age, weight, heart_rate) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iddd", $user_id, $gestational_age, $weight, $heart_rate);
 
-  if (!$stmt->execute()) {
+    if (!$stmt->execute()) {
+      $stmt->close();
+      $this->conn->close();
+      return false; // SQL error
+    }
+
     $stmt->close();
     $this->conn->close();
-    return false; // SQL error
+    header("LOCATION: ../../fetus.php");
+    return true; // Success
+
   }
 
-  $stmt->close();
-  $this->conn->close();
-  header("LOCATION: ../../fetus.php");
-  return true; // Success
-    
+
+
+
+  // authentications for the patient to be able to access the main menu of patients
+
+  public function isUserConfirmed($user_id)
+{
+    $query = "SELECT confirmed FROM users WHERE id = ?";
+    $stmt = $this->conn->prepare($query);
+    if (!$stmt) {
+        die("Error preparing statement: " . $this->conn->error);
+    }
+    $stmt->bind_param("i", $user_id);
+    if (!$stmt->execute()) {
+        die("Error executing statement: " . $stmt->error);
+    }
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    if ($user['confirmed'] == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+  public function isPatient($user_id)
+  {
+    $query = "SELECT access_level FROM users WHERE id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    if ($user['access_level'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
-  
+
+
+
 }
 
 ?>

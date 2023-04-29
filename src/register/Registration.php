@@ -145,7 +145,7 @@ class Registration
     $mail->isHTML(true);
     $mail->Subject = "Confirm your registration";
     $mail->Body = "Thank you for registering! Your confirmation code is: <p color='blue'><bold>$confirmationCode</bold></p> Or confirm by clicking on the link below:";
-    $mail->Body .= "http://localhost/ouvatech/src/confirm.php?email=$email&confirmationCode=$confirmationCode";
+    $mail->Body .= "http://localhost/ouvatech/src/login/userLogin.php?email=$email&confirmationCode=$confirmationCode";
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
         
@@ -155,23 +155,7 @@ class Registration
     return true;
 }
 
-public function updateConfirmationStatus($email, $confirmationCode)
-{
-    
-    $confirmationCode = $this->conn->real_escape_string($confirmationCode);
-    $email = $this->conn->real_escape_string($email);
-    
-    // Check if the confirmation code belongs to the email
-    $query = "SELECT * FROM users WHERE email='$email' AND confirmation_code='$confirmationCode'";
-    $result = $this->conn->query($query);
-    if (!$result || $result->num_rows == 0) {
-        return false;
-    }
-    
-    // Update the confirmation status
-    $query = "UPDATE users SET confirmed=1 WHERE email='$email'";
-    return $this->conn->query($query);
-}
+
 
 
 }

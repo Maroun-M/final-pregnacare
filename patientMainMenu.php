@@ -15,9 +15,21 @@
   </head>
 
   <body>
-    <!-- <?php 
+     <?php 
     session_start();
-  ?> -->
+    include_once("./src/patient/Patient.php");
+    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $patient = new Patient($conn);
+    if(!isset($_SESSION['user_id']) || !$patient->isPatient($_SESSION['user_id'])) { // Check if the user is logged in and is patient
+      echo "You don't have access to this page.";
+      exit();
+   }
+   if(!$patient->isUserConfirmed($_SESSION['user_id'])){
+    header("location:./confirm.php");
+    exit();
+   }
+  ?> 
+  
     <div class="patient-menu-wrap">
       <div class="patient-menu-container">
         <div class="options-container">

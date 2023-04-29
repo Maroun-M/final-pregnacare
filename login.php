@@ -49,6 +49,11 @@
     <?php
     // Start session
     session_start();
+    if(isset($_SESSION['user_id'])) { // Check if the user is logged in
+      // User is logged in, redirect them to the home page or any other page
+      header("Location: ./patientMainMenu.php");
+      exit;
+   }
     // Generate CSRF token
     $_SESSION['token'] = bin2hex(random_bytes(32));
     ?>
