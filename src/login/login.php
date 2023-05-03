@@ -38,8 +38,6 @@ class Login
                 //  Set user information
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_email'] = $row['email'];            
-                $stmt->close();
-                $this->conn->close();
                 return true;
             
         } else {
@@ -74,6 +72,25 @@ class Login
         header("location: ../../index.html?account=confirmed");
         return true;
     }
+
+
+     public function getUserAccessLevel($userId) {
+      
+      
+    
+      // Prepare and execute the SQL query
+      $stmt = $this->conn->prepare("SELECT access_level FROM users WHERE id = ?");
+      $stmt->bind_param("i", $userId);
+      $stmt->execute();
+      $stmt->bind_result($accessLevel);
+      $stmt->fetch();
+    
+    
+      // Return the access level as an integer
+      return (int) $accessLevel;
+    }
+    
+    
     
     
 }

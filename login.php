@@ -47,13 +47,24 @@
         </nav> -->
 
     <?php
+    include_once("./src/login/login.php");
+    $user_login = new login();
     // Start session
     session_start();
-    if(isset($_SESSION['user_id'])) { // Check if the user is logged in
+    $access_lvl = $user_login->getUserAccessLevel($_SESSION['user_id']);
+    $user_id = $_SESSION['user_id'];
+    if (isset($user_id) && $access_lvl == 1) { // Check if the user is logged in
       // User is logged in, redirect them to the home page or any other page
       header("Location: ./patientMainMenu.php");
       exit;
-   }
+    } else if (isset($user_id) && $access_lvl == 2){
+      header("Location: ./doctorMainMenu.php");
+      exit;
+    } 
+    if(isset($user_id)){
+      header('location: ./index.html');
+      exit;
+    }
     // Generate CSRF token
     $_SESSION['token'] = bin2hex(random_bytes(32));
     ?>
@@ -87,14 +98,14 @@
         </div>
         <div class="signup-prompt-container">
           <p>Don't have an account? <span class="sign-up-btn">
-            <a href="./index.html">Sign Up</a>
-          </span></p>
+              <a href="./index.html">Sign Up</a>
+            </span></p>
         </div>
       </form>
 
-  </div>
-  <!-- footer container -->
-  <!-- <hr />
+    </div>
+    <!-- footer container -->
+    <!-- <hr />
         <div class="footer-container">
           <div class="footer-content">
             <p>Ouvatech© 2023. All rights reserved.</p>

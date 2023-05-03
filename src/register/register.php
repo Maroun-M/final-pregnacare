@@ -6,7 +6,10 @@ $phoneNumber = $_POST['phoneNumber'];
 $email = $_POST['emailAddress'];
 $password = $_POST['password'];
 $confirmPassword = $_POST['confirm-password'];
-$account = new Registration($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword);
+$type = $_POST['registration-type'];
+
+$account = new Registration($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword, $type);
 $account->register();
+header('Location: ../../index.html?login=successful');
 
 ?>
