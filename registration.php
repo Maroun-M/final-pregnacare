@@ -40,10 +40,7 @@
             <input type="radio" name="registration-type" value="doctor" id="doctor-radio" />
           </label>
           <br />
-          <label for="medical-radio">
-            Register as medical-professional
-            <input type="radio" name="registration-type" value="medical-professional" id="medical-radio" />
-          </label>
+          
           <input class="btn btn-primary btn-lg" type="submit" value="Submit" name="submit-registration"/>
         </form>
       </div>

@@ -367,7 +367,7 @@ class Patient
     }
 }
 
-
+  // checks the access level of the user if he is patient
   public function isPatient($user_id)
   {
     $query = "SELECT access_level FROM users WHERE id = ?";
@@ -383,7 +383,16 @@ class Patient
     }
   }
 
-
+  // checks if the patient has a record in the table patient
+  public function has_patient_record($user_id) {
+    echo $user_id;
+    $stmt = $this->conn->prepare("SELECT * FROM patients WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    return $result->num_rows > 0;
+  }
 
 }
 

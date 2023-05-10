@@ -20,48 +20,28 @@
 
 <body>
   <div class="wrapper  gradient-custom-login">
-    <!-- <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-          <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div class="navbar-nav">
-                <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
-                 <a href="./index.html">Home</a> 
-                </p>
-                <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
-                  Features
-                </p>
-                <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
-                  Info
-                </p>
-                <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
-                  Register
-                </p>
-                <p class="nav-link"><a href="./login.html">Login</a></p>
-              </div>
-            </div>
-          </div>
-        </nav> -->
 
     <?php
     include_once("./src/login/login.php");
     $user_login = new login();
     // Start session
     session_start();
+    $access_lvl;
+    $user_id;
+    if(isset($_SESSION['user_id'])){
     $access_lvl = $user_login->getUserAccessLevel($_SESSION['user_id']);
     $user_id = $_SESSION['user_id'];
+    }
+    
     if (isset($user_id) && $access_lvl == 1) { // Check if the user is logged in
       // User is logged in, redirect them to the home page or any other page
       header("Location: ./patientMainMenu.php");
       exit;
-    } else if (isset($user_id) && $access_lvl == 2){
+    } else if (isset($user_id) && $access_lvl == 2) {
       header("Location: ./doctorMainMenu.php");
       exit;
-    } 
-    if(isset($user_id)){
+    }
+    if (isset($user_id)) {
       header('location: ./index.html');
       exit;
     }
@@ -83,10 +63,7 @@
         <div class="input-container">
           <input type="email" name="email" placeholder="Email"> <br>
           <input type="password" name="password" placeholder="Password"><br>
-          <input type="hidden" name="token" value="<?php
-
-          echo $_SESSION['token']; ?>">
-
+          <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
         </div>
         <div class="reset-login-container">
           <a href="">
@@ -104,14 +81,7 @@
       </form>
 
     </div>
-    <!-- footer container -->
-    <!-- <hr />
-        <div class="footer-container">
-          <div class="footer-content">
-            <p>Ouvatech© 2023. All rights reserved.</p>
-          </div>
-        </div> -->
-
+ 
   </div>
   <!-- footer container end -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"

@@ -128,12 +128,10 @@ class Registration
         $firstName = $this->conn->real_escape_string($this->firstName);
         $lastName = $this->conn->real_escape_string($this->lastName);
         $phoneNumber = $this->conn->real_escape_string($this->phoneNumber);
-        $registrationType = $this->conn->real_escape_string($this->type);
+        $this->type = $this->conn->real_escape_string($this->type);
         // Determine access level based on registration type
         if ($this->type === 'doctor') {
             $accessLevel = 2;
-        } elseif ($this->type === 'medical-professional') {
-            $accessLevel = 3;
         } else {
             $accessLevel = 1;
         }

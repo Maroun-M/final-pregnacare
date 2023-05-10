@@ -11,7 +11,7 @@
     background-size: auto;
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
-    height: 100vh;
+    height: 120vh;
     width: 100%;
 }
 
@@ -444,7 +444,7 @@ body {
 }
 
 .signup-prompt-container {
-    padding-top: 100px;
+    padding-top: 70px;
     text-align: center;
     font-weight: 400;
     font-size: 15px;
@@ -805,8 +805,8 @@ body {
 .registration-choice-form label:hover {
     border-color: #51667b;
 }
-.registration-choice-form input[type="radio"] {
-}
+
 .registration-choice-form input:checked + label + .labels-container {
     border: 2px solid#70a4db;
 }
+

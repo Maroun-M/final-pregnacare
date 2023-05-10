@@ -37,6 +37,11 @@
         header("location:./confirm.php");
         exit();
     }
+
+    if (!$patient->has_patient_record($_SESSION['user_id'])){
+        header("location:./userInfo.php");
+        exit();
+       }
     ?>
     <div class="user-info-wrap">
 

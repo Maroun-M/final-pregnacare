@@ -72,24 +72,28 @@ class Login
         header("location: ../../index.html?account=confirmed");
         return true;
     }
-
+    private $accessLevel;
 
      public function getUserAccessLevel($userId) {
       
       
-    
+        
       // Prepare and execute the SQL query
       $stmt = $this->conn->prepare("SELECT access_level FROM users WHERE id = ?");
       $stmt->bind_param("i", $userId);
       $stmt->execute();
-      $stmt->bind_result($accessLevel);
+      $stmt->bind_result($this->accessLevel);
       $stmt->fetch();
     
     
       // Return the access level as an integer
-      return (int) $accessLevel;
+      return (int) $this->accessLevel;
     }
-    
+
+   
+      
+  
+
     
     
     
