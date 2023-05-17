@@ -34,7 +34,6 @@
     <div class="login-form-container user-info-container">
       <form action="./src/patient/updateUserInfo.php" method="POST" enctype="multipart/form-data">
       <div class="user-info-header">
-        <p>Hello, fName</p>
         <p>Please enter more details:</p>
       </div>
         <div class="user-info-input">

@@ -841,3 +841,34 @@ body {
 .one-patient-tests-container{
     grid-template-columns: repeat(3,1fr);
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 8px;
+  }
+
+  .grid-item {
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .grid-header {
+    font-weight: bold;
+  }
+
+  .button-container {
+    grid-column: 1 / -1;
+  }
+
+  .choose-doctor-btn {
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .choose-doctor-btn:hover {
+    background-color: #45a049;
+  }

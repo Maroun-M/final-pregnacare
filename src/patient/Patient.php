@@ -386,7 +386,6 @@ class Patient
   // checks if the patient has a record in the table patient
   public function has_patient_record($user_id)
   {
-    echo $user_id;
     $stmt = $this->conn->prepare("SELECT * FROM patients WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -466,7 +465,7 @@ class Patient
     // Set the user_id and time_range parameters for the query
     $user_id = $this->conn->real_escape_string($user_id);
     $time_range = $this->conn->real_escape_string($time_range);
-    
+
     // Calculate the start and end dates based on the time range
     $start_date = '';
     $end_date = date('Y-m-d');
@@ -634,7 +633,7 @@ class Patient
           'date' => $row['date'],
           'time' => $row['time'],
           'value' => $row['bpm'],
-      
+
         );
       }
 
@@ -785,6 +784,54 @@ class Patient
       echo 'Error: ' . $this->conn->error;
     }
   }
+
+  public function assignDoctorToPatient($patientUserId, $doctorId)
+  {
+    // Retrieve the patient_id based on the patient's user_id
+    $query = "SELECT patient_id FROM patients WHERE user_id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $patientUserId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+      $row = $result->fetch_assoc();
+      $patientId = $row['patient_id'];
+
+      // Check if the patient-doctor relationship already exists in the patient_doctor table
+      $checkQuery = "SELECT * FROM patient_doctor WHERE patient_id = ?";
+      $checkStmt = $this->conn->prepare($checkQuery);
+      $checkStmt->bind_param("i", $patientId);
+      $checkStmt->execute();
+      $checkResult = $checkStmt->get_result();
+
+      if ($checkResult->num_rows === 0) {
+        // The patient-doctor relationship does not exist, so insert it into the patient_doctor table
+        $insertQuery = "INSERT INTO patient_doctor (patient_id, doctor_id) VALUES (?, ?)";
+        $insertStmt = $this->conn->prepare($insertQuery);
+        $insertStmt->bind_param("ii", $patientId, $doctorId);
+        $insertStmt->execute();
+
+        if ($insertStmt->affected_rows === 1) {
+          // Successfully inserted the record
+          return true;
+        } else {
+          // Failed to insert the record
+          return false;
+        }
+      } else {
+        $insertQuery = "UPDATE  patient_doctor  SET doctor_id = ? WHERE patient_id = ?";
+        $insertStmt = $this->conn->prepare($insertQuery);
+        $insertStmt->bind_param("ii",  $doctorId, $patientId);
+        $insertStmt->execute();
+        return true;
+      }
+    } else {
+      // Patient not found
+      return false;
+    }
+  }
+
 
 
 

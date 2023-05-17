@@ -118,6 +118,58 @@ class Doctor
     }
   }
 
+  public function getTotalDoctors()
+  {
+
+    // Number of results per page
+    $resultsPerPage = 10;
+
+    // Query to get the total number of doctors
+    $countQuery = "SELECT COUNT(*) AS total FROM doctors";
+    $countResult = $this->conn->query($countQuery);
+    $totalDoctors = $countResult->fetch_assoc()['total'];
+
+    // Calculate the total number of pages
+    $totalPages = ceil($totalDoctors / $resultsPerPage);
+
+    // Output the total number of pages as JSON
+    header("Content-Type: application/json");
+    echo json_encode(['totalPages' => $totalPages]);
+
+  }
+  public function getDoctors($page)
+  {
+    // Number of results per page
+    $resultsPerPage = 10;
+
+    // Calculate the offset for the current page
+    $offset = ($page - 1) * $resultsPerPage;
+
+    // Prepare the query to fetch doctors
+    $query = "SELECT doctors.*, users.phone_number, CONCAT(users.first_name, ' ', users.last_name) AS name
+    FROM doctors 
+    JOIN users ON doctors.user_id = users.id LIMIT ?, ?;";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $offset, $resultsPerPage);
+    $stmt->execute();
+
+    // Get the result set
+    $result = $stmt->get_result();
+
+    // Fetch the doctors into an array
+    $doctors = [];
+    while ($row = $result->fetch_assoc()) {
+      $doctors[] = $row;
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    // Output the doctors as JSON
+    header("Content-Type: application/json");
+    echo json_encode($doctors);
+  }
+
 }
 
 ?>

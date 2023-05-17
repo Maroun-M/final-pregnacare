@@ -198,51 +198,177 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
         testsData.forEach((data) => {
           if (dataType === "Blood Pressure") {
             results += `<div class="item">Diastolic: ${data.diastolic} Systolic: ${data.systolic}</div>
-                <div class="item">${data.date}</div>
-                <div class="item">${data.time}</div>`;
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
           } else if (dataType === "Fetus Data") {
             results += `
-                <div class="header">Gestational Age: ${data.gestational_age} Weight: ${data.weight} Heart rate: ${data.heart_rate}</div>
-                <div class="header">${data.date}</div>
-                <div class="header">${data.time}</div>`;
+                  <div class="header">Gestational Age: ${data.gestational_age} Weight: ${data.weight} Heart rate: ${data.heart_rate}</div>
+                  <div class="header">${data.date}</div>
+                  <div class="header">${data.time}</div>`;
           } else if (dataType === "Lab Tests") {
             results += `
-            <div class="header"><a href="${data.file_path}" target="_blank">Lab Tests</a></div>
-            <div class="header">${data.date}</div>
-            <div class="header">${data.time}</div> `;
+              <div class="header"><a href="${data.file_path}" target="_blank">Lab Tests</a></div>
+              <div class="header">${data.date}</div>
+              <div class="header">${data.time}</div> `;
           } else {
             results += `<div class="item">${data.value}</div>
-                <div class="item">${data.date}</div>
-                <div class="item">${data.time}</div>`;
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
           }
         });
         table.innerHTML = results;
+
+        // Call the createChart function to display the chart
+
+        createChart(testsData);
       }
     };
     xhr.send();
   }
 
   // Function to create or update the chart
-function createChart(testsData) {
-    // Get the canvas element
+  // Function to create or update the chart
+  function createChart(testsData) {
     const canvas = document.getElementById("data-chart");
-  
-    // Create an array of labels and an array of data values from the testsData
+
+    // Check if there is an existing chart instance
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) {
+      existingChart.destroy(); // Destroy the existing chart
+    }
+
     const labels = testsData.map((data) => data.date);
     const dataValues = testsData.map((data) => data.value);
-  
-    // Create a Chart.js chart using the canvas element
+    if (selectedDataType === "Lab Tests") {
+      const chart = new Chart(canvas, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: selectedDataType,
+              data: null,
+              backgroundColor: "rgba(0, 123, 255, 0.5)",
+              borderColor: "rgba(0, 123, 255, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          // Customize the chart options as needed
+        },
+      });
+    }
+
+    if (selectedDataType === "Blood Pressure") {
+      const labels = testsData.map((data) => data.date);
+      const dataValues1 = testsData.map((data) => data.systolic);
+      const dataValues2 = testsData.map((data) => data.diastolic);
+      const chart = new Chart(canvas, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Systolic", // Customize the label for the first data value
+              data: dataValues1,
+              backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
+              borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
+              borderWidth: 1, // Customize the border width
+            },
+            {
+              label: "Diastolic", // Customize the label for the second data value
+              data: dataValues2,
+              backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
+              borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
+              borderWidth: 1, // Customize the border width
+            },
+          ],
+        },
+        options: {
+          // Customize the chart options as needed
+        },
+      });
+    }
+    if (selectedDataType === "Blood Pressure") {
+        const labels = testsData.map((data) => data.date);
+        const dataValues1 = testsData.map((data) => data.systolic);
+        const dataValues2 = testsData.map((data) => data.diastolic);
+        const chart = new Chart(canvas, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Systolic", // Customize the label for the first data value
+                data: dataValues1,
+                backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
+                borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
+                borderWidth: 1, // Customize the border width
+              },
+              {
+                label: "Diastolic", // Customize the label for the second data value
+                data: dataValues2,
+                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
+                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
+                borderWidth: 1, // Customize the border width
+              },
+            ],
+          },
+          options: {
+            // Customize the chart options as needed
+          },
+        });
+      }
+      if (selectedDataType === "Fetus Data") {
+        const labels = testsData.map((data) => data.date);
+        const dataValues1 = testsData.map((data) => data.gestational_age);
+        const dataValues2 = testsData.map((data) => data.weight);
+        const dataValues3 = testsData.map((data) => data.heart_rate);
+
+        const chart = new Chart(canvas, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Gestational Age", // Customize the label for the first data value
+                data: dataValues1,
+                backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
+                borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
+                borderWidth: 1, // Customize the border width
+              },
+              {
+                label: "Weight", // Customize the label for the second data value
+                data: dataValues2,
+                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
+                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
+                borderWidth: 1, // Customize the border width
+              },{
+                label: "Heart Rate", // Customize the label for the second data value
+                data: dataValues2,
+                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
+                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
+                borderWidth: 1, // Customize the border width
+              },
+            ],
+          },
+          options: {
+            // Customize the chart options as needed
+          },
+        });
+      }
     const chart = new Chart(canvas, {
-      type: "line", // Use a line chart, you can change it to other types like "bar", "pie", etc.
+      type: "line",
       data: {
         labels: labels,
         datasets: [
           {
-            label: "Test Data", // Customize the label
+            label: selectedDataType,
             data: dataValues,
-            backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
-            borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
-            borderWidth: 1, // Customize the border width
+            backgroundColor: "rgba(0, 123, 255, 0.5)",
+            borderColor: "rgba(0, 123, 255, 1)",
+            borderWidth: 1,
           },
         ],
       },
@@ -250,6 +376,5 @@ function createChart(testsData) {
         // Customize the chart options as needed
       },
     });
-}
-
+  }
 }

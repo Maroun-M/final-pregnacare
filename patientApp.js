@@ -61,11 +61,11 @@ const insert = async () => {
     } else if (patients[3] == 3) {
       pregStage3.checked = true;
     }
-    if(patients[4] == 1){
-        diabetic.checked = true;
+    if (patients[4] == 1) {
+      diabetic.checked = true;
     }
-    if(patients[5] == 1){
-        hypertension.checked = true;
+    if (patients[5] == 1) {
+      hypertension.checked = true;
     }
   } catch (error) {
     console.log(error);
@@ -76,4 +76,107 @@ window.onload = load = () => {
   if (window.location.pathname === "/ouvatech/userInfo.php") {
     insert();
   }
+};
+
+if (window.location.pathname === "/ouvatech/chooseDoctor.php") {
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchDoctors(1);
+    fetchTotal();
+  });
+}
+
+let fetchTotal = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `./src/data/allDoctors.php?getTotal=true`);
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      var total = JSON.parse(xhr.responseText);
+      total = total.totalPages;
+      createButtons(total);
+    }
+  };
+  xhr.send();
+};
+
+let createButtons = (total) => {
+  const paginationContainer = document.querySelector(".page-btns-container");
+  for (let i = 1; i <= total; i++) {
+    const button = document.createElement("button");
+    button.innerText = i;
+    button.addEventListener("click", () => {
+      fetchDoctors(i);
+    });
+    paginationContainer.appendChild(button);
+  }
+};
+
+let fetchDoctors = (i) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `./src/data/allDoctors.php?page=${i}`);
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      const doctors = JSON.parse(xhr.responseText);
+      // Process the doctors data here (e.g., create buttons, update UI)
+      console.log(doctors);
+      displayDrs(doctors);
+      chooseDr();
+    }
+  };
+  xhr.send();
+};
+
+let displayDrs = (doctors) => {
+  const doctorsData = document.querySelector(".doctor-list-data");
+  let results = ``;
+  doctors.forEach((dr) => {
+    results += `<div class="grid-item">Dr. ${dr.name}</div>
+    <div class="grid-item">${dr.phone_number}</div>
+    <div class="grid-item">${dr.education}</div>
+
+    <div class="grid-item">${dr.clinic_name}</div>
+    <div class="grid-item">${dr.clinic_number}</div>
+
+    <div class="grid-item">${dr.location}</div>
+    <div class="grid-item">
+        <button class="choose-doctor-btn" data-id="${dr.doctor_id}">Choose</button>
+    </div>`;
+  });
+  doctorsData.innerHTML = results;
+};
+
+let chooseDr = () => {
+  const chooseBtn = document.querySelectorAll(".choose-doctor-btn");
+  console.log(chooseBtn);
+  chooseBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const doctorID = event.target.dataset.id;
+      const url = "./src/data/allDoctors.php";
+      const data = {
+        doctor_id: doctorID
+      };
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          alert(response)
+          if (response.ok) {
+            const successMessage = "Success"; // Set your success message here
+            const params = new URLSearchParams(window.location.search);
+            params.set("choice", successMessage);
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            window.location.href = newUrl;
+          } else {
+            throw new Error("Request failed");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+  });
 };

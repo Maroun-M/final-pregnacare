@@ -101,6 +101,14 @@
                 <p class="logout-btn" >Log Out</p>
             </div>
         </div>
+        <div class="options-container">
+            <div class="options-logo-container">
+              <img src="./icons/details.svg" alt="" onclick="window.location.href = './chooseDoctor.php'">
+            </div>
+            <div class="options-title-container">
+               <p onclick="window.location.href = './chooseDoctor.php'">Choose Doctor</p> 
+            </div>
+        </div>
       </div>
     </div>
   </body>

@@ -45,8 +45,8 @@
   <button class="tests-btn">Blood Glucose</button>
   <button class="tests-btn">Blood Oxygen</button>
   <button class="tests-btn">Heart Rate</button>
-  <button class="tests-btn">Fetus Data</button>
   <button class="tests-btn">Temperature</button>
+  <button class="tests-btn">Blood Pressure</button>
   <button class="tests-btn">Fetus Data</button>
   <button class="tests-btn">Lab Tests</button>
 
