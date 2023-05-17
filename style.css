@@ -810,3 +810,34 @@ body {
     border: 2px solid#70a4db;
 }
 
+
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    padding: 10px;
+}
+.header {
+    font-weight: bold;
+    text-align: center;
+}
+.item {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.item:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.patient-records{
+    cursor: pointer;
+}
+.tests-container{
+    grid-template-columns: repeat(4, 1fr);
+
+}
+
+.one-patient-tests-container{
+    grid-template-columns: repeat(3,1fr);
+}

@@ -348,24 +348,24 @@ class Patient
   // authentications for the patient to be able to access the main menu of patients
 
   public function isUserConfirmed($user_id)
-{
+  {
     $query = "SELECT confirmed FROM users WHERE id = ?";
     $stmt = $this->conn->prepare($query);
     if (!$stmt) {
-        die("Error preparing statement: " . $this->conn->error);
+      die("Error preparing statement: " . $this->conn->error);
     }
     $stmt->bind_param("i", $user_id);
     if (!$stmt->execute()) {
-        die("Error executing statement: " . $stmt->error);
+      die("Error executing statement: " . $stmt->error);
     }
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
     if ($user['confirmed'] == 1) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
-}
+  }
 
   // checks the access level of the user if he is patient
   public function isPatient($user_id)
@@ -384,16 +384,412 @@ class Patient
   }
 
   // checks if the patient has a record in the table patient
-  public function has_patient_record($user_id) {
+  public function has_patient_record($user_id)
+  {
     echo $user_id;
     $stmt = $this->conn->prepare("SELECT * FROM patients WHERE user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     return $result->num_rows > 0;
   }
 
+  // returns the patients data for the doctor tab
+  public function getPatientsByDoctorId($doctor_id)
+  {
+
+    // Prepare the SQL statement to join the tables and retrieve the patient data
+    $stmt = $this->conn->prepare("
+    SELECT u.id, p.location, CONCAT(u.first_name, ' ', u.last_name) AS name, u.phone_number, TIMESTAMPDIFF(YEAR, p.date_of_birth, CURDATE()) AS age FROM patients p JOIN patient_doctor pd ON p.patient_id = pd.patient_id JOIN users u ON p.user_id = u.id JOIN doctors d ON pd.doctor_id = d.doctor_id WHERE d.user_id = ?;
+    
+    ");
+    // Bind the doctor ID parameter to the SQL statement
+    $stmt->bind_param('i', $doctor_id);
+
+    // Execute the SQL statement
+    $stmt->execute();
+
+    // Get the result set
+    $result = $stmt->get_result();
+
+    // Fetch the patient data as an associative array
+    $patients = [];
+    while ($row = $result->fetch_assoc()) {
+      $patients[] = $row;
+    }
+
+    // Loop through the patient data and calculate the age of each patient
+
+
+    // Close the database connection
+    $this->conn->close();
+    echo json_encode($patients);
+    // Return the patient data as a JSON array
+    return true;
+  }
+
+  public function getRecentUserData($user_id)
+  {
+    // Set the user_id parameter for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Prepare and execute the query for each table
+    $tables = array('blood_glucose', 'blood_oxygen', 'fetus', 'hr_bp', 'temperature', 'user_files');
+    $data = array();
+
+    foreach ($tables as $table) {
+      $sql = "SELECT * FROM $table WHERE user_id = '$user_id' ORDER BY timestamp DESC LIMIT 1";
+      $result = $this->conn->query($sql);
+
+      if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $timestamp = $row['timestamp'];
+        $row['date'] = date('Y-m-d', strtotime($timestamp));
+        $row['time'] = date('H:i:s', strtotime($timestamp));
+        unset($row['timestamp']);
+        $data[$table] = $row;
+      } else {
+        $data[$table] = array();
+      }
+    }
+
+    // Close the database connection
+    $this->conn->close();
+
+    // Echo the data as a JSON array
+    echo json_encode($data);
+  }
+
+  public function getBloodGlucoseData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+    $time_range = $this->conn->real_escape_string($time_range);
+    
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+    // Prepare and execute the query
+    $sql = "SELECT record_id, user_id, glucose_level, DATE(timestamp) AS date, TIME(timestamp) AS time 
+          FROM blood_glucose 
+          WHERE user_id = $user_id AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'record_id' => $row['record_id'],
+          'user_id' => $row['user_id'],
+          'value' => $row['glucose_level'],
+          'date' => $row['date'],
+          'time' => $row['time']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+  public function getBloodOxygenData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+    // Prepare and execute the query
+    $sql = "SELECT record_id, user_id, percentage, DATE(timestamp) AS date, TIME(timestamp) AS time 
+          FROM blood_oxygen 
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'record_id' => $row['record_id'],
+          'user_id' => $row['user_id'],
+          'value' => $row['percentage'],
+          'date' => $row['date'],
+          'time' => $row['time']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+  public function getFetusData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+
+    // Prepare and execute the query
+    $sql = "SELECT id, user_id, gestational_age, weight, heart_rate, DATE(timestamp) AS date, TIME(timestamp) AS time 
+        FROM fetus 
+        WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'id' => $row['id'],
+          'user_id' => $row['user_id'],
+          'gestational_age' => $row['gestational_age'],
+          'weight' => $row['weight'],
+          'heart_rate' => $row['heart_rate'],
+          'date' => $row['date'],
+          'time' => $row['time']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+
+  public function getHRBPData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+
+    // Prepare and execute the query
+    $sql = "SELECT HR_BP_record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, bpm, systolic, diastolic 
+            FROM hr_bp 
+            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'HR_record_id' => $row['HR_BP_record_id'],
+          'user_id' => $row['user_id'],
+          'date' => $row['date'],
+          'time' => $row['time'],
+          'value' => $row['bpm'],
+      
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+  public function getBPData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+
+    // Prepare and execute the query
+    $sql = "SELECT HR_BP_record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, systolic, diastolic 
+            FROM hr_bp 
+            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'BP_record_id' => $row['HR_BP_record_id'],
+          'user_id' => $row['user_id'],
+          'date' => $row['date'],
+          'time' => $row['time'],
+          'systolic' => $row['systolic'],
+          'diastolic' => $row['diastolic']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+  public function getTemperatureData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+
+    // Prepare and execute the query
+    $sql = "SELECT record_id, user_id, temp, DATE(timestamp) AS date, TIME(timestamp) AS time 
+          FROM temperature 
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'record_id' => $row['record_id'],
+          'user_id' => $row['user_id'],
+          'value' => $row['temp'],
+          'date' => $row['date'],
+          'time' => $row['time']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+
+  public function getUserFilesData($user_id, $time_range)
+  {
+    // Set the user_id and time_range parameters for the query
+    $user_id = $this->conn->real_escape_string($user_id);
+
+    // Calculate the start and end dates based on the time range
+    $start_date = '';
+    $end_date = date('Y-m-d');
+
+    if ($time_range === 'weekly') {
+      $start_date = date('Y-m-d', strtotime('-1 week'));
+    } elseif ($time_range === 'monthly') {
+      $start_date = date('Y-m-d', strtotime('-1 month'));
+    } elseif ($time_range === 'yearly') {
+      $start_date = date('Y-m-d', strtotime('-1 year'));
+    }
+
+    // Prepare and execute the query
+    $sql = "SELECT id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, file_path 
+          FROM user_files 
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+    $result = $this->conn->query($sql);
+
+    // Check if the query was successful
+    if ($result) {
+      $data = array();
+
+      // Fetch the result rows and process the data
+      while ($row = $result->fetch_assoc()) {
+        $data[] = array(
+          'id' => $row['id'],
+          'user_id' => $row['user_id'],
+          'date' => $row['date'],
+          'time' => $row['time'],
+          'file_path' => $row['file_path']
+        );
+      }
+
+      // Echo the data as a JSON array
+      echo json_encode($data);
+    } else {
+      // Handle query error
+      echo 'Error: ' . $this->conn->error;
+    }
+  }
+
+
+
 }
+
+
 
 ?>

@@ -41,10 +41,10 @@
       <div class="patient-menu-container">
       <div class="options-container">
             <div class="options-logo-container">
-              <img src="./icons/details.svg" alt="" onclick="window.location.href = './patientData.php'">
+              <img src="./icons/details.svg" alt="" onclick="window.location.href = './patients.php'">
             </div>
             <div class="options-title-container">
-               <p onclick="window.location.href = './patientData.php'">Patient Data</p> 
+               <p onclick="window.location.href = './patients.php'">Patient Data</p> 
             </div>
         </div>
         <div class="options-container">
