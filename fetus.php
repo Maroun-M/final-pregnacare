@@ -43,14 +43,8 @@
                     <img src="./icons/fetus.svg" alt="">
                 </div>
                 <div class="form-inputs-container">
-                    <div class="inputs-header-title">
-                        <p>Please insert your fetus gestational age:</p>
-                        <p class="temperature-detail"></p>
-                    </div>
-                    <div class="rates-input">
-                        <input type="text" id="gest-age" name="gest-age" placeholder="10" required>
-                        <span class="measure-units">weeks</span>
-                    </div> 
+                    
+                    
                     <div class="inputs-header-title">
                         <p>Please insert your fetus weight:</p>
                         <p class="temperature-detail"></p>

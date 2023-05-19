@@ -55,12 +55,12 @@
 
 <canvas id="data-chart"></canvas>
 
-  <div class="container tests-container one-patient-tests-container">
+  <div class="dr-container tests-container one-patient-tests-container">
         <div class="header">Values</div>
         <div class="header">Date</div>
         <div class="header">Time</div>
       </div>
-      <div class="container tests-data-container data-container tests-container one-patient-tests-container">
+      <div class="dr-container tests-data-container data-container tests-container one-patient-tests-container">
         <!-- Add more patient data items here -->
 
         

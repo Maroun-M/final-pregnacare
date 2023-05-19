@@ -27,6 +27,7 @@ class Patient
     return $row['count'] > 0;
   }
 
+
   public function getLocation()
   {
     $stmt = $this->conn->prepare("SELECT location FROM patients WHERE user_id = ?");
@@ -43,6 +44,65 @@ class Patient
     $stmt = $this->conn->prepare("UPDATE patients SET location = ? WHERE user_id = ?");
     $stmt->bind_param("si", $location, $this->userId);
     $stmt->execute();
+  }
+  public function setLMP($lmpDate)
+  {
+    // Prepare the query
+    $query = "
+          UPDATE patients
+          SET LMP = ?
+          WHERE user_id = ?
+      ";
+
+    // Prepare the statement
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("si", $lmpDate, $this->userId);
+
+    // Execute the query
+    $stmt->execute();
+  }
+  public function updatePatientEDD()
+  {
+    // Prepare the queries
+    $query2 = "UPDATE patients
+               SET EDD = CASE
+                   WHEN previous_pregnancies = 0 THEN LMP + INTERVAL 12 MONTH - INTERVAL 2 MONTH - INTERVAL 14 DAY
+                   ELSE LMP + INTERVAL 12 MONTH - INTERVAL 2 MONTH - INTERVAL 18 DAY
+               END
+               WHERE user_id = $this->userId";
+
+
+
+
+
+    // Execute the queries
+    $this->conn->query($query2);
+  }
+  public function updateGestationAge()
+  {
+
+    $query3 = "UPDATE patients
+               SET gestational_age = (DATEDIFF(CURRENT_DATE, EDD) / 7 + 40) * 7
+               WHERE user_id = $this->userId";
+
+
+    // Execute the queries
+    $this->conn->query($query3);
+
+  }
+  public function updatePregnancyStage()
+  {
+    $query1 = "UPDATE patients
+               SET pregnancy_stage = 
+               CASE
+                   WHEN gestational_age <= 84 THEN 1
+                   WHEN gestational_age <= 168 THEN 2
+                   ELSE 3
+               END
+               WHERE user_id = $this->userId";
+
+    $this->conn->query($query1);
+
   }
 
   // Getter for date of birth
@@ -301,12 +361,9 @@ class Patient
     return true; // Success
   }
 
-  function insertOrUpdateFetusRecord($user_id, $gestational_age, $weight, $heart_rate)
+  function insertOrUpdateFetusRecord($user_id, $weight, $heart_rate)
   {
     // Validate inputs
-    if (!is_numeric($gestational_age) || $gestational_age <= 0 || !ctype_digit($gestational_age)) {
-      return false;
-    }
 
     // Check that weight is a positive float or integer within a reasonable range
     if (!is_numeric($weight) || $weight <= 0 || $weight > 5000) {
@@ -320,9 +377,26 @@ class Patient
 
     // Sanitize inputs
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
-    $gestational_age = filter_var($gestational_age, FILTER_SANITIZE_NUMBER_INT);
     $weight = filter_var($weight, FILTER_SANITIZE_NUMBER_INT);
     $heart_rate = filter_var($heart_rate, FILTER_SANITIZE_NUMBER_INT);
+
+    // Fetch gestational age from the patients table
+    $stmt = $this->conn->prepare("SELECT gestational_age FROM patients WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+      // User ID not found in patients table
+      $stmt->close();
+      $this->conn->close();
+      return false;
+    }
+
+    $row = $result->fetch_assoc();
+    $gestational_age = $row['gestational_age'];
+
+    $stmt->close();
 
     // Insert data into database
 
@@ -339,8 +413,8 @@ class Patient
     $this->conn->close();
     header("LOCATION: ../../fetus.php");
     return true; // Success
-
   }
+
 
 
 
@@ -567,7 +641,7 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT id, user_id, gestational_age, weight, heart_rate, DATE(timestamp) AS date, TIME(timestamp) AS time 
+    $sql = "SELECT id, user_id, gestational_age / 7, weight, heart_rate, DATE(timestamp) AS date, TIME(timestamp) AS time 
         FROM fetus 
         WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
     $result = $this->conn->query($sql);
@@ -822,7 +896,7 @@ class Patient
       } else {
         $insertQuery = "UPDATE  patient_doctor  SET doctor_id = ? WHERE patient_id = ?";
         $insertStmt = $this->conn->prepare($insertQuery);
-        $insertStmt->bind_param("ii",  $doctorId, $patientId);
+        $insertStmt->bind_param("ii", $doctorId, $patientId);
         $insertStmt->execute();
         return true;
       }
@@ -833,6 +907,34 @@ class Patient
   }
 
 
+
+  // trimester for the patient app
+  function getPatientPregnancyStage($user_id)
+  {
+    // Sanitize the user_id input
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+
+    // Prepare and execute the database query
+    $stmt = $this->conn->prepare("SELECT pregnancy_stage FROM patients WHERE user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Check if the user_id exists in the table
+    if ($result->num_rows === 0) {
+      $stmt->close();
+      return json_encode(['error' => 'User ID not found in the patients table']);
+    }
+
+    // Fetch the pregnancy_stage from the query result
+    $row = $result->fetch_assoc();
+    $pregnancy_stage = $row['pregnancy_stage'];
+
+    $stmt->close();
+
+    // Return the pregnancy_stage as JSON
+    echo json_encode(['pregnancy_stage' => $pregnancy_stage]);
+  }
 
 
 }

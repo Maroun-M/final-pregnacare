@@ -152,7 +152,7 @@ let chooseDr = () => {
       const doctorID = event.target.dataset.id;
       const url = "./src/data/allDoctors.php";
       const data = {
-        doctor_id: doctorID
+        doctor_id: doctorID,
       };
 
       fetch(url, {
@@ -163,7 +163,6 @@ let chooseDr = () => {
         body: JSON.stringify(data),
       })
         .then((response) => {
-          alert(response)
           if (response.ok) {
             const successMessage = "Success"; // Set your success message here
             const params = new URLSearchParams(window.location.search);
@@ -180,3 +179,55 @@ let chooseDr = () => {
     });
   });
 };
+
+let fetchTrimester = () => {
+  var xhr = new XMLHttpRequest();
+  var url = "./src/data/patientTrimester.php"; // Replace with the URL or file path of your PHP script
+  var parameter = "patient";
+  url += "?" + parameter;
+  xhr.open("GET", url, true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var response = xhr.responseText;
+      response = JSON.parse(response);
+      const pregnancyStage = response.pregnancy_stage;
+      // Handle the response from the server
+      enableDisableButton(pregnancyStage);
+    }
+  };
+
+  xhr.send();
+};
+
+let enableDisableButton = (pregnancyStage) => {
+  const glucoseInput = document.getElementById("glucose");
+  const addButton = document.querySelector(".add-btn");
+
+  glucoseInput.addEventListener("input", function () {
+    const glucoseLevel = parseInt(glucoseInput.value);
+    const glucoseDetail = document.querySelector(".glucose-detail");
+
+    // Validate glucose value
+    if (isNaN(glucoseLevel) || !Number.isInteger(parseFloat(glucoseLevel)) || glucoseLevel <= 0 || glucoseLevel >= 220) {
+      glucoseDetail.textContent = "Invalid glucose level";
+      addButton.disabled = true;
+      return;
+    }
+    if (glucoseLevel >= 140) {
+      glucoseDetail.textContent = "Hyperglycemia";
+      addButton.disabled = false;
+
+    } else if (glucoseLevel <= 60) {
+      glucoseDetail.textContent = "Hypoglycemia";
+      addButton.disabled = false;
+
+    } else {glucoseDetail.textContent = "Normal";
+    addButton.disabled = false;
+  }
+  });
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchTrimester();
+});

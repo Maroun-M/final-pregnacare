@@ -16,6 +16,8 @@
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <script src="./app.js" defer></script>
+
 </head>
 
 <body>
@@ -28,11 +30,11 @@
     session_start();
     $access_lvl;
     $user_id;
-    if(isset($_SESSION['user_id'])){
-    $access_lvl = $user_login->getUserAccessLevel($_SESSION['user_id']);
-    $user_id = $_SESSION['user_id'];
+    if (isset($_SESSION['user_id'])) {
+      $access_lvl = $user_login->getUserAccessLevel($_SESSION['user_id']);
+      $user_id = $_SESSION['user_id'];
     }
-    
+
     if (isset($user_id) && $access_lvl == 1) { // Check if the user is logged in
       // User is logged in, redirect them to the home page or any other page
       header("Location: ./patientMainMenu.php");
@@ -59,10 +61,12 @@
         <h2>LOGIN</h2>
         <p>Please enter your email and password</p>
       </div>
-      <form action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
+      <form id="loginForm" action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
         <div class="input-container">
-          <input type="email" name="email" placeholder="Email"> <br>
-          <input type="password" name="password" placeholder="Password"><br>
+          <input type="email" id="email" name="email" placeholder="Email" required> <br>
+          <div id="emailError" class="error-message"></div>
+          <input type="password" id="password" name="password" placeholder="Password" required><br>
+          <div id="passwordError" class="error-message" style="color:purple;"></div>
           <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
         </div>
         <div class="reset-login-container">
@@ -70,18 +74,18 @@
             <p>Forgot Password?</p>
           </a>
           <div class="login-btn-container">
-            <button class="login-btn">LOGIN</button>
+            <button class="login-btn" id="loginBtn" disabled>LOGIN</button>
           </div>
         </div>
         <div class="signup-prompt-container">
           <p>Don't have an account? <span class="sign-up-btn">
-              <a href="./index.html">Sign Up</a>
+              <a href="./index.php">Sign Up</a>
             </span></p>
         </div>
       </form>
-
     </div>
- 
+
+
   </div>
   <!-- footer container end -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"

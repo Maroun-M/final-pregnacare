@@ -346,7 +346,7 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
                 borderWidth: 1, // Customize the border width
               },{
                 label: "Heart Rate", // Customize the label for the second data value
-                data: dataValues2,
+                data: dataValues3,
                 backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
                 borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
                 borderWidth: 1, // Customize the border width

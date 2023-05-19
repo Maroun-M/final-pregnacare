@@ -44,7 +44,6 @@
        }
     ?>
     <div class="user-info-wrap">
-
         <div class="login-form-container user-info-container heart-rate-inputs-container">
             <form action="./src/patient/patientEntries.php" method="POST" enctype="multipart/form-data"
                 class="heart-rate-form">
@@ -59,7 +58,7 @@
                     </div>
                     <div class="rates-input">
                         <input type="text" id="glucose" name="glucose" placeholder="95">
-                        <span class="measure-units">mmol/L</span>
+                        <span class="measure-units">mg/dl</span>    
                     </div>
 
                 </div>

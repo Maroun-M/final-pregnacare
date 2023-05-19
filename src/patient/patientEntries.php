@@ -20,8 +20,8 @@ if(isset($_POST["glucose"])){
     $patient->insertBloodGlucose($_POST["glucose"], $_SESSION["user_id"]);
 }
 
-if(isset($_POST["gest-age"]) && isset($_POST["fetal-weight"]) && isset($_POST["fetal-heart-rate"])){
-    $patient->insertOrUpdateFetusRecord($_SESSION["user_id"], $_POST["gest-age"], $_POST["fetal-weight"], $_POST["fetal-heart-rate"]);
+if( isset($_POST["fetal-weight"]) && isset($_POST["fetal-heart-rate"])){
+    $patient->insertOrUpdateFetusRecord($_SESSION["user_id"], $_POST["fetal-weight"], $_POST["fetal-heart-rate"]);
 }
 
 ?>

@@ -36,13 +36,13 @@
     exit();
   }
   ?>
-  <div class="container tests-container">
+  <div class="dr-container tests-container">
     <div class="header">Test</div>
     <div class="header">Values</div>
     <div class="header">Date</div>
     <div class="header">Time</div>
   </div>
-  <div class="container tests-data-container data-container tests-container">
+  <div class="dr-container tests-data-container data-container tests-container">
     <!-- Add more patient data items here -->
 
 

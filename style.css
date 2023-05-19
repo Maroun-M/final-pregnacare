@@ -812,7 +812,7 @@ body {
 
 
 
-.container {
+.dr-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 10px;
@@ -829,6 +829,7 @@ body {
 .item:nth-child(even) {
     background-color: #f9f9f9;
 }
+
 
 .patient-records{
     cursor: pointer;
@@ -871,4 +872,8 @@ body {
 
   .choose-doctor-btn:hover {
     background-color: #45a049;
+  }
+
+  body{
+    overflow-x: hidden;
   }

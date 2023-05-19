@@ -1,13 +1,154 @@
-const logged_in = document.querySelector(".login-status");
-const login_btn = document.querySelector(".login-nav-btn");
-const account_nav_btn = document.querySelector(".account-nav-btn");
-const logout_nav_btn = document.querySelector(".logout-nav-btn");
-console.log(login_btn)
-var log_in_status = parseInt(logged_in.innerText); 
-console.log(log_in_status);
-if (log_in_status === 1) {
-    login_btn.style.display = "none";
-    account_nav_btn.style.display = "block";
-    logout_nav_btn.style.display = "block";
+if (window.location.pathname === "/ouvatech/index.php"){
+    const logged_in = document.querySelector(".login-status");
+    const login_btn = document.querySelector(".login-nav-btn");
+    const account_nav_btn = document.querySelector(".account-nav-btn");
+    const logout_nav_btn = document.querySelector(".logout-nav-btn");
+    console.log(login_btn)
+    var log_in_status = parseInt(logged_in.innerText); 
+    console.log(log_in_status);
+    if (log_in_status === 1) {
+        login_btn.style.display = "none";
+        account_nav_btn.style.display = "block";
+        logout_nav_btn.style.display = "block";
+    
+    }
+    
+    
+    // Get form inputs
+    var firstNameInput = document.getElementById('firstName');
+    var lastNameInput = document.getElementById('lastName');
+    var emailAddressInput = document.getElementById('emailAddress');
+    var phoneNumberInput = document.getElementById('phoneNumber');
+    var passwordInput = document.getElementById('password');
+    var confirmPasswordInput = document.getElementById('confirm-password');
+    var submitButton = document.querySelector('input[type="submit"]');
+    
+    // Function to check if all fields are valid
+    function validateForm() {
+      return (
+        validateField(firstNameInput) &&
+        validateField(lastNameInput) &&
+        validateField(emailAddressInput) &&
+        validateField(phoneNumberInput) &&
+        validateField(passwordInput) &&
+        validateField(confirmPasswordInput)
+      );
+    }
+    
+    // Function to validate individual field
+    function validateField(field) {
+      var errorElement = document.getElementById(field.id + '-error');
+      var errorMessage = '';
+    
+      if (field.value.trim() === '') {
+        errorMessage = 'This field is required.';
+      } else {
+        switch (field.id) {
+          case 'firstName':
+          case 'lastName':
+            if (!/^[a-zA-Z ]*$/.test(field.value.trim())) {
+              errorMessage = 'Only letters allowed.';
+            }
+            break;
+          case 'emailAddress':
+            if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(field.value.trim())) {
+              errorMessage = 'Invalid email format.';
+            }
+            break;
+          case 'phoneNumber':
+            if (!/^\+(?:[0-9] ?){6,14}[0-9]$/.test(field.value.trim()) || field.value.length < 13 || field.value.length >13) {
+              errorMessage = 'Invalid phone number, valid format is +961 01234567';
+            }
+            break;
+          case 'password':
+            if (
+              field.value.length < 8 ||
+              !/[A-Z]/.test(field.value) ||
+              !/[0-9]/.test(field.value)
+            ) {
+              errorMessage =
+                'Password must be at least 8 characters long, contain at least one capital letter, and one digit.';
+            }
+            break;
+          case 'confirm-password':
+            if (field.value !== passwordInput.value) {
+              errorMessage = 'Passwords do not match.';
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    
+      errorElement.textContent = errorMessage;
+      return errorMessage === ''; // Return true if field is valid
+    }
+    
+    // Add event listeners to validate fields on input
+    firstNameInput.addEventListener('input', function () {
+      validateField(firstNameInput);
+      submitButton.disabled = !validateForm();
+    });
+    lastNameInput.addEventListener('input', function () {
+      validateField(lastNameInput);
+      submitButton.disabled = !validateForm();
+    });
+    emailAddressInput.addEventListener('input', function () {
+      validateField(emailAddressInput);
+      submitButton.disabled = !validateForm();
+    });
+    phoneNumberInput.addEventListener('input', function () {
+        if (!phoneNumberInput.value.startsWith('+961 ')) {
+            phoneNumberInput.value = '+961 ';
+          }
+      validateField(phoneNumberInput);
+      submitButton.disabled = !validateForm();
+    });
+    passwordInput.addEventListener('input', function () {
+      validateField(passwordInput);
+      validateField(confirmPasswordInput);
+      submitButton.disabled = !validateForm();
+    });
+    confirmPasswordInput.addEventListener('input', function () {
+      validateField(passwordInput);
+      validateField(confirmPasswordInput);
+      submitButton.disabled = !validateForm();
+    });
+    
+    // Disable submit button initially
+    submitButton.disabled = true;
 
+}
+
+
+
+
+// login form validation
+if (window.location.pathname === "/ouvatech/login.php"){var emailInput = document.getElementById('email');
+var passwordInput = document.getElementById('password');
+var loginBtn = document.getElementById('loginBtn');
+
+emailInput.addEventListener('input', validateInputs);
+passwordInput.addEventListener('input', validateInputs);
+
+function validateInputs() {
+  var email = emailInput.value.trim();
+  var password = passwordInput.value.trim();
+
+  var isEmailValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email.trim());
+  var isPasswordValid = password.length >= 8;
+
+  loginBtn.disabled = !(isEmailValid && isPasswordValid);
+}
+
+document.addEventListener("DOMContentLoaded", () =>{
+  var url = new URL(window.location.href);
+
+  // Get the value of a specific parameter
+  if (url.searchParams.has('error')) {
+    const error_container = document.getElementById("passwordError");
+    error_container.innerHTML = "Invalid email or password."
+  } 
+
+})
 }

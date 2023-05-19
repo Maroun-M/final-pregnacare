@@ -76,23 +76,11 @@
           <input type="radio" name="previous-pregnancies" id="no" value="false" /> <label for="no">No </label>
 
           <br />
-          <label for="stage">Pregnancy stage: <span class="red">*</span> </label>
+          <label for="LMP">Last Menstrual Period: <span class="red">*</span> 
+          <input type="date" name="LMP"></label>
           <br />
         </div>
-          <div class="stages-container-wrap">
-            <div class="stages-container radio-container">
-              <input type="radio" name="pregnancy-stage" id="1st-stage" value="1" checked/>
-              <label for="1st-stage">1st Trimester<br>1-3 months</label>
-            </div>
-            <div class="stages-container">
-              <input type="radio" name="pregnancy-stage" id="2nd-stage" value="2" />
-              <label for="2nd-stage">2nd Trimester<br>4-6 months</label>
-            </div>
-            <div class="stages-container">
-              <input type="radio" name="pregnancy-stage" id="3rd-stage" value="3" />
-              <label for="3rd-stage">3rd Trimester<br>7-9 months</label>
-            </div>
-          </div>
+          
 
           <div class="disease-container">
             <label class="checkbox-label">
