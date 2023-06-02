@@ -38,7 +38,7 @@
   ?> 
 
   
-    <div class="container">
+    <div class="dr-container">
         <div class="header">Name</div>
         <div class="header">Age</div>
         <div class="header">Location</div>
@@ -46,7 +46,7 @@
         <div class="header">Status</div>
         <div class="header">Medical Record</div>
       </div>
-      <div class="container data-container">
+      <div class="dr-container data-container">
         <!-- Add more patient data items here -->
 
         
