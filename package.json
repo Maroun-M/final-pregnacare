@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "chart.js": "^4.3.0",
-    "moment": "^2.29.4"
-  }
-}

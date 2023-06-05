@@ -2,6 +2,11 @@
 include("../doctor/Doctor.php");
 $doctor = new doctor();
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    // Handle the case when the user is not logged in
+    echo "User not logged in";
+    exit();
+}
 if(isset($_GET['getTotal']) && ($_GET['getTotal'] === "true")){
     $doctor->getTotalDoctors();
 }

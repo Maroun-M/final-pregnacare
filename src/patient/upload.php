@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+if (!isset($_SESSION['user_id'])) {
+    // Handle the case when the user is not logged in
+    echo "User not logged in";
+    exit();
+}
 if (isset($_FILES["lab-tests"])) {
 
     $files = $_FILES['lab-tests'];

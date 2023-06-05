@@ -3,7 +3,11 @@ session_start();
 $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
 $patient = new Patient($conn);
 
-
+if (!isset($_SESSION['user_id'])) {
+    // Handle the case when the user is not logged in
+    echo "User not logged in";
+    exit();
+}
 if(isset($_POST["heart-rate"]) && isset($_POST["systolic"]) && isset($_POST["diastolic"])){
     $patient->insert_hr_bp($_POST["heart-rate"], $_POST["systolic"], $_POST["diastolic"], $_SESSION["user_id"]);
 }

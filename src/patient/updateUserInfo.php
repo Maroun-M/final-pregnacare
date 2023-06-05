@@ -3,7 +3,11 @@ include_once("./Patient.php");
 session_start();
 $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
 $patient = new Patient($conn);
-
+if (!isset($_SESSION['user_id'])) {
+    // Handle the case when the user is not logged in
+    echo "User not logged in";
+    exit();
+}
 // Set patient's user ID
 if(isset($_POST["dob"]) && isset($_POST["location"]) && isset($_POST["previous-pregnancies"]) && isset($_POST["LMP"]) ){
     if(!$patient->checkID($_SESSION['user_id'])){

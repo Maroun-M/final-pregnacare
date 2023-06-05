@@ -553,7 +553,7 @@ class Patient
     // Prepare and execute the query
     $sql = "SELECT record_id, user_id, glucose_level, DATE(timestamp) AS date, TIME(timestamp) AS time 
           FROM blood_glucose 
-          WHERE user_id = $user_id AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+          WHERE user_id = $user_id AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -598,7 +598,7 @@ class Patient
     // Prepare and execute the query
     $sql = "SELECT record_id, user_id, percentage, DATE(timestamp) AS date, TIME(timestamp) AS time 
           FROM blood_oxygen 
-          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -641,9 +641,9 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT id, user_id, gestational_age / 7, weight, heart_rate, DATE(timestamp) AS date, TIME(timestamp) AS time 
+    $sql = "SELECT record_id, user_id, gestational_age, weight, heart_rate, DATE(timestamp) AS date, TIME(timestamp) AS time 
         FROM fetus 
-        WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+        WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -653,9 +653,9 @@ class Patient
       // Fetch the result rows and process the data
       while ($row = $result->fetch_assoc()) {
         $data[] = array(
-          'id' => $row['id'],
+          'record_id' => $row['record_id'],
           'user_id' => $row['user_id'],
-          'gestational_age' => $row['gestational_age'],
+          'gestational_age' =>(int)((int) $row['gestational_age'] / 7) ,
           'weight' => $row['weight'],
           'heart_rate' => $row['heart_rate'],
           'date' => $row['date'],
@@ -690,9 +690,9 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT HR_BP_record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, bpm, systolic, diastolic 
+    $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, bpm, systolic, diastolic 
             FROM hr_bp 
-            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -702,7 +702,7 @@ class Patient
       // Fetch the result rows and process the data
       while ($row = $result->fetch_assoc()) {
         $data[] = array(
-          'HR_record_id' => $row['HR_BP_record_id'],
+          'record_id' => $row['record_id'],
           'user_id' => $row['user_id'],
           'date' => $row['date'],
           'time' => $row['time'],
@@ -737,9 +737,9 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT HR_BP_record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, systolic, diastolic 
+    $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, systolic, diastolic 
             FROM hr_bp 
-            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+            WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -749,7 +749,7 @@ class Patient
       // Fetch the result rows and process the data
       while ($row = $result->fetch_assoc()) {
         $data[] = array(
-          'BP_record_id' => $row['HR_BP_record_id'],
+          'record_id' => $row['record_id'],
           'user_id' => $row['user_id'],
           'date' => $row['date'],
           'time' => $row['time'],
@@ -786,7 +786,7 @@ class Patient
     // Prepare and execute the query
     $sql = "SELECT record_id, user_id, temp, DATE(timestamp) AS date, TIME(timestamp) AS time 
           FROM temperature 
-          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -831,9 +831,9 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, file_path 
+    $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, file_path 
           FROM user_files 
-          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date'";
+          WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
     // Check if the query was successful
@@ -843,7 +843,7 @@ class Patient
       // Fetch the result rows and process the data
       while ($row = $result->fetch_assoc()) {
         $data[] = array(
-          'id' => $row['id'],
+          'record_id' => $row['record_id'],
           'user_id' => $row['user_id'],
           'date' => $row['date'],
           'time' => $row['time'],
@@ -858,6 +858,77 @@ class Patient
       echo 'Error: ' . $this->conn->error;
     }
   }
+
+  
+
+
+
+  // trimester for the patient app
+  function getPatientPregnancyStage($user_id)
+  {
+    // Sanitize the user_id input
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+
+    // Prepare and execute the database query
+    $stmt = $this->conn->prepare("SELECT id, pregnancy_stage, first_name, last_name FROM patients, users WHERE users.id = patients.user_id AND user_id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Check if the user_id exists in the table
+    if ($result->num_rows === 0) {
+      $stmt->close();
+      return json_encode(['error' => 'User ID not found in the patients table']);
+    }
+    
+    // Fetch the pregnancy_stage from the query result
+    $doctorName = $this->getDoctorName();
+    
+    
+    $row = $result->fetch_assoc();
+    $row['doctor_name'] = $doctorName;
+    $stmt->close();
+
+    // Return the pregnancy_stage as JSON
+    echo json_encode($row);
+  }
+
+  function getDoctorName()
+{
+  // Prepare and execute the database query to retrieve doctor name
+  $stmt = $this->conn->prepare("SELECT
+  u_doctor.first_name AS doctor_first_name,
+  u_doctor.last_name AS doctor_last_name
+FROM
+  patient_doctor AS pd
+JOIN
+  doctors AS d ON pd.doctor_id = d.doctor_id
+JOIN
+  users AS u_doctor ON d.user_id = u_doctor.id
+JOIN
+  patients AS p ON pd.patient_id = p.patient_id
+WHERE
+  p.user_id = ?;
+");
+  $stmt->bind_param("i", $this->userId);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  // Check if the doctor_id exists in the table
+  if ($result->num_rows === 0) {
+    $stmt->close();
+    return null; // Or you can return an empty string or any other value to indicate no doctor found
+  }
+
+  // Fetch the doctor name from the query result
+  $row = $result->fetch_assoc();
+  $stmt->close();
+
+  // Concatenate first name and last name to get the full doctor name
+  $doctorName = $row['doctor_first_name'] . ' ' . $row['doctor_last_name'];
+
+  return $doctorName;
+}
 
   public function assignDoctorToPatient($patientUserId, $doctorId)
   {
@@ -905,36 +976,85 @@ class Patient
       return false;
     }
   }
-
-
-
-  // trimester for the patient app
-  function getPatientPregnancyStage($user_id)
-  {
-    // Sanitize the user_id input
-    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
-
-    // Prepare and execute the database query
-    $stmt = $this->conn->prepare("SELECT pregnancy_stage FROM patients WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Check if the user_id exists in the table
-    if ($result->num_rows === 0) {
-      $stmt->close();
-      return json_encode(['error' => 'User ID not found in the patients table']);
+public function deleteBloodGlucoseRecord($user_id, $record_id) {
+    $query = "DELETE FROM blood_glucose WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
     }
+}
 
-    // Fetch the pregnancy_stage from the query result
-    $row = $result->fetch_assoc();
-    $pregnancy_stage = $row['pregnancy_stage'];
+public function deleteBloodOxygenRecord($user_id, $record_id) {
+    $query = "DELETE FROM blood_oxygen WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    $stmt->close();
+public function deleteFetusRecord($user_id, $record_id) {
+    $query = "DELETE FROM fetus WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    // Return the pregnancy_stage as JSON
-    echo json_encode(['pregnancy_stage' => $pregnancy_stage]);
-  }
+public function deleteHRBPRecord($user_id, $record_id) {
+    $query = "DELETE FROM hr_bp WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+public function deleteTemperatureRecord($user_id, $record_id) {
+    $query = "DELETE FROM temperature WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+public function deleteUserFile($user_id, $record_id) {
+    $query = "DELETE FROM user_files WHERE user_id = ? AND record_id = ?";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $user_id, $record_id);
+    
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 
 
 }
