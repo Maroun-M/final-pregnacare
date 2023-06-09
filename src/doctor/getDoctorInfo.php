@@ -8,8 +8,7 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $doctor->fetchDoctorsDataAsJson($_SESSION['user_id']);
-}
+
 ?>

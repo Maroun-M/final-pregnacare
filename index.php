@@ -18,8 +18,9 @@
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <script src="./app.js" defer></script>
   <link rel="icon" type="image/png" href="./images/logo-removebg-preview.png">
-
-
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+    integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 </head>
 
 <body>
@@ -42,54 +43,75 @@
   </div>
 
 
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-      <!-- <a class="navbar-brand" href="#" >Navbar</a> -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
-            Home
-          </p>
-          <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
-            Features
-          </p>
-          <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
-            Info
-          </p>
-          <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
-            Register
-          </p>
-          <p class="nav-link login-nav-btn"><a href="./login.php">Login</a></p>
-          <p class="nav-link account-nav-btn" style="display:none"><a href="./src/login/userLogin.php">Account</a></p>
-          <p class="nav-link logout-nav-btn" style="display:none"><a href="./src/login/logout.php">Logout</a></p>
 
-        </div>
-      </div>
-    </div>
-  </nav>
 
   <div class="front">
-    <h1 class="col-12 p-5">
-      <img src="./images/logo.jfif" alt="" /><br />
-      OUVATECH
-    </h1>
-
-    <h2 class="col-sm-12 col-lg-6 content">
-      Empowering pregnant women to monitor their health and well-being through
-      innovative technology and compassionate care, we are dedicated to
-      improving maternal and fetal health outcomes and promoting a safe and
-      fulfilling pregnancy experience for all women. <br />
-      <button class="m-5 px-5 py-2 btn-ouva-purple" onClick="document.querySelector('.vh-150').scrollIntoView();">
-        Sign Up Now!
-      </button>
-    </h2>
+    <div class="ouvatech-img-container">
+      <!-- <img src="./images/logo-removebg-preview.png" alt="" /> -->
+      <div class="ouvatech-description-container">
+        <h1>Ouvatech</h1>
+        <h3 class="col-sm-12 col-lg-6 content">Empowering pregnant women to monitor their health and well-being through
+          innovative technology and compassionate care, we are dedicated to
+          improving maternal and fetal health outcomes and promoting a safe and
+          fulfilling pregnancy experience for all women. <br />
+          <button class="m-5 px-5 py-2 btn-ouva-purple" onClick="document.querySelector('.vh-150').scrollIntoView();">
+            Sign Up Now!
+          </button>
+        </h3>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-12 col-md-6">
-    <img src="" />
+
+  <div class="navbar-wrap">
+    <div class="navbar-container">
+      <div class="nav-logo-container">
+        <a href="./index.php"> <img src="./images/logo-removebg-preview.png" alt=""></a>
+      </div>
+      <div class="nav-btns-container">
+        <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
+          HOME
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
+          FEATURES
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
+          INFO
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
+          REGISTER
+        </p>
+        <p class="nav-link login-nav-btn"><a href="./login.php">LOGIN</a></p>
+        <p class="nav-link account-nav-btn" ><a href="./src/login/userLogin.php">ACCOUNT</a></p>
+        <p class="nav-link logout-nav-btn" ><a href="./src/login/logout.php">LOGOUT</a></p>
+        <i class="bi bi-list home-list"></i>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-overlay">
+    <div class="navbar-mobile-container">
+    
+      <div class="nav-btns-mobile-container">
+        <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
+          Home
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
+          Features
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
+          Info
+        </p>
+        <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
+          Register
+        </p>
+        <p class="nav-link login-nav-btn-mobile"><a href="./login.php">Login</a></p>
+        <p class="nav-link account-nav-btn" ><a href="./src/login/userLogin.php">Account</a></p>
+        <p class="nav-link logout-nav-btn" ><a href="./src/login/logout.php">Logout</a></p>
+      </div>
+      
+    </div>
+    <div class="empty-div">
+        
+      </div>
   </div>
   <!-- features wrapper -->
   <div class="logos-wrap">
@@ -240,9 +262,9 @@
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
-                      <input type="text" id="firstName" name="firstName" class="form-control form-control-lg"
+                      <input type="text" id="firstName" name="firstName"  class="form-control form-control-lg"
                         required />
-                      <label class="form-label" for="firstName">First Name</label>
+                      <label class="form-label" for="firstName" >First Name</label>
                     </div>
                     <div id="firstName-error" class="error-message"></div>
                   </div>
@@ -266,9 +288,9 @@
                   </div>
                   <div class="col-md-6 mb-4 pb-2">
                     <div class="form-outline">
-                      <input type="tel" id="phoneNumber" name="phoneNumber" value="+961 " class="form-control form-control-lg"
-                        required />
-                      <label class="form-label" for="phoneNumber" >Phone Number</label>
+                      <input type="tel" id="phoneNumber" name="phoneNumber" value="+961 "
+                        class="form-control form-control-lg" required />
+                      <label class="form-label" for="phoneNumber">Phone Number</label>
                     </div>
                     <div id="phoneNumber-error" class="error-message"></div>
                   </div>
