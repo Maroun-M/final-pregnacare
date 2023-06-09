@@ -170,6 +170,26 @@ class Doctor
     echo json_encode($doctors);
   }
 
+
+  public function fetchDoctorsDataAsJson($userID) {
+    $query = "SELECT * FROM doctors WHERE user_id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $data = array();
+
+    while ($row = $result->fetch_assoc()) {
+      $data = $row;
+    }
+
+    // Set the appropriate header for JSON response
+    header('Content-Type: application/json');
+
+    // Echo the data as JSON
+    echo json_encode($data);
+  }
 }
 
 ?>

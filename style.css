@@ -464,8 +464,8 @@ body {
 
 .user-info-container {
     height: auto;
+    width:100%;
     font-size: 17px;
-    width: 32%;
 
 
 }
@@ -511,30 +511,31 @@ body {
 
 
 
-.user-info-header {
-    margin-top: 50px;
-
-}
-
 .user-info-container form {
     line-height: 40px;
+    letter-spacing: 0.5px;
+    color:#842d74;
+    
 }
-
+.user-info-container input, .user-info-container select {
+    border-radius: 3px;
+    border: 1px solid rgb(194, 186, 186);
+    background-color: #f5e7e73a;
+}
 .user-info-container p {
     margin-left: 35px;
 
 }
 
 .user-info-container form input[name="dob"] {
-    width: 40%;
+    width: auto;
     height: 25px;
 }
 
 .user-info-container form select[name="location"] {
     margin-top: 10px;
-    width: 40.6%;
+    width: auto;
     height: 26.5px;
-    margin-left: 26px;
 }
 
 .user-info-container form input[name="previous-pregnancies"] {
@@ -557,7 +558,8 @@ body {
 
 .disease-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    margin-left: 35px;
     align-items: center;
     gap: 35px;
 }
@@ -580,9 +582,11 @@ body {
 
 .form-labels {
     margin-left: 35px;
-    ;
+    letter-spacing: 1px;
 }
-
+.form-labels input, .form-labels select{
+    min-height:25px;
+}
 .checkbox-label {
     display: block;
     position: relative;
@@ -805,7 +809,7 @@ body {
 
 .dr-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-gap: 10px;
     padding: 10px;
 }
@@ -838,12 +842,14 @@ body {
     grid-template-columns: repeat(3, 1fr);
 }
 
-.grid-container {
+.grid-container, .doctor-list-data {
     display: grid;
+    overflow-x: scroll;
     grid-template-columns: repeat(7, 1fr);
-    grid-gap: 8px;
 }
-
+.grid-container::-webkit-scrollbar, .doctor-list-data::-webkit-scrollbar{
+    display:none;
+}
 .grid-item {
     padding: 8px;
     border: 1px solid #ccc;
@@ -859,14 +865,15 @@ body {
 
 .choose-doctor-btn {
     padding: 8px;
-    background-color: #4CAF50;
+    background-color: #d116d1;
     color: white;
     border: none;
     cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
 .choose-doctor-btn:hover {
-    background-color: #45a049;
+    background-color: #853284;
 }
 
 body {
@@ -1221,7 +1228,9 @@ align-items: center;  letter-spacing: 0.5px;
 
 .content-wrap{
     min-height: 100vh;
-    height: auto;}
+    height: auto;
+
+   }
 
 
 .heart-rate-input {
@@ -1232,4 +1241,74 @@ align-items: center;  letter-spacing: 0.5px;
 .form-inputs-container{
     width: unset;
     justify-items: left;
+}
+
+.doctors-table{
+    display:block;
+    padding:15px;
+    position: relative;
+    width: 100%;;
+}
+
+.doctor-list-data{
+    width: 100%;;
+}
+
+.page-btns-container{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    width:100%;
+    margin-bottom: 20px;
+}
+
+.page-btns-container button{
+    background:none;
+    border: 1px solid rgb(174, 58, 184);
+    border-radius: 3px;
+    padding:2px 4px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.page-btns-container button:hover{
+    background-color: rgb(174, 58, 184);
+}
+
+
+.patients-tables-container {
+    color: #a7079de1;
+
+    letter-spacing: 0.75px;
+
+    font-weight: 500;
+    min-height: 93vh;
+    max-height: auto;
+}
+
+.patients-container{
+    overflow-x: scroll;
+    
+}
+
+.patients-container::-webkit-scrollbar, .patients-records-table-container-overflow::-webkit-scrollbar{
+    display: none;
+}
+
+.graphs-btn{
+    height:200px;
+}
+
+.patients-records-table-container-overflow{
+    overflow-x: scroll;
+}
+
+.patients-records-table-container-overflow .item, .patients-records-table-container-overflow .header{
+    font-size: 14px;
+}
+
+.tests-data-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }

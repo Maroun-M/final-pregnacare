@@ -1,5 +1,5 @@
 // Call the getPatients function when the page is ready
-if (window.location.pathname === "/ouvatech/patients.php") {
+if (window.location.pathname === "/ouvatech/doctorMainMenu.php") {
   // Function to get the patient data from the server
 
   const patient_row = document.querySelector(".data-container");
@@ -11,14 +11,13 @@ if (window.location.pathname === "/ouvatech/patients.php") {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var patients = JSON.parse(xhr.responseText);
-        console.log(patients);
         let results = ``;
         patients.forEach((patient) => {
           results += `<div class="item">${patient.name}</div>
                     <div class="item">${patient.age}</div>
                     <div class="item">${patient.location}</div>
                     <div class="item">${patient.phone_number}</div>
-                    <div class="item">Normal</div>
+                    
                     <div class="item "><u class="patient-records" data-id=${patient.id}>Records</u></div>`;
         });
         patient_row.innerHTML += results;
@@ -65,7 +64,6 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
         // Request was successful, process the response
         const data = xhr.response;
 
-        console.log(data);
         const bloodGlucoseData = data["blood_glucose"];
         const bloodOxygenData = data["blood_oxygen"];
         const fetusData = data["fetus"];
@@ -73,33 +71,33 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
         const temperatureData = data["temperature"];
         const userFilesData = data["user_files"];
 
-        const table = document.querySelector(".tests-data-container");
+        const table = document.querySelector(".tests-container");
 
         let results = ``;
-        results += `<div class="header">Blood Glucose</div>
-            <div class="header">${bloodGlucoseData.glucose_level}</div>
-            <div class="header">${bloodGlucoseData.date}</div>
-            <div class="header">${bloodGlucoseData.time}</div> `;
+        results += `<div class="item">Blood Glucose</div>
+            <div class="item">${bloodGlucoseData.glucose_level} mg/dl</div>
+            <div class="item">${bloodGlucoseData.date}</div>
+            <div class="item">${bloodGlucoseData.time}</div> `;
         table.innerHTML += results;
 
         let oxygenResults = ``;
-        oxygenResults += `<div class="header">Blood Oxygen</div>
-            <div class="header">${bloodOxygenData.percentage}%</div>
-            <div class="header">${bloodOxygenData.date}</div>
-            <div class="header">${bloodOxygenData.time}</div> `;
+        oxygenResults += `<div class="item">Blood Oxygen</div>
+            <div class="item">${bloodOxygenData.percentage}%</div>
+            <div class="item">${bloodOxygenData.date}</div>
+            <div class="item">${bloodOxygenData.time}</div> `;
         table.innerHTML += oxygenResults;
 
         let hrData = ``;
-        hrData += `<div class="header">Heart Rate</div>
-    <div class="header">${hrBpData.bpm}</div>
-    <div class="header">${hrBpData.date}</div>
-    <div class="header">${hrBpData.time}</div> `;
+        hrData += `<div class="item">Heart Rate</div>
+    <div class="item">${hrBpData.bpm} BPM</div>
+    <div class="item">${hrBpData.date}</div>
+    <div class="item">${hrBpData.time}</div> `;
         table.innerHTML += hrData;
         let pressure = ``;
-        pressure += `<div class="header">Blood Pressure</div>
-    <div class="header">Diastolic: ${hrBpData.diastolic} Systolic: ${hrBpData.systolic}</div>
-    <div class="header">${hrBpData.date}</div>
-    <div class="header">${hrBpData.time}</div> `;
+        pressure += `<div class="item">Blood Pressure</div>
+    <div class="item">Diastolic: ${hrBpData.diastolic} mmHg || Systolic: ${hrBpData.systolic} mmHg</div>
+    <div class="item">${hrBpData.date}</div>
+    <div class="item">${hrBpData.time}</div> `;
         table.innerHTML += pressure;
 
         const downloadLink = document.createElement("a");
@@ -110,23 +108,32 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
         // Set the link's text
         downloadLink.innerHTML = "Lab Test";
         let filesData = ``;
-        filesData += `<div class="header">Lab Tests</div>
-            <div class="header"><a href="${userFilesData.file_path}" target="_blank">Lab Tests</a></div>
-            <div class="header">${userFilesData.date}</div>
-            <div class="header">${userFilesData.time}</div> `;
-        table.innerHTML += filesData;
+        if (userFilesData.length === 0) {
+          filesData += `<div class="item">Lab Tests</div>
+            <div class="item">No tests available</div>
+            <div class="item"></div>
+            <div class="item"></div> `;
+          table.innerHTML += filesData;
+        } else {
+          filesData += `<div class="item">Lab Tests</div>
+          <div class="item"><a href="${userFilesData.file_path}" target="_blank">Lab Tests</a></div>
+          <div class="item">${userFilesData.date}</div>
+          <div class="item">${userFilesData.time}</div> `;
+          table.innerHTML += filesData;
+        }
 
         let tempData = ``;
-        tempData += `<div class="header">Temperature</div>
-<div class="header">${temperatureData.temp}</div>
-<div class="header">${temperatureData.date}</div>
-<div class="header">${temperatureData.time}</div> `;
+        tempData += `<div class="item">Temperature</div>
+<div class="item">${temperatureData.temp} °C </div>
+<div class="item">${temperatureData.date}</div>
+<div class="item">${temperatureData.time}</div> `;
         table.innerHTML += tempData;
+
         let fetusResults = ``;
-        fetusResults += `<div class="header">Blood Glucose</div>
-        <div class="header">Gestational Age: ${fetusData.gestational_age} Weight: ${fetusData.weight} Heart rate: ${fetusData.heart_rate}</div>
-        <div class="header">${fetusData.date}</div>
-        <div class="header">${fetusData.time}</div> `;
+        fetusResults += `<div class="item">Fetus </div>
+        <div class="item">Gestational Age: ${(fetusData.gestational_age / 7).toFixed()} || Weight: ${fetusData.weight} g || Heart rate: ${fetusData.heart_rate} BPM</div>
+        <div class="item">${fetusData.date}</div>
+        <div class="item">${fetusData.time}</div> `;
         table.innerHTML += fetusResults;
       } else {
         // Request failed, handle the error
@@ -192,26 +199,42 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
     xhr.onload = () => {
       if (xhr.status === 200) {
         const testsData = JSON.parse(xhr.responseText);
-        console.log(testsData);
         const table = document.querySelector(".tests-data-container");
-        let results = ``;
+        let results = `<div class="header ">Values</div>
+        <div class="header ">Date</div>
+        <div class="header ">Time</div>`;
         testsData.forEach((data) => {
+          console.log(data);
+
           if (dataType === "Blood Pressure") {
-            results += `<div class="item">Diastolic: ${data.diastolic} Systolic: ${data.systolic}</div>
+            results += `<div class="item">Diastolic: ${data.diastolic} mmHg Systolic: ${data.systolic} mmHg</div>
                   <div class="item">${data.date}</div>
                   <div class="item">${data.time}</div>`;
           } else if (dataType === "Fetus Data") {
             results += `
-                  <div class="header">Gestational Age: ${data.gestational_age} Weight: ${data.weight} Heart rate: ${data.heart_rate}</div>
-                  <div class="header">${data.date}</div>
-                  <div class="header">${data.time}</div>`;
+                  <div class="item">Gestational Age: ${(data.gestational_age /7).toFixed()} Weight: ${data.weight} g Heart rate: ${data.heart_rate}</div>
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
           } else if (dataType === "Lab Tests") {
             results += `
-              <div class="header"><a href="${data.file_path}" target="_blank">Lab Tests</a></div>
-              <div class="header">${data.date}</div>
-              <div class="header">${data.time}</div> `;
-          } else {
-            results += `<div class="item">${data.value}</div>
+              <div class="item"><a href="${data.file_path}" target="_blank">Lab Tests</a></div>
+              <div class="item">${data.date}</div>
+              <div class="item">${data.time}</div> `;
+          } else  if (dataType === "Blood Glucose"){
+            results += `<div class="item">${data.value} mg/dl</div>
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
+          } else  if (dataType === "Blood Oxygen"){
+            results += `<div class="item">${data.value}%</div>
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
+          } else  if (dataType === "Heart Rate"){
+            results += `<div class="item">${data.value} BPM</div>
+                  <div class="item">${data.date}</div>
+                  <div class="item">${data.time}</div>`;
+          } else  if (dataType === "Temperature"){
+
+            results += `<div class="item">${data.value} °C</div>
                   <div class="item">${data.date}</div>
                   <div class="item">${data.time}</div>`;
           }
@@ -239,6 +262,10 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
 
     const labels = testsData.map((data) => data.date);
     const dataValues = testsData.map((data) => data.value);
+
+    let backgroundColor = "rgba(255, 105, 180, 0.5)"; // Pink-themed background color
+    let borderColor = "rgba(255, 105, 180, 1)"; // Pink-themed border color
+
     if (selectedDataType === "Lab Tests") {
       const chart = new Chart(canvas, {
         type: "line",
@@ -248,8 +275,8 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
             {
               label: selectedDataType,
               data: null,
-              backgroundColor: "rgba(0, 123, 255, 0.5)",
-              borderColor: "rgba(0, 123, 255, 1)",
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
               borderWidth: 1,
             },
           ],
@@ -258,9 +285,7 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
           // Customize the chart options as needed
         },
       });
-    }
-
-    if (selectedDataType === "Blood Pressure") {
+    } else if (selectedDataType === "Blood Pressure") {
       const labels = testsData.map((data) => data.date);
       const dataValues1 = testsData.map((data) => data.systolic);
       const dataValues2 = testsData.map((data) => data.diastolic);
@@ -270,18 +295,76 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
           labels: labels,
           datasets: [
             {
-              label: "Systolic", // Customize the label for the first data value
+              label: "Systolic",
               data: dataValues1,
-              backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
-              borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
-              borderWidth: 1, // Customize the border width
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
             },
             {
-              label: "Diastolic", // Customize the label for the second data value
+              label: "Diastolic",
               data: dataValues2,
-              backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
-              borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
-              borderWidth: 1, // Customize the border width
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          // Customize the chart options as needed
+        },
+      });
+    } else if (selectedDataType === "Fetus Data") {
+      const labels = testsData.map((data) => data.date);
+      const dataValues1 = testsData.map((data) => data.gestational_age);
+      const dataValues2 = testsData.map((data) => data.weight);
+      const dataValues3 = testsData.map((data) => data.heart_rate);
+
+      const chart = new Chart(canvas, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Gestational Age",
+              data: dataValues1,
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
+            },
+            {
+              label: "Weight",
+              data: dataValues2,
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
+            },
+            {
+              label: "Heart Rate",
+              data: dataValues3,
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          // Customize the chart options as needed
+        },
+      });
+    } else {
+      // Default chart creation
+      const chart = new Chart(canvas, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: selectedDataType,
+              data: dataValues,
+              backgroundColor: backgroundColor,
+              borderColor: borderColor,
+              borderWidth: 1,
             },
           ],
         },
@@ -290,91 +373,29 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
         },
       });
     }
-    if (selectedDataType === "Blood Pressure") {
-        const labels = testsData.map((data) => data.date);
-        const dataValues1 = testsData.map((data) => data.systolic);
-        const dataValues2 = testsData.map((data) => data.diastolic);
-        const chart = new Chart(canvas, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: "Systolic", // Customize the label for the first data value
-                data: dataValues1,
-                backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
-                borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
-                borderWidth: 1, // Customize the border width
-              },
-              {
-                label: "Diastolic", // Customize the label for the second data value
-                data: dataValues2,
-                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
-                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
-                borderWidth: 1, // Customize the border width
-              },
-            ],
-          },
-          options: {
-            // Customize the chart options as needed
-          },
-        });
-      }
-      if (selectedDataType === "Fetus Data") {
-        const labels = testsData.map((data) => data.date);
-        const dataValues1 = testsData.map((data) => data.gestational_age);
-        const dataValues2 = testsData.map((data) => data.weight);
-        const dataValues3 = testsData.map((data) => data.heart_rate);
-
-        const chart = new Chart(canvas, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: "Gestational Age", // Customize the label for the first data value
-                data: dataValues1,
-                backgroundColor: "rgba(0, 123, 255, 0.5)", // Customize the background color
-                borderColor: "rgba(0, 123, 255, 1)", // Customize the border color
-                borderWidth: 1, // Customize the border width
-              },
-              {
-                label: "Weight", // Customize the label for the second data value
-                data: dataValues2,
-                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
-                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
-                borderWidth: 1, // Customize the border width
-              },{
-                label: "Heart Rate", // Customize the label for the second data value
-                data: dataValues3,
-                backgroundColor: "rgba(255, 0, 0, 0.5)", // Customize the background color
-                borderColor: "rgba(255, 0, 0, 1)", // Customize the border color
-                borderWidth: 1, // Customize the border width
-              },
-            ],
-          },
-          options: {
-            // Customize the chart options as needed
-          },
-        });
-      }
-    const chart = new Chart(canvas, {
-      type: "line",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: selectedDataType,
-            data: dataValues,
-            backgroundColor: "rgba(0, 123, 255, 0.5)",
-            borderColor: "rgba(0, 123, 255, 1)",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        // Customize the chart options as needed
-      },
-    });
   }
+}
+
+
+
+
+
+if (window.location.pathname === "/ouvatech/doctorInfo.php") {
+
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('./src/doctor/getDoctorInfo.php')
+    .then(response => response.json())
+    .then(data => {
+      // Process the retrieved data here
+      // Populate the inputs and select with the received data
+      document.getElementById('dob').value = data.date_of_birth;
+      document.getElementById('location').value = data.location;
+      document.getElementById('education').value = data.education;
+      document.getElementById('clinic_name').value = data.clinic_name;
+      document.getElementById('clinic_number').value = data.clinic_number;    })
+    .catch(error => {
+      // Handle any errors that occur during the request
+      console.error('Error:', error);
+    });
+});
 }

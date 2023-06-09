@@ -160,14 +160,14 @@ class Patient
   }
 
   // Getter for pregnancy stage
-  public function getPregnancyStage()
+  public function getLMP()
   {
-    $stmt = $this->conn->prepare("SELECT pregnancy_stage FROM patients WHERE user_id = ?");
+    $stmt = $this->conn->prepare("SELECT LMP FROM patients WHERE user_id = ?");
     $stmt->bind_param("i", $this->userId);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    return $row['pregnancy_stage'];
+    return $row['LMP'];
   }
 
   // Setter for pregnancy stage
@@ -221,7 +221,7 @@ class Patient
       'dob' => $this->getDateOfBirth(),
       'location' => $this->getLocation(),
       'prevPreg' => $this->getPreviousPregnancies(),
-      'stage' => $this->getPregnancyStage(),
+      'LMP' => $this->getLMP(),
       'diabetic' => $this->getDiabetic(),
       'hypertension' => $this->getHypertension()
     );
@@ -268,7 +268,7 @@ class Patient
 
       $stmt->close();
       $this->conn->close();
-      header("LOCATION: ../../heartRate.php");
+      header("LOCATION: ../../heartRate.php?insert=success");
       return "Success: New record created successfully.";
     } else {
       return "Error: " . $stmt->error;
@@ -297,7 +297,7 @@ class Patient
       // Close statement and connection
       $stmt->close();
       $this->conn->close();
-      header("LOCATION: ../../temperature.php");
+      header("LOCATION: ../../temperature.php?insert=success");
       return true;
     } else {
       return "Error: " . $stmt->error;
@@ -328,7 +328,7 @@ class Patient
 
     $stmt->close();
     $this->conn->close();
-    header("LOCATION: ../../bloodOxygen.php");
+    header("LOCATION: ../../bloodOxygen.php?insert=success");
 
     return true; // Success
   }
@@ -357,7 +357,7 @@ class Patient
 
     $stmt->close();
     $this->conn->close();
-    header("LOCATION: ../../bloodGlucose.php");
+    header("LOCATION: ../../bloodGlucose.php?insert=success");
     return true; // Success
   }
 
@@ -411,7 +411,7 @@ class Patient
 
     $stmt->close();
     $this->conn->close();
-    header("LOCATION: ../../fetus.php");
+    header("LOCATION: ../../fetus.php?insert=success");
     return true; // Success
   }
 
@@ -1053,6 +1053,9 @@ public function deleteUserFile($user_id, $record_id) {
         return false;
     }
 }
+
+
+
 
 
 

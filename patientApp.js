@@ -34,17 +34,11 @@ const insert = async () => {
       "input[name='previous-pregnancies'][value='false']"
     );
 
-    const pregStage1 = document.querySelector(
-      "input[name='pregnancy-stage'][value='1']"
-    );
-    const pregStage2 = document.querySelector(
-      "input[name='pregnancy-stage'][value='2']"
-    );
-    const pregStage3 = document.querySelector(
-      "input[name='pregnancy-stage'][value='3']"
-    );
+    
     const diabetic = document.querySelector("input[name='diabetics']");
     const hypertension = document.querySelector("input[name='hypertension']");
+    const LMP = document.querySelector("input[name='LMP']");
+      LMP.value= patients[3]
     dob.value = patients[0];
     location.value = patients[1];
 
@@ -54,13 +48,7 @@ const insert = async () => {
       prevPregYes.checked = true;
     }
 
-    if (patients[3] == 1) {
-      pregStage1.checked = true;
-    } else if (patients[3] == 2) {
-      pregStage2.checked = true;
-    } else if (patients[3] == 3) {
-      pregStage3.checked = true;
-    }
+ 
     if (patients[4] == 1) {
       diabetic.checked = true;
     }
@@ -83,7 +71,12 @@ if (window.location.pathname === "/ouvatech/chooseDoctor.php") {
     fetchDoctors(1);
     fetchTotal();
   });
+
+
 }
+
+
+
 
 let fetchTotal = () => {
   const xhr = new XMLHttpRequest();
@@ -104,6 +97,10 @@ let createButtons = (total) => {
     const button = document.createElement("button");
     button.innerText = i;
     button.addEventListener("click", () => {
+  const doctorsData = document.querySelectorAll(".doctor-info");
+  doctorsData.forEach((record) => {
+    record.remove();
+  })
       fetchDoctors(i);
     });
     paginationContainer.appendChild(button);
@@ -128,19 +125,19 @@ let displayDrs = (doctors) => {
   const doctorsData = document.querySelector(".doctor-list-data");
   let results = ``;
   doctors.forEach((dr) => {
-    results += `<div class="grid-item">Dr. ${dr.name}</div>
-    <div class="grid-item">${dr.phone_number}</div>
-    <div class="grid-item">${dr.education}</div>
+    results += `<div class="grid-item doctor-info">Dr. ${dr.name}</div>
+    <div class="grid-item doctor-info">${dr.phone_number}</div>
+    <div class="grid-item doctor-info">${dr.education}</div>
 
-    <div class="grid-item">${dr.clinic_name}</div>
-    <div class="grid-item">${dr.clinic_number}</div>
+    <div class="grid-item doctor-info">${dr.clinic_name}</div>
+    <div class="grid-item doctor-info">${dr.clinic_number}</div>
 
-    <div class="grid-item">${dr.location}</div>
-    <div class="grid-item">
+    <div class="grid-item doctor-info">${dr.location}</div>
+    <div class="grid-item doctor-info">
         <button class="choose-doctor-btn" data-id="${dr.doctor_id}">Choose</button>
     </div>`;
   });
-  doctorsData.innerHTML = results;
+  doctorsData.innerHTML += results;
 };
 
 let chooseDr = () => {
@@ -433,7 +430,7 @@ let fetchTrimester = () => {
         console.log(patientSection);
         let results = `<p>Hello, ${patientName}!</p>
         <p>User ID: ${response.id}</p>
-        <p>Current Doctor: ${response.doctor_name}</p>`;
+        <p>Current Doctor: Dr. ${response.doctor_name}</p>`;
         patientSection.innerHTML = results;
       }
 
@@ -450,6 +447,8 @@ let fetchTrimester = () => {
       if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
         validateOxygen(pregnancyStage);
       }
+
+      
     }
   };
 
@@ -691,6 +690,41 @@ if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
     });
   }
 }
+
+
+if (window.location.pathname === "/ouvatech/fetus.php") {
+  const btn = document.querySelector("#add-button");
+  btn.disabled = true;
+  console.log(btn)
+  function validateFetusData() {
+    var fetusWeight = parseFloat(document.querySelector("#fetal-weight").value);
+    var fetusHR = parseFloat(document.querySelector("#fetal-heart-rate").value) ;
+    const error = document.querySelector("#fetus-error");
+    if(isNaN(fetusWeight) || isNaN(fetusHR)) {
+      error.innerHTML = "Please enter a valid value."
+      btn.disabled = true;
+    } else {
+      error.innerHTML = ``;
+      btn.disabled = false;
+
+    }
+    
+  }
+
+  var fetusWeight = document.querySelector("#fetal-weight");
+  var fetusHR = document.querySelector("#fetal-heart-rate");
+
+  fetusWeight.addEventListener("input", validateFetusData);
+  fetusHR.addEventListener("input", validateFetusData);
+
+
+ 
+}
+
+
+
+
+
 
 
 
