@@ -47,11 +47,11 @@
 
 .logos-wrap {
     display: flex;
-
+    padding-top: 45px;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0 5px 0 5px;
+    margin: 0 25px 0 5px;
     column-gap: 100px;
     row-gap: 15px;
 }
@@ -1360,7 +1360,7 @@ body {
 .navbar-container {
     display: grid;
     grid-template-columns: auto 1fr;
-    padding: 10px 0 0 25px;
+    padding: 5px 0 5px 20px;
 
 }
 
@@ -1498,4 +1498,190 @@ body {
 .navbar-wrap{
     z-index: 6;
     position: fixed;
+}
+
+
+
+.admin-patients-holder {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.search-container{
+    padding: 15px 0 0 15px;
+}
+
+.search-container input{
+    padding-left: 8px;
+    border-radius: 3px;
+    width:200px;
+    height:25px;
+    border: 1px solid rgba(97, 43, 94, 0.525);;
+}
+
+.search-container input::placeholder{
+    color:gray;
+}
+.admin-patients-container{
+    position: relative;
+}
+.pagination-container, .dr-pagination-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height:75px;
+    position: absolute;
+    bottom: 0;
+    padding:25px 0;
+}
+
+.pagination-container button, .dr-pagination-container button{
+    background-color: rgba(246, 209, 248, 0.26);
+    border:1px solid rgb(84, 12, 77);
+    padding:1px 4px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.item a {
+    all: unset;
+}
+.admin-patients-holder, .admin-doctors-holder{
+    padding-bottom: 75px;
+}
+.admin-patients-container, .admin-doctors-container {
+    min-height: 100vh;
+    max-height: auto;
+}
+
+.admin-doctors-holder{
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.admin-doctors-container{
+    position: relative;
+}
+
+
+
+.confirmation-overlay{
+    position: fixed;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #9593932d;
+    
+    display: none;
+
+}
+
+.confirmation-container{
+    border:1px solid rgba(122, 119, 119, 0.452);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    background: rgb(245, 243, 243);    border-radius: 5px;
+    width:25%;
+    height:25%;
+    color:purple;
+    padding:20px;
+    display: grid;
+    justify-content: center;
+}
+
+@media screen and (max-width:1100px) {
+    .confirmation-container {
+        width:45%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .confirmation-container {
+        width:65%;
+    }
+}
+@media screen and (max-width:500px) {
+    .confirmation-container {
+        width:75%;
+    }
+}
+.confirmation-buttons-container{
+    display: flex;
+    gap:25px;
+    justify-content: center;
+
+}
+.confirmation-btn{
+    width:35%;
+    cursor: pointer;
+    height:50%;
+    border:1px solid black;
+    border-radius: 3px;
+}
+
+.confirmation-btn:nth-child(1){
+    background-color: rgb(34, 144, 34);
+    border:1px solid rgb(34, 144, 34);
+    color:white;
+    font-weight: 700;
+    transition: 0.3s ease-in-out;
+}
+
+.confirmation-btn:nth-child(1):hover{
+    background-color: rgb(39, 126, 39);
+}
+
+.confirmation-btn:nth-child(2){
+    background-color: rgb(134, 4, 4);
+    color: white;;
+    font-weight: 700;
+    transition: 0.3s ease-in-out;
+
+}
+
+.confirmation-btn:nth-child(2):hover{
+    background-color: rgb(163, 43, 43);
+}
+
+.force-add-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.force-add-form-container{
+    padding-left:25px;
+    padding-top:35px;
+}
+
+.force-add-form-container input, .force-add-form-container select{
+    padding:3px 25px 3px 5px;
+    margin: 3px 0 5px 0;
+    border-radius: 4px;
+    border:1px solid rgb(160, 155, 155)
+}
+
+
+
+
+.force-add-form-container #submit-btn-force {
+    margin-top: 15px;
+    padding:0;
+    padding:10px 25px;
+    background: rgb(174, 58, 184);
+    border: 1px solid rgb(174, 58, 184);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    color:white
+}
+
+
+.force-add-form-container #submit-btn-force:hover {
+    background-color: rgb(115, 58, 121);
+}
+
+.patient-main-menu-table{
+    grid-template-columns: repeat(4, 1fr) !important;
 }

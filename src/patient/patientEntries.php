@@ -8,10 +8,12 @@ if (!isset($_SESSION['user_id'])) {
     echo "User not logged in";
     exit();
 }
-if(isset($_POST["heart-rate"]) && isset($_POST["systolic"]) && isset($_POST["diastolic"])){
-    $patient->insert_hr_bp($_POST["heart-rate"], $_POST["systolic"], $_POST["diastolic"], $_SESSION["user_id"]);
+if(isset($_POST["heart-rate"])){
+    $patient->insert_hr($_POST["heart-rate"], $_SESSION["user_id"]);
 }
-
+if(isset($_POST["systolic"]) && isset($_POST["diastolic"])){
+    $patient->insert_bp($_POST["systolic"], $_POST["diastolic"], $_SESSION["user_id"]);
+}
 if(isset($_POST["temperature"])){
     $patient->addTemperature($_POST["temperature"], $_SESSION["user_id"]);
 }

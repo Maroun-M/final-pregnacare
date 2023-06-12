@@ -30,6 +30,7 @@
     $doctor = new Doctor();
     if (!isset($_SESSION['user_id']) || !$doctor->isDoctor($_SESSION['user_id'])) { // Check if the user is logged in and is doctor
         echo "You don't have access to this page.";
+        header("LOCATION: ./index.php?access=unauthorized");
         exit();
     }
     if (!$doctor->isDoctorConfirmed($_SESSION['user_id'])) {
@@ -39,10 +40,6 @@
 
 
 
-    if (!$doctor->has_doctor_record($_SESSION['user_id'])) {
-        header("location:./doctorInfo.php");
-        exit();
-    }
     ?>
 
 

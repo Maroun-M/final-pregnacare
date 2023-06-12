@@ -25,35 +25,35 @@ const getPatientData = async () => {
 const insert = async () => {
   try {
     const patients = await getPatientData();
-    const dob = document.querySelector("input[name='dob']");
-    const location = document.querySelector("select[name='location']");
-    const prevPregYes = document.querySelector(
-      "input[name='previous-pregnancies'][value='true']"
-    );
-    const prevPregNo = document.querySelector(
-      "input[name='previous-pregnancies'][value='false']"
-    );
+    if (patients.length !== 0) {
+      const dob = document.querySelector("input[name='dob']");
+      const location = document.querySelector("select[name='location']");
+      const prevPregYes = document.querySelector(
+        "input[name='previous-pregnancies'][value='true']"
+      );
+      const prevPregNo = document.querySelector(
+        "input[name='previous-pregnancies'][value='false']"
+      );
 
-    
-    const diabetic = document.querySelector("input[name='diabetics']");
-    const hypertension = document.querySelector("input[name='hypertension']");
-    const LMP = document.querySelector("input[name='LMP']");
-      LMP.value= patients[3]
-    dob.value = patients[0];
-    location.value = patients[1];
+      const diabetic = document.querySelector("input[name='diabetics']");
+      const hypertension = document.querySelector("input[name='hypertension']");
+      const LMP = document.querySelector("input[name='LMP']");
+      LMP.value = patients[3];
+      dob.value = patients[0];
+      location.value = patients[1];
 
-    if (patients[2] === 0) {
-      prevPregNo.checked = true;
-    } else {
-      prevPregYes.checked = true;
-    }
+      if (patients[2] === 0) {
+        prevPregNo.checked = true;
+      } else {
+        prevPregYes.checked = true;
+      }
 
- 
-    if (patients[4] == 1) {
-      diabetic.checked = true;
-    }
-    if (patients[5] == 1) {
-      hypertension.checked = true;
+      if (patients[4] == 1) {
+        diabetic.checked = true;
+      }
+      if (patients[5] == 1) {
+        hypertension.checked = true;
+      }
     }
   } catch (error) {
     console.log(error);
@@ -71,12 +71,7 @@ if (window.location.pathname === "/ouvatech/chooseDoctor.php") {
     fetchDoctors(1);
     fetchTotal();
   });
-
-
 }
-
-
-
 
 let fetchTotal = () => {
   const xhr = new XMLHttpRequest();
@@ -97,10 +92,10 @@ let createButtons = (total) => {
     const button = document.createElement("button");
     button.innerText = i;
     button.addEventListener("click", () => {
-  const doctorsData = document.querySelectorAll(".doctor-info");
-  doctorsData.forEach((record) => {
-    record.remove();
-  })
+      const doctorsData = document.querySelectorAll(".doctor-info");
+      doctorsData.forEach((record) => {
+        record.remove();
+      });
       fetchDoctors(i);
     });
     paginationContainer.appendChild(button);
@@ -124,20 +119,22 @@ let fetchDoctors = (i) => {
 let displayDrs = (doctors) => {
   const doctorsData = document.querySelector(".doctor-list-data");
   let results = ``;
-  doctors.forEach((dr) => {
-    results += `<div class="grid-item doctor-info">Dr. ${dr.name}</div>
-    <div class="grid-item doctor-info">${dr.phone_number}</div>
-    <div class="grid-item doctor-info">${dr.education}</div>
-
-    <div class="grid-item doctor-info">${dr.clinic_name}</div>
-    <div class="grid-item doctor-info">${dr.clinic_number}</div>
-
-    <div class="grid-item doctor-info">${dr.location}</div>
-    <div class="grid-item doctor-info">
-        <button class="choose-doctor-btn" data-id="${dr.doctor_id}">Choose</button>
-    </div>`;
-  });
-  doctorsData.innerHTML += results;
+  if (doctors.length !== 0) {
+    doctors.forEach((dr) => {
+      results += `<div class="grid-item doctor-info">Dr. ${dr.name}</div>
+      <div class="grid-item doctor-info">${dr.phone_number}</div>
+      <div class="grid-item doctor-info">${dr.education}</div>
+  
+      <div class="grid-item doctor-info">${dr.clinic_name}</div>
+      <div class="grid-item doctor-info">${dr.clinic_number}</div>
+  
+      <div class="grid-item doctor-info">${dr.location}</div>
+      <div class="grid-item doctor-info">
+          <button class="choose-doctor-btn" data-id="${dr.doctor_id}">Choose</button>
+      </div>`;
+    });
+    doctorsData.innerHTML += results;
+  }
 };
 
 let chooseDr = () => {
@@ -266,7 +263,7 @@ if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
     xhr.onload = () => {
       // Handle the response after deleting the data
       if (xhr.status === 200) {
-        // location.reload(); // Reload the page
+        location.reload(); // Reload the page
       }
     };
 
@@ -429,13 +426,17 @@ let fetchTrimester = () => {
         const patientSection = document.querySelector("#patient-info-tab");
         console.log(patientSection);
         let results = `<p>Hello, ${patientName}!</p>
-        <p>User ID: ${response.id}</p>
-        <p>Current Doctor: Dr. ${response.doctor_name}</p>`;
+        <p>User ID: ${response.id}</p>`;
+        if (response.doctor_name === null) {
+          results += `<p>Current Doctor: Doctor not assigned yet</p>`;
+        } else {
+          results += `<p>Current Doctor: Dr. ${response.doctor_name}</p>`;
+        }
         patientSection.innerHTML = results;
       }
 
       if (window.location.pathname === "/ouvatech/heartRate.php") {
-        validateHRBP(pregnancyStage);
+        validateHR(pregnancyStage);
       }
       if (window.location.pathname === "/ouvatech/temperature.php") {
         validateTemperature(pregnancyStage);
@@ -447,8 +448,10 @@ let fetchTrimester = () => {
       if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
         validateOxygen(pregnancyStage);
       }
+      if (window.location.pathname === "/ouvatech/bloodPressure.php") {
 
-      
+      validateBP(pregnancyStage)
+      }
     }
   };
 
@@ -456,15 +459,12 @@ let fetchTrimester = () => {
 };
 
 if (window.location.pathname === "/ouvatech/heartRate.php") {
-  function validateHRBP(pregnancyStage) {
-    // Clear previous error messages
+  function validateHR(pregnancyStage) {
+    // Clear previous error message
     const hrError = document.getElementById("heart-rate-error");
-    const bpError = document.getElementById("blood-pressure-error");
 
-    // Retrieve input values
+    // Retrieve input value
     var heartRate = document.getElementById("heart-rate");
-    var systolic = document.getElementById("systolic");
-    var diastolic = document.getElementById("diastolic");
 
     heartRate.addEventListener("input", () => {
       var valid = false;
@@ -501,10 +501,24 @@ if (window.location.pathname === "/ouvatech/heartRate.php") {
         hrError.textContent = "Normal Heart Rate";
         valid = true;
       }
-      validateBtn(valid);
+      validateHRBtn(valid);
     });
+  }
+  let validateHRBtn = (valid) => {
+    var addButton = document.getElementById("add-button");
+    addButton.disabled = !valid;
+  };
+}
+if (window.location.pathname === "/ouvatech/bloodPressure.php") {
+  function validateBP(pregnancyStage) {
+    // Clear previous error message
+    const bpError = document.getElementById("blood-pressure-error");
 
-    let validateBP = () => {
+    // Retrieve input values
+    var systolic = document.getElementById("systolic");
+    var diastolic = document.getElementById("diastolic");
+
+    let validate = () => {
       var validBP = false;
       var systolicValue = parseInt(systolic.value);
       var diastolicValue = parseInt(diastolic.value);
@@ -582,14 +596,13 @@ if (window.location.pathname === "/ouvatech/heartRate.php") {
         bpError.textContent = "Normal";
         validBP = true;
       }
-      validateBtn(validBP);
+      validateBPBtn(validBP);
     };
 
-    systolic.addEventListener("input", validateBP);
-    diastolic.addEventListener("input", validateBP);
+    systolic.addEventListener("input", validate);
+    diastolic.addEventListener("input", validate);
   }
-
-  let validateBtn = (validBP) => {
+  let validateBPBtn = (validBP) => {
     var addButton = document.getElementById("add-button");
     addButton.disabled = !validBP;
   };
@@ -691,24 +704,21 @@ if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
   }
 }
 
-
 if (window.location.pathname === "/ouvatech/fetus.php") {
   const btn = document.querySelector("#add-button");
   btn.disabled = true;
-  console.log(btn)
+  console.log(btn);
   function validateFetusData() {
     var fetusWeight = parseFloat(document.querySelector("#fetal-weight").value);
-    var fetusHR = parseFloat(document.querySelector("#fetal-heart-rate").value) ;
+    var fetusHR = parseFloat(document.querySelector("#fetal-heart-rate").value);
     const error = document.querySelector("#fetus-error");
-    if(isNaN(fetusWeight) || isNaN(fetusHR)) {
-      error.innerHTML = "Please enter a valid value."
+    if (isNaN(fetusWeight) || isNaN(fetusHR)) {
+      error.innerHTML = "Please enter a valid value.";
       btn.disabled = true;
     } else {
       error.innerHTML = ``;
       btn.disabled = false;
-
     }
-    
   }
 
   var fetusWeight = document.querySelector("#fetal-weight");
@@ -716,17 +726,7 @@ if (window.location.pathname === "/ouvatech/fetus.php") {
 
   fetusWeight.addEventListener("input", validateFetusData);
   fetusHR.addEventListener("input", validateFetusData);
-
-
- 
 }
-
-
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchTrimester();

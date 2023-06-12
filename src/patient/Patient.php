@@ -228,52 +228,80 @@ class Patient
     return $data;
   }
 
-  public function insert_hr_bp($bpm, $systolic, $diastolic, $user_id)
-  {
-    // Validate that inputs are integers
+  public function insert_hr($bpm, $user_id)
+{
+    // Validate that input is an integer
     $bpm = (int) $bpm;
+
+    // Sanitize input
+    $bpm = filter_var($bpm, FILTER_SANITIZE_NUMBER_INT);
+    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
+
+    // Validate BPM is within a reasonable range
+    if ($bpm < 40 || $bpm > 200) {
+        return "Error: Invalid BPM value.";
+    }
+
+    // Prepare and bind statement
+    $stmt = $this->conn->prepare("INSERT INTO heart_rate (user_id, bpm) VALUES (?, ?)");
+
+    if (!$stmt) {
+        printf("Query Prep Failed: %s\n", $this->conn->error);
+        exit;
+    }
+
+    $stmt->bind_param("ii", $user_id, $bpm);
+
+    // Execute statement and check for errors
+    if ($stmt->execute() === TRUE) {
+        // Close statement and connection
+        $stmt->close();
+        $this->conn->close();
+        header("LOCATION: ../../heartRate.php?insert=success");
+        return "Success: New heart rate record created successfully.";
+    } else {
+        return "Error: " . $stmt->error;
+    }
+}
+
+public function insert_bp($systolic, $diastolic, $user_id)
+{
+    // Validate that inputs are integers
     $systolic = (int) $systolic;
     $diastolic = (int) $diastolic;
 
     // Sanitize inputs
-    $bpm = filter_var($bpm, FILTER_SANITIZE_NUMBER_INT);
     $systolic = filter_var($systolic, FILTER_SANITIZE_NUMBER_INT);
     $diastolic = filter_var($diastolic, FILTER_SANITIZE_NUMBER_INT);
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
 
-    // Validate bpm is within reasonable range
-    if ($bpm < 40 || $bpm > 200) {
-      return "Error: Invalid BPM value.";
-    }
-
     // Validate systolic and diastolic are within reasonable range
     if ($systolic < 70 || $systolic > 200 || $diastolic < 40 || $diastolic > 120) {
-      return "Error: Invalid systolic or diastolic blood pressure value.";
+        return "Error: Invalid systolic or diastolic blood pressure value.";
     }
 
     // Prepare and bind statement
-    $stmt = $this->conn->prepare("INSERT INTO hr_bp (user_id, bpm, systolic, diastolic) VALUES (?, ?, ?, ?)");
+    $stmt = $this->conn->prepare("INSERT INTO blood_pressure (user_id, systolic, diastolic) VALUES (?, ?, ?)");
 
     if (!$stmt) {
-      printf("Query Prep Failed: %s\n", $this->conn->error);
-      exit;
+        printf("Query Prep Failed: %s\n", $this->conn->error);
+        exit;
     }
 
-    $stmt->bind_param("iiii", $user_id, $bpm, $systolic, $diastolic);
-
+    $stmt->bind_param("iii", $user_id, $systolic, $diastolic);
 
     // Execute statement and check for errors
     if ($stmt->execute() === TRUE) {
-      // Close statement and connection
-
-      $stmt->close();
-      $this->conn->close();
-      header("LOCATION: ../../heartRate.php?insert=success");
-      return "Success: New record created successfully.";
+        // Close statement and connection
+        $stmt->close();
+        $this->conn->close();
+        header("LOCATION: ../../bloodPressure.php?insert=success");
+        return "Success: New blood pressure record created successfully.";
     } else {
-      return "Error: " . $stmt->error;
+        return "Error: " . $stmt->error;
     }
-  }
+}
+
 
   public function addTemperature($temperature, $userId)
   {
@@ -508,7 +536,7 @@ class Patient
     $user_id = $this->conn->real_escape_string($user_id);
 
     // Prepare and execute the query for each table
-    $tables = array('blood_glucose', 'blood_oxygen', 'fetus', 'hr_bp', 'temperature', 'user_files');
+    $tables = array('blood_glucose', 'blood_oxygen', 'fetus', 'blood_pressur', `heart_rate`, 'temperature', 'user_files');
     $data = array();
 
     foreach ($tables as $table) {
@@ -672,7 +700,7 @@ class Patient
   }
 
 
-  public function getHRBPData($user_id, $time_range)
+  public function getHRData($user_id, $time_range)
   {
     // Set the user_id and time_range parameters for the query
     $user_id = $this->conn->real_escape_string($user_id);
@@ -690,8 +718,8 @@ class Patient
     }
 
     // Prepare and execute the query
-    $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, bpm, systolic, diastolic 
-            FROM hr_bp 
+    $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, bpm 
+            FROM heart_rate 
             WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
@@ -738,7 +766,7 @@ class Patient
 
     // Prepare and execute the query
     $sql = "SELECT record_id, user_id, DATE(timestamp) AS date, TIME(timestamp) AS time, systolic, diastolic 
-            FROM hr_bp 
+            FROM blood_pressure 
             WHERE user_id = '$user_id' AND DATE(timestamp) BETWEEN '$start_date' AND '$end_date' ORDER BY timestamp DESC";
     $result = $this->conn->query($sql);
 
@@ -1015,8 +1043,8 @@ public function deleteFetusRecord($user_id, $record_id) {
     }
 }
 
-public function deleteHRBPRecord($user_id, $record_id) {
-    $query = "DELETE FROM hr_bp WHERE user_id = ? AND record_id = ?";
+public function deleteHR($user_id, $record_id) {
+    $query = "DELETE FROM heart_rate WHERE user_id = ? AND record_id = ?";
     
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("ii", $user_id, $record_id);
@@ -1027,7 +1055,18 @@ public function deleteHRBPRecord($user_id, $record_id) {
         return false;
     }
 }
-
+public function deleteBP($user_id, $record_id) {
+  $query = "DELETE FROM blood_pressure WHERE user_id = ? AND record_id = ?";
+  
+  $stmt = $this->conn->prepare($query);
+  $stmt->bind_param("ii", $user_id, $record_id);
+  
+  if ($stmt->execute()) {
+      return true;
+  } else {
+      return false;
+  }
+}
 public function deleteTemperatureRecord($user_id, $record_id) {
     $query = "DELETE FROM temperature WHERE user_id = ? AND record_id = ?";
     

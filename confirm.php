@@ -25,7 +25,7 @@
     $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
     $patient = new Patient($conn);
     if($patient->isUserConfirmed($_SESSION['user_id'])){
-        header("Location: ./index.html?accountIsConfirmed");
+        header("Location: ./src/login/userLogin.php");
     }
 
     ?>

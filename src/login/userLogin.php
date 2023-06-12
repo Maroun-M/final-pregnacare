@@ -24,11 +24,12 @@ if(isset($_SESSION['user_id'])){
         header("Location: ../../patientMainMenu.php");
     } else if ($access_lvl == 2) {
         header("Location: ../../doctorMainMenu.php");
+    } else {
+        header("Location: ../../admin.php");
+
     }
 }
 if (isset($_POST['confirmation-email']) && isset($_POST['confirmation-code'])) {
-    echo $_POST['confirmation-email'];
-    echo $_POST['confirmation-code'];
     $login->confirmUser($_POST['confirmation-email'], $_POST['confirmation-code']);
 }
 

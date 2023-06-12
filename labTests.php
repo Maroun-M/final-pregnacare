@@ -29,6 +29,7 @@
     $patient = new Patient($conn);
     if (!isset($_SESSION['user_id']) || !$patient->isPatient($_SESSION['user_id'])) { // Check if the user is logged in and is patient
         echo "You don't have access to this page.";
+        header("LOCATION: ./index.php?access=unauthorized");
         exit();
     }
     if (!$patient->isUserConfirmed($_SESSION['user_id'])) {
@@ -72,7 +73,15 @@
                     <i class="bi bi-heart-pulse-fill"></i>
                 </div>
                 <div class="sidebar-nav-name">
-                    <p>Heart Rate & Blood Pressure</p>
+                    <p>Heart Rate</p>
+                </div>
+            </div>
+            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+                <div class="sidebar-nav-logo">
+                    <img src="./icons/blood_pressure_monitor.svg" alt="">
+                </div>
+                <div class="sidebar-nav-name">
+                    <p>Blood Pressure</p>
                 </div>
             </div>
             <div class="sidebar-nav-container" onclick="window.location.href = './temperature.php'">

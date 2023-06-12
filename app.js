@@ -1,13 +1,11 @@
-if (window.location.pathname === "/ouvatech/index.php") {
+if (window.location.pathname === "/ouvatech/index.php" || window.location.pathname === "/ouvatech/") {
   document.addEventListener("DOMContentLoaded", () => {
     const logged_in = document.querySelector(".login-status");
     const login_btn = document.querySelector(".login-nav-btn");
-    const login_btn_mobile = document.querySelector(".login-nav-btn-mobile");
-
+    const login_btn_mobile = document.querySelector(".login-nav-btn-mobile"); 
     const account_nav_btn = document.querySelector(".account-nav-btn");
     const logout_nav_btn = document.querySelector(".logout-nav-btn");
     var log_in_status = parseInt(logged_in.innerHTML);
-    console.log(log_in_status);
     if (log_in_status === 1) {
       login_btn.style.display = "none";
       login_btn_mobile.style.display = "none";
@@ -34,6 +32,27 @@ if (window.location.pathname === "/ouvatech/index.php") {
 
     })
   });
+
+
+
+ // Get the URL of the current page
+var url = window.location.href;
+// Create a URL object with the URL
+var urlObject = new URL(url);
+// Get the search parameters from the URL
+var searchParams = new URLSearchParams(urlObject.search);
+// Get the value of a specific parameter
+var parameterValue = searchParams.get('register');
+
+if(searchParams.get('register') === ""){
+  document.querySelector('.vh-150').scrollIntoView()
+}
+
+
+
+
+
+
 
 // Get the target element
 const targetElement = document.querySelector('.front');
@@ -183,7 +202,10 @@ if (window.location.pathname === "/ouvatech/login.php") {
 
     loginBtn.disabled = !(isEmailValid && isPasswordValid);
   }
+  document.querySelector(".sign-up-btn").addEventListener("click", () =>{
+    window.location.href = "index.php?register";
 
+  })
   document.addEventListener("DOMContentLoaded", () => {
     var url = new URL(window.location.href);
 

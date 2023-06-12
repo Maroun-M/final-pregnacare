@@ -76,15 +76,15 @@
                     <p>Heart Rate</p>
                 </div>
             </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+            <div class="sidebar-nav-container active" onclick="window.location.href = './bloodPressure.php'">
                 <div class="sidebar-nav-logo">
-                    <img src="./icons/blood_pressure_monitor.svg" alt="">
+                <img src="./icons/blood_pressure_monitor.svg" alt="">
                 </div>
                 <div class="sidebar-nav-name">
                     <p>Blood Pressure</p>
                 </div>
             </div>
-            <div class="sidebar-nav-container " onclick="window.location.href = './temperature.php'">
+            <div class="sidebar-nav-container" onclick="window.location.href = './temperature.php'">
                 <div class="sidebar-nav-logo">
                     <i class="bi bi-thermometer-half"></i>
                 </div>
@@ -140,7 +140,7 @@
                     <p>Update Profile</p>
                 </div>
             </div>
-            <div class="sidebar-nav-container active" onclick="window.location.href = './chooseDoctor.php'">
+            <div class="sidebar-nav-container" onclick="window.location.href = './chooseDoctor.php'">
                 <div class="sidebar-nav-logo">
                     <i class="bi bi-hand-index"></i>
                 </div>
@@ -163,23 +163,30 @@
             <div class="hamburger-container">
                 <i class="bi bi-list"></i>
             </div>
-            <div class="user-info-wrap card-display doctors-table" >
-                <div class="doctor-list-data">
-                    <div class="grid-item grid-header">Name</div>
-                    <div class="grid-item grid-header">Phone Number</div>
-                    <div class="grid-item grid-header">Education</div>
-
-                    <div class="grid-item grid-header">Clinic Name</div>
-                    <div class="grid-item grid-header">Clinic Number</div>
-                    <div class="grid-item grid-header">Location</div>
-
-                    <div class="grid-item grid-header">Pick Doctor</div>
-                     
-                </div>
-               
-                <div class="page-btns-container">
-
-                </div>
+            <div class="user-info-wrap card-display">
+                <form action="./src/patient/patientEntries.php" method="POST" enctype="multipart/form-data"
+                    class="inputs-form ">
+                    <div class="info-update-logo-container">
+                        <img src="./icons/blood_pressure.svg" alt="">
+                    </div>
+                    <div class="form-inputs-container heart-rate-input">
+                    <div class="inputs-header-title">
+                            <p>Please insert your blood pressure:</p>
+                            <p class="blood-pressure-detail"></p>
+                        </div>
+                        <div class="rates-input">
+                            <input type="number" name="systolic" id="systolic" placeholder="Systolic: 120" required>
+                            / <input type="number" name="diastolic" id="diastolic" placeholder="Diastolic: 80" required>
+                            <span class="measure-units">mmHG</span>
+                        </div>
+                        <div class="invalid-input-message" id="blood-pressure-error"></div>
+                        <!-- Element to display error message -->
+                    </div>
+                    <div class="btns-container forms-btns">
+                        <button class="tests-btn btns-style" id="add-button" >ADD</button>
+                        <!-- Add onclick event to trigger form validation -->
+                    </div>
+                </form>
 
 
             </div>

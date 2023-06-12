@@ -30,11 +30,11 @@ if (isset($_POST['dataType']) && isset($_POST['recordId'])) {
             break;
         case 'Blood Pressure':
             $recordId = $_POST['recordId'];
-            $result = $patient->deleteHRBPRecord($user_id, $recordId);
+            $result = $patient->deleteBP($user_id, $recordId);
             break;
         case 'Heart Rate':
             $recordId = $_POST['recordId'];
-            $result = $patient->deleteHRBPRecord($user_id, $recordId);
+            $result = $patient->deleteHR($user_id, $recordId);
             break;
         case 'Temperature':
             $recordId = $_POST['recordId'];

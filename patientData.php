@@ -18,33 +18,22 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
 
   <link rel="icon" type="image/png" href="./images/logo-removebg-preview.png">
-  <script src="./doctorApp.js" defer></script>
+  <script src="./admin.js" defer></script>
 
 </head>
 
 <body>
-<?php 
-    session_start();
-    include_once("./src/doctor/Doctor.php");
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
-    $doctor = new Doctor();    
-    if(!isset($_SESSION['user_id']) || !$doctor->isDoctor($_SESSION['user_id'])) { // Check if the user is logged in and is doctor
-      echo "You don't have access to this page.";
-      header("LOCATION: ./index.php?access=unauthorized");
-      exit();
-    }
-    if(!$doctor->isDoctorConfirmed($_SESSION['user_id'])){
-        header("location:./confirm.php");
-        exit();
-    }
-    
-    
-    
-   if (!$doctor->has_doctor_record($_SESSION['user_id'])){
-    header("location:./doctorInfo.php");
+  <?php
+  session_start();
+  include_once("./src/admin/Admin.php");
+  $admin = new Admin();
+  if (!isset($_SESSION['user_id']) || !$admin->isAdmin($_SESSION['user_id'])) { // Check if the user is logged in and is doctor
+    echo "You don't have access to this page.";
+    header("LOCATION: ./index.php?access=unauthorized");
     exit();
-   }
-  ?> 
+  }
+
+  ?>
 
 
 
@@ -55,32 +44,22 @@
       <div class="sidebar-close-btn">
         <i class="bi bi-x-circle"></i>
       </div>
-      <div class="sidebar-logo-container" >
+      <div class="sidebar-logo-container">
         <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
       </div>
       <hr class="sidebar-divider">
-      <div class="sidebar-nav-container active" onclick="window.location.href = './doctorMainMenu.php'">
+      <div class="sidebar-nav-container active" onclick="window.location.href = './admin.php'">
         <div class="sidebar-nav-logo">
-        <i class="bi bi-people-fill"></i>
+          <i class="bi bi-people-fill"></i>
         </div>
         <div class="sidebar-nav-name ">
-          <p >Patients</p>
+          <p>Manage Users</p>
         </div>
       </div>
       <hr class="sidebar-divider">
-      
-      <div class="sidebar-header">
-        <p>PROFILE</p>
-      </div>
-      <div class="sidebar-nav-container" onclick="window.location.href = './doctorInfo.php'">
-        <div class="sidebar-nav-logo">
-          <img src="./icons/details.svg" alt="">
-        </div>
-        <div class="sidebar-nav-name">
-          <p>Update Profile</p>
-        </div>
-      </div>
-      
+
+
+
       <div class="sidebar-nav-container logout-btn">
         <div class="sidebar-nav-logo">
           <img src="./icons/logout.svg" alt="">
@@ -96,25 +75,40 @@
       <div class="hamburger-container">
         <i class="bi bi-list"></i>
       </div>
+      <div class="patients-tables-container card-display admin-patients-container">
+        <div class="search-container">
+          <label for="search-patients">Search by patient name:</label>
+          <input type="text" id="search-patients" placeholder="Search..">
+        </div>
+        <div class="dr-container data-container patients-container admin-patients-holder">
+          
+
+        </div>
+        <div  id="pagination-container">
+
+        </div>
+      </div>
+
+<a href="./patientRecords.php"></a>
+
       <div class="patients-tables-container card-display ">
-      <div class="dr-container data-container patients-container">
-        <div class="header">Name</div>
-        <div class="header">Age</div>
-        <div class="header">Location</div>
-        <div class="header">Phone Number</div>
-        <div class="header">Medical Record</div>
+      <div class="search-container">
+        <label for="search-doctors">Search by doctor name:</label>
+        <input type="text" id="search-doctors" placeholder="Search..">
+</div>
+        <div class="dr-container data-container patients-container admin-doctors-holder">
+          <div class="header">Name</div>
+          <div class="header">Age</div>
+          <div class="header">Location</div>
+          <div class="header">Phone Number</div>
+          <div class="header">Delete</div>
+        </div>
       </div>
-      
-      </div>
+
     </div>
-   
-  </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
   integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"
   defer></script>
 
 </html>
-
-
-

@@ -29,7 +29,8 @@
     $patient = new Patient($conn);
     if(!isset($_SESSION['user_id']) || !$patient->isPatient($_SESSION['user_id'])) { // Check if the user is logged in and is patient
       echo "You don't have access to this page.";
-      exit();
+        header("LOCATION: ./index.php?access=unauthorized");
+        exit();
    }
    if(!$patient->isUserConfirmed($_SESSION['user_id'])){
     header("location:./confirm.php");
@@ -68,13 +69,21 @@
         <p>TESTS</p>
       </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './heartRate.php'">
-        <div class="sidebar-nav-logo">
-          <i class="bi bi-heart-pulse-fill"></i>
-        </div>
-        <div class="sidebar-nav-name">
-          <p>Heart Rate & Blood Pressure</p>
-        </div>
-      </div>
+                <div class="sidebar-nav-logo">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <div class="sidebar-nav-name">
+                    <p>Heart Rate</p>
+                </div>
+            </div>
+            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+                <div class="sidebar-nav-logo">
+                    <img src="./icons/blood_pressure_monitor.svg" alt="">
+                </div>
+                <div class="sidebar-nav-name">
+                    <p>Blood Pressure</p>
+                </div>
+            </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './temperature.php'">
         <div class="sidebar-nav-logo">
           <i class="bi bi-thermometer-half"></i>
@@ -178,13 +187,13 @@
       </div>
       
       <div class="tables-container card-display">
-        <div class="dr-container tests-container one-patient-tests-container patient-table">
+        <div class="dr-container tests-container one-patient-tests-container patient-table ">
           <div class="header ">Values</div>
           <div class="header ">Date</div>
           <div class="header ">Time</div>
           <div class="header ">Delete</div>
         </div>
-        <div class="dr-container tests-data-container data-container tests-container one-patient-tests-container patient-table">
+        <div class="dr-container tests-data-container data-container tests-container one-patient-tests-container patient-table patient-main-menu-table">
           <!-- Add more patient data items here -->
   
           

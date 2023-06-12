@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         } elseif($_GET['type'] === "Blood Oxygen"){
             $patient->getBloodOxygenData($_SESSION['user_id'], $_GET['range']);
         }elseif($_GET['type'] === "Heart Rate"){
-            $patient->getHRBPData($_SESSION['user_id'], $_GET['range']);
+            $patient->getHRData($_SESSION['user_id'], $_GET['range']);
         }elseif($_GET['type'] === "Blood Pressure"){
             $patient->getBPData($_SESSION['user_id'], $_GET['range']);
         }elseif($_GET['type'] === "Fetus Data"){
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         } elseif($_GET['type'] === "Blood Oxygen"){
             $patient->getBloodOxygenData($_GET['ID'], $_GET['range']);
         }elseif($_GET['type'] === "Heart Rate"){
-            $patient->getHRBPData($_GET['ID'], $_GET['range']);
+            $patient->getHRData($_GET['ID'], $_GET['range']);
         }elseif($_GET['type'] === "Blood Pressure"){
             $patient->getBPData($_GET['ID'], $_GET['range']);
         }elseif($_GET['type'] === "Fetus Data"){

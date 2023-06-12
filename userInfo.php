@@ -29,17 +29,14 @@
   $patient = new Patient($conn);
   if (!isset($_SESSION['user_id']) || !$patient->isPatient($_SESSION['user_id'])) { // Check if the user is logged in and is patient
     echo "You don't have access to this page.";
-    exit();
+        header("LOCATION: ./index.php?access=unauthorized");
+        exit();
   }
   if (!$patient->isUserConfirmed($_SESSION['user_id'])) {
     header("location:./confirm.php");
     exit();
   }
 
-  if (!$patient->has_patient_record($_SESSION['user_id'])) {
-    header("location:./userInfo.php");
-    exit();
-  }
   ?>
 
 
@@ -68,13 +65,21 @@
         <p>TESTS</p>
       </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './heartRate.php'">
-        <div class="sidebar-nav-logo">
-          <i class="bi bi-heart-pulse-fill"></i>
-        </div>
-        <div class="sidebar-nav-name">
-          <p>Heart Rate & Blood Pressure</p>
-        </div>
-      </div>
+                <div class="sidebar-nav-logo">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </div>
+                <div class="sidebar-nav-name">
+                    <p>Heart Rate</p>
+                </div>
+            </div>
+            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+                <div class="sidebar-nav-logo">
+                    <img src="./icons/blood_pressure_monitor.svg" alt="">
+                </div>
+                <div class="sidebar-nav-name">
+                    <p>Blood Pressure</p>
+                </div>
+            </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './temperature.php'">
         <div class="sidebar-nav-logo">
           <i class="bi bi-thermometer-half"></i>

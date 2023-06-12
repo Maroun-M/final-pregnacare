@@ -42,6 +42,8 @@
     } else if (isset($user_id) && $access_lvl == 2) {
       header("Location: ./doctorMainMenu.php");
       exit;
+    } else if(isset($user_id) && $access_lvl == 3) {
+      header("LOCATION: ./admin.php");
     }
     if (isset($user_id)) {
       header('location: ./index.html');
@@ -79,7 +81,7 @@
         </div>
         <div class="signup-prompt-container">
           <p>Don't have an account? <span class="sign-up-btn">
-              <a href="./index.php">Sign Up</a>
+              Sign Up
             </span></p>
         </div>
       </form>

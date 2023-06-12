@@ -138,7 +138,9 @@ class Doctor
 
   }
   public function getDoctors($page)
-  {
+  { // Validate and sanitize the page number
+    $page = filter_var($page, FILTER_VALIDATE_INT);
+    $page = ($page !== false && $page > 0) ? $page : 1;
     // Number of results per page
     $resultsPerPage = 10;
 

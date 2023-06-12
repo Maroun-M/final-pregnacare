@@ -69,7 +69,7 @@ class Login
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        header("location: ../../index.html?account=confirmed");
+        header("location: ../../index.php?account=confirmed");
         return true;
     }
     private $accessLevel;

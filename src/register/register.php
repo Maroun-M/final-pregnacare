@@ -10,6 +10,11 @@ $type = $_POST['registration-type'];
 
 $account = new Registration($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword, $type);
 $account->register();
-header('Location: ../../index.html?login=successful');
+if($type === 'doctor'){
+    header('Location: ../../doctorInfo.php?registration=successful');
+} else {
+    header('Location: ../../userInfo.php?registration=successful');
+
+}
 
 ?>

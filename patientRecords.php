@@ -23,34 +23,74 @@
 </head>
 
 <body>
-  <?php
-  session_start();
-  include_once("./src/doctor/Doctor.php");
-  $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
-  $doctor = new Doctor();
-  if (!isset($_SESSION['user_id']) || !$doctor->isDoctor($_SESSION['user_id'])) { // Check if the user is logged in and is doctor
-    echo "You don't have access to this page.";
-    exit();
-  }
-  if (!$doctor->isDoctorConfirmed($_SESSION['user_id'])) {
-    header("location:./confirm.php");
-    exit();
-  }
+<div class="dashboard-wrapper">
 
+<?php
+session_start();
+include_once("./src/admin/Admin.php");
+include_once("./src/doctor/Doctor.php");
+$conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+$doctor = new Doctor();
+$admin = new Admin();
 
+if (!isset($_SESSION['user_id']) || ((!$doctor->isDoctor($_SESSION['user_id']) && !$doctor->has_doctor_record($_SESSION['user_id'])) && !$admin->isAdmin($_SESSION['user_id']))) { // Check if the user is logged in and is a doctor
+  echo "You don't have access to this page.";
+  header("LOCATION: ./index.php?access=unauthorized");
+  exit();
+}
+if (!$doctor->isDoctorConfirmed($_SESSION['user_id'])) {
+  header("location:./confirm.php");
+  exit();
+}
 
-  if (!$doctor->has_doctor_record($_SESSION['user_id'])) {
-    header("location:./doctorInfo.php");
-    exit();
-  }
+// Check the user type and echo the corresponding sidebar HTML
+if ($doctor->isDoctor($_SESSION['user_id'])) {
   ?>
+  <!-- Doctor sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-close-btn">
+      <i class="bi bi-x-circle"></i>
+    </div>
+    <div class="sidebar-logo-container">
+      <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
+    </div>
+    <hr class="sidebar-divider">
+    <div class="sidebar-nav-container active" onclick="window.location.href = './patientMainMenu.php'">
+      <div class="sidebar-nav-logo">
+        <i class="bi bi-house-fill"></i>
+      </div>
+      <div class="sidebar-nav-name ">
+        <p>Home</p>
+      </div>
+    </div>
+    <hr class="sidebar-divider">
 
+    <div class="sidebar-header">
+      <p>PROFILE</p>
+    </div>
+    <div class="sidebar-nav-container" onclick="window.location.href = './doctorInfo.php'">
+      <div class="sidebar-nav-logo">
+        <img src="./icons/details.svg" alt="">
+      </div>
+      <div class="sidebar-nav-name">
+        <p>Update Profile</p>
+      </div>
+    </div>
 
-
-  <div class="dashboard-wrapper">
-
-    <!--  sidebar section -->
-    <div class="sidebar">
+    <div class="sidebar-nav-container logout-btn">
+      <div class="sidebar-nav-logo">
+        <img src="./icons/logout.svg" alt="">
+      </div>
+      <div class="sidebar-nav-name">
+        <p>Logout</p>
+      </div>
+    </div>
+  </div>
+  <?php
+} else {
+  ?>
+  <!-- Other user sidebar -->
+  <div class="sidebar">
       <div class="sidebar-close-btn">
         <i class="bi bi-x-circle"></i>
       </div>
@@ -58,27 +98,25 @@
         <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
       </div>
       <hr class="sidebar-divider">
-      <div class="sidebar-nav-container active" onclick="window.location.href = './patientMainMenu.php'">
+      <div class="sidebar-nav-container active" onclick="window.location.href = './admin.php'">
         <div class="sidebar-nav-logo">
-          <i class="bi bi-house-fill"></i>
+          <i class="bi bi-people-fill"></i>
         </div>
         <div class="sidebar-nav-name ">
-          <p>Home</p>
+          <p>Manage Users</p>
+        </div>
+      </div>
+      <div class="sidebar-nav-container" onclick="window.location.href = './manageUsers.php'">
+        <div class="sidebar-nav-logo">
+        <i class="bi bi-plus-square-dotted"></i>
+        </div>
+        <div class="sidebar-nav-name ">
+          <p>Add/Drop Users</p>
         </div>
       </div>
       <hr class="sidebar-divider">
 
-      <div class="sidebar-header">
-        <p>PROFILE</p>
-      </div>
-      <div class="sidebar-nav-container" onclick="window.location.href = './doctorInfo.php'">
-        <div class="sidebar-nav-logo">
-          <img src="./icons/details.svg" alt="">
-        </div>
-        <div class="sidebar-nav-name">
-          <p>Update Profile</p>
-        </div>
-      </div>
+
 
       <div class="sidebar-nav-container logout-btn">
         <div class="sidebar-nav-logo">
@@ -89,6 +127,9 @@
         </div>
       </div>
     </div>
+  <?php
+}
+?>
 
     <!-- PAGE CONTENT -->
     <div class="content-wrap ">
