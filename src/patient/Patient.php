@@ -405,7 +405,7 @@ public function insert_bp($systolic, $diastolic, $user_id)
 
     // Sanitize inputs
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
-    $weight = filter_var($weight, FILTER_SANITIZE_NUMBER_INT);
+    $weight = filter_var($weight, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     $heart_rate = filter_var($heart_rate, FILTER_SANITIZE_NUMBER_INT);
 
     // Fetch gestational age from the patients table

@@ -29,11 +29,7 @@ if(isset($_SESSION['user_id'])){
 
     }
 }
-if (isset($_POST['confirmation-email']) && isset($_POST['confirmation-code'])) {
-    $login->confirmUser($_POST['confirmation-email'], $_POST['confirmation-code']);
-}
 
-if (isset($_GET['email']) && isset($_GET['confirmationCode'])) {
-    $login->confirmUser($_GET['email'], $_GET['confirmationCode']);
-}
+
+
 ?>

@@ -16,6 +16,8 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+
+        <script src="./app.js" defer></script>
 </head>
 
 <body>
@@ -41,14 +43,17 @@
                 <h2>Confirm Your Account: </h2>
                 <p>Enter the confirmation code that was sent to your email:</p>
             </div>
-            <form action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
+            <form action="./src/login/confirm.php" method="POST" enctype="multipart/form-data">
                 <div class="input-container">
                     <input type="confirmation-email" name="confirmation-email" value="<?php echo
                     $_SESSION['user_email'];
                     ?>" hidden>
                     <input type="text" name="confirmation-code" placeholder="Code" required> <br>
+                    <p class="resend-btn">Resend Confirmation Email</p>
                 </div>
-
+                <div class="confirm-error-handling">
+                    <p class="confirm-error"></p>
+                </div>
                 <div class="reset-login-container">
 
                     <div class="login-btn-container">

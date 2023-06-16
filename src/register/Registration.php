@@ -19,7 +19,7 @@ class Registration
     private $type;
     private $accessLevel;
 
-    public function __construct($firstName, $lastName, $phoneNumber, $email, $password, $confirmPassword, $type)
+    public function __construct($firstName = null, $lastName = null, $phoneNumber = null, $email = null, $password = null, $confirmPassword = null, $type = null)
     {
         $this->firstName = trim($firstName);
         $this->lastName = trim($lastName);
@@ -28,8 +28,25 @@ class Registration
         $this->password = $password;
         $this->confirmPassword = $confirmPassword;
         $this->type = $type;
+
+
         $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
-        ;
+    }
+    private function initializeConnection()
+    {
+        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    }
+
+    // New constructor with no parameters
+    public static function createWithoutParams()
+    {
+        $instance = new self();
+        $instance->initializeConnection();
+        return $instance;
+    }
+    public function __constructWithoutParams()
+    {
+        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
     }
 
     public function validate()
@@ -164,6 +181,106 @@ class Registration
             echo 'Message sent!';
         }
         return true;
+    }
+
+    public function resendActivationEmail($email)
+    {
+
+
+        $query = "SELECT u.id, u.confirmation_code, rac.resend_count, rac.last_resend_timestamp
+              FROM users AS u
+              LEFT JOIN resend_activation_counts AS rac ON u.id = rac.user_id
+              WHERE u.email = ?";
+
+        // Prepare the statement
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $email); // Bind the email parameter
+
+        // Execute the query
+        $stmt->execute();
+
+        // Fetch the result
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $user_id = $row['id'];
+            $resendCount = $row['resend_count'];
+            $lastResendTimestamp = $row['last_resend_timestamp'];
+
+            // Check if the resend limit has been reached
+            $maxResendLimit = 3; // Define your desired maximum resend limit
+            $resendCooldownSeconds = 3600; // Define the cooldown period in seconds (1 hour in this example)
+
+            if ($resendCount >= $maxResendLimit && time() - strtotime($lastResendTimestamp) < $resendCooldownSeconds) {
+                // Resend limit reached and cooldown period is still active
+                $response = array(
+                    'message' => 'You have reached the maximum resend limit. Please try again later.'
+                );
+                header('Content-Type: application/json');
+
+                echo json_encode($response);
+                exit; // Stop further execution
+            }
+
+            // Increment the resend_count and update the last_resend_timestamp in the resend_activation_counts table
+            $resendCount++;
+            $currentTimestamp = date('Y-m-d H:i:s');
+            $updateQuery = "INSERT INTO resend_activation_counts (user_id, resend_count, last_resend_timestamp)
+                        VALUES ($user_id, $resendCount, '$currentTimestamp')
+                        ON DUPLICATE KEY UPDATE resend_count = VALUES(resend_count), last_resend_timestamp = VALUES(last_resend_timestamp)";
+            $this->conn->query($updateQuery);
+
+            // Send the activation email
+            $mail = new PHPMailer(true);
+            // Configure your PHPMailer settings here
+            // ...
+
+            // Generate a new confirmation code
+            $newConfirmationCode = $this->generateConfirmationCode();
+
+            // Update the new confirmation code in the users table
+            $updateCodeQuery = "UPDATE users SET confirmation_code = '$newConfirmationCode' WHERE id = $user_id";
+            $this->conn->query($updateCodeQuery);
+
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'maroun233245@gmail.com';
+            $mail->Password = 'kheqpudxbrnxadlc';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            $to = $email;
+            $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
+            $mail->addAddress($to);
+            $mail->isHTML(true);
+            $mail->Subject = "Confirm your registration";
+            $mail->Body = "Thank you for registering! Your confirmation code is: <p color='blue'><bold>$newConfirmationCode</bold></p> Or confirm by clicking on the link below:";
+            $mail->Body .= "http://localhost/ouvatech/src/login/confirm.php?email=$email&confirmationCode=$newConfirmationCode";
+            if (!$mail->send()) {
+                $response = array(
+                    'message' => 'Failed to send the activation email.'
+                );
+                header('Content-Type: application/json');
+
+                echo  json_encode($response);
+            } else {
+                $response = array(
+                    'message' => 'Activation email sent successfully!'
+                );
+                header('Content-Type: application/json');
+
+                echo json_encode($response);
+            }
+        } else {
+            $response = array(
+                'message' => 'Email is not registered.'
+            );
+            header('Content-Type: application/json');
+
+            echo json_encode($response);
+        }
     }
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 12, 2023 at 06:25 PM
+-- Generation Time: Jun 16, 2023 at 03:10 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -192,8 +192,8 @@ CREATE TABLE IF NOT EXISTS `patients` (
 --
 
 INSERT INTO `patients` (`patient_id`, `user_id`, `location`, `date_of_birth`, `previous_pregnancies`, `pregnancy_stage`, `diabetic`, `hypertension`, `LMP`, `EDD`, `gestational_age`) VALUES
-(1, 9, 'Beirut', '2020-04-18', 1, 2, 0, 0, '2023-01-18', '2023-10-31', 121),
-(9, 28, 'lebanon', '2020-04-18', 1, 2, 0, 0, '2023-01-18', '2023-10-31', 123);
+(1, 9, 'Beirut', '2020-04-18', 1, 2, 0, 0, '2023-01-18', '2023-10-31', 122),
+(9, 28, 'lebanon', '2020-04-18', 1, 2, 0, 0, '2023-01-18', '2023-10-31', 124);
 
 -- --------------------------------------------------------
 
@@ -216,6 +216,27 @@ CREATE TABLE IF NOT EXISTS `patient_doctor` (
 INSERT INTO `patient_doctor` (`patient_id`, `doctor_id`) VALUES
 (1, 4),
 (9, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resend_activation_counts`
+--
+
+DROP TABLE IF EXISTS `resend_activation_counts`;
+CREATE TABLE IF NOT EXISTS `resend_activation_counts` (
+  `user_id` int NOT NULL,
+  `resend_count` int DEFAULT '0',
+  `last_resend_timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `resend_activation_counts`
+--
+
+INSERT INTO `resend_activation_counts` (`user_id`, `resend_count`, `last_resend_timestamp`) VALUES
+(9, 3, '2023-06-15 16:34:45');
 
 -- --------------------------------------------------------
 
@@ -285,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `account_password`, `confirmation_code`, `confirmed`, `created_at`, `access_level`) VALUES
-(9, 'Maroun', 'Mourad', '+961 81838298', 'maroun233243@gmail.com', '$2y$12$LXTdTJ20ukQxRlI6CXKSB.7ropRaTgR6VngF5GuV90B.65UDs0T/K', 'XLvpmN', 1, '2023-04-03 17:22:41', 1),
+(9, 'Maroun', 'Mourad', '+961 81838298', 'maroun233243@gmail.com', '$2y$12$LXTdTJ20ukQxRlI6CXKSB.7ropRaTgR6VngF5GuV90B.65UDs0T/K', 'S9PMQZ', 1, '2023-04-03 17:22:41', 1),
 (28, 'Maroun', 'Mourad', '+961 81838', 'maroun360p@gmail.com', '$2y$12$457/50.li5rMbEjQABvO0O1Cat45RMhzks/BqqvqzeUnYo7LmnV2u', '16vOVB', 0, '2023-04-06 11:02:18', 1),
 (30, 'Maroun', 'Mourad', '+961 81838', 'maroun233245@gmail.com', '$2y$12$3RmwGAxNo4lV5XwuyN3C0OW71cFRO/pfooZkcBIjr9zrBVnNakLRS', 'h9xBKM', 0, '2023-05-03 19:00:09', 2),
 (74, 'First5725', 'Last1289', '555-555-9271', 'user2490@example.com', 'ecd1ffd6a744d742ce8c110b989d7f32', '5715', 0, '2022-10-03 05:58:22', 2),
@@ -341,7 +362,8 @@ ALTER TABLE `doctors`
 -- Constraints for table `fetus`
 --
 ALTER TABLE `fetus`
-  ADD CONSTRAINT `fk_fetus_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_fetus_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_patient_fetus_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `heart_rate`

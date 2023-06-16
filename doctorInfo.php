@@ -91,7 +91,7 @@
             <div class="hamburger-container">
                 <i class="bi bi-list"></i>
             </div>
-            <div class="user-info-wrap card-display">
+            <div class="user-info-wrap card-display update-info-form-container">
                 <div class="user-info-container">
 
                     <form action="./src/doctor/updateDoctorInfo.php" method="POST" enctype="multipart/form-data">
@@ -148,9 +148,26 @@
 
                         </div>
                         <div class="login-btn-container update-btn-container">
-                <button class="login-btn update-btn">Update</button>
-              </div>
+                            <button class="login-btn update-btn">Update</button>
+                        </div>
                     </form>
+                </div>
+
+                <div class="change-password-container">
+                    <div class="user-info-header">
+                        <p>Change Password:</p>
+                    </div>
+                    <div class="change-password-input-container user-info-container">
+                        <label for="old-pass">Old Password:</label> <br>
+                        <input type="password" name="old-pass" id="old-pass" style="height:20px;"> <br>
+                        <label for="old-pass">New Password:</label> <br>
+                        <input type="password" name="new-pass" id="new-pass" style="height:20px;"><br>
+                        <label for="old-pass">Confirm New Password:</label> <br>
+                        <input type="password" name="confirm-new-pass" id="confirm-new-pass" style="height:20px;">
+                        <div class="login-btn-container update-btn-container" style="margin:0;">
+                            <button class="login-btn update-btn change-password-btn" style="height:35px;">Change</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -538,6 +538,7 @@ body {
 }
 
 .user-info-container form input[name="previous-pregnancies"] {
+    
     margin-left: 10px;
 }
 
@@ -1685,3 +1686,60 @@ body {
 .patient-main-menu-table{
     grid-template-columns: repeat(4, 1fr) !important;
 }
+
+.resend-btn {
+    cursor: pointer;
+    text-decoration: underline;
+    color: purple;
+    
+}
+
+.confirm-error-handling{
+    text-align: center;
+    color: purple;
+
+
+}
+
+
+.radio-btns-container{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.update-info-form-container{
+    padding-top:50px;
+}
+
+.change-password-container {
+    padding:0;
+    margin: 0;
+    width: 100%;
+    padding-top:6px;
+    color:purple;
+    padding-left:25px;
+}
+
+.change-password-input-container{
+    padding-top:15px;
+}
+
+.change-password-input-container input{
+    margin-top:10px;
+}
+@media screen and (min-width:1000px) {
+    .update-info-form-container .update-btn-container{
+        justify-content: left;
+        margin-left:35px;
+            
+    }
+
+    .update-info-form-container{
+        grid-template-columns: 1fr 1fr;
+        align-items: unset;
+        padding-top:50px;
+    }
+}
+
+

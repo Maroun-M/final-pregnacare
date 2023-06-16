@@ -29,8 +29,8 @@
   $patient = new Patient($conn);
   if (!isset($_SESSION['user_id']) || !$patient->isPatient($_SESSION['user_id'])) { // Check if the user is logged in and is patient
     echo "You don't have access to this page.";
-        header("LOCATION: ./index.php?access=unauthorized");
-        exit();
+    header("LOCATION: ./index.php?access=unauthorized");
+    exit();
   }
   if (!$patient->isUserConfirmed($_SESSION['user_id'])) {
     header("location:./confirm.php");
@@ -65,21 +65,21 @@
         <p>TESTS</p>
       </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './heartRate.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-heart-pulse-fill"></i>
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Heart Rate</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/blood_pressure_monitor.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Blood Pressure</p>
-                </div>
-            </div>
+        <div class="sidebar-nav-logo">
+          <i class="bi bi-heart-pulse-fill"></i>
+        </div>
+        <div class="sidebar-nav-name">
+          <p>Heart Rate</p>
+        </div>
+      </div>
+      <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+        <div class="sidebar-nav-logo">
+          <img src="./icons/blood_pressure_monitor.svg" alt="">
+        </div>
+        <div class="sidebar-nav-name">
+          <p>Blood Pressure</p>
+        </div>
+      </div>
       <div class="sidebar-nav-container" onclick="window.location.href = './temperature.php'">
         <div class="sidebar-nav-logo">
           <i class="bi bi-thermometer-half"></i>
@@ -159,7 +159,7 @@
       <div class="hamburger-container">
         <i class="bi bi-list"></i>
       </div>
-      <div class="user-info-wrap card-display">
+      <div class="user-info-wrap card-display update-info-form-container">
 
 
         <div class="user-info-container">
@@ -203,11 +203,13 @@
                 </select>
                 <br />
                 <label> Previous pregnancies: <span class="red">*</span></label> <br>
-                <input type="radio" name="previous-pregnancies" id="yes" value="true" checked required/> <label
-                  for="yes">Yes</label>
-                <input type="radio" name="previous-pregnancies" id="no" value="false" required/> <label for="no">No </label>
+                <div class="radio-btns-container">
+                  <input type="radio" name="previous-pregnancies" id="yes" value="true" checked required /> <label
+                    for="yes">Yes</label>
+                  <input type="radio" name="previous-pregnancies" id="no" value="false" required /> <label for="no">No
+                  </label>
+                </div>
 
-                <br />
                 <label for="LMP">Last Menstrual Period: <span class="red">*</span>
                   <input type="date" name="LMP" required></label>
                 <br />
@@ -223,12 +225,30 @@
                   <input type="checkbox" name="hypertension" value="true"><span class="checkbox-custom"></span>
                   Hypertension
                 </label>
+
               </div>
               <div class="login-btn-container update-btn-container">
                 <button class="login-btn update-btn">Update</button>
               </div>
           </form>
 
+        </div>
+
+      </div>
+      <div class="change-password-container">
+        <div class="user-info-header">
+          <p>Change Password:</p>
+        </div>
+        <div class="change-password-input-container user-info-container">
+          <label for="old-pass">Old Password:</label> <br>
+          <input type="password" name="old-pass" id="old-pass" style="height:20px;"> <br>
+          <label for="old-pass">New Password:</label> <br>
+          <input type="password" name="new-pass" id="new-pass" style="height:20px;"><br>
+          <label for="old-pass">Confirm New Password:</label> <br>
+          <input type="password" name="confirm-new-pass" id="confirm-new-pass" style="height:20px;">
+          <div class="login-btn-container update-btn-container" style="margin:0;">
+                <button class="login-btn update-btn change-password-btn" style="height:35px;">Change</button>
+              </div>
         </div>
       </div>
     </div>
