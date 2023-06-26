@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <script src="./patientApp.js" defer></script>
+    <script src="./changePass.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
@@ -164,8 +165,10 @@
                         <input type="password" name="new-pass" id="new-pass" style="height:20px;"><br>
                         <label for="old-pass">Confirm New Password:</label> <br>
                         <input type="password" name="confirm-new-pass" id="confirm-new-pass" style="height:20px;">
+                        <p class="change-pass-feedback" style="padding-left:0; margin-left:0; margin-top:15px"></p>
                         <div class="login-btn-container update-btn-container" style="margin:0;">
-                            <button class="login-btn update-btn change-password-btn" style="height:35px;">Change</button>
+                            <button class="login-btn update-btn change-password-btn" id="change-pass-btn"
+                                style="height:35px;">Change</button>
                         </div>
                     </div>
                 </div>

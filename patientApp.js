@@ -63,6 +63,7 @@ const insert = async () => {
 window.onload = load = () => {
   if (window.location.pathname === "/ouvatech/userInfo.php") {
     insert();
+
   }
 };
 
@@ -449,8 +450,7 @@ let fetchTrimester = () => {
         validateOxygen(pregnancyStage);
       }
       if (window.location.pathname === "/ouvatech/bloodPressure.php") {
-
-      validateBP(pregnancyStage)
+        validateBP(pregnancyStage);
       }
     }
   };
