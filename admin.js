@@ -21,6 +21,7 @@ function getUsersData(page, perPage, name) {
       var response = JSON.parse(xhr.responseText);
       var totalPages = response.totalPages;
       var data = response.data;
+      console.log(data)
       let results = `<div class="header">Name</div>
         <div class="header">Age</div>
         <div class="header">Location</div>

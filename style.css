@@ -1742,4 +1742,13 @@ body {
     }
 }
 
+.sidebar {
+    z-index:5;
+}
+.navbar-wrap{
+    z-index:1;  
+}
+.navbar-mobile-container{
+    z-index: 5;
+}
 

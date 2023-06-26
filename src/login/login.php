@@ -92,7 +92,59 @@ class Login
 
    
       
-  
+    public function changePassword($userId, $currentPassword, $newPassword, $confirmPassword)
+{
+    // Check if the new password and confirm password match
+    if ($newPassword !== $confirmPassword) {
+        $response = array(
+            'success' => false,
+            'message' => 'New password and confirm password do not match.'
+        );
+        echo json_encode($response);
+        return false; // Passwords don't match
+    }
+
+    // Check if the current password matches the stored password for the user
+    $query = "SELECT password FROM users WHERE id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        $storedPassword = $row['password'];
+        
+        // Verify the current password
+        if (password_verify($currentPassword, $storedPassword)) {
+            // Generate a new password hash for the new password
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            
+            // Update the user's password in the database
+            $updateQuery = "UPDATE users SET password = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($updateQuery);
+            $stmt->bind_param("si", $newPasswordHash, $userId);
+            $stmt->execute();
+            
+            if ($stmt->affected_rows === 1) {
+                $response = array(
+                    'success' => true,
+                    'message' => 'Password changed successfully.'
+                );
+                echo json_encode($response);
+                return true; // Password change successful
+            }
+        }
+    }
+    
+    $response = array(
+        'success' => false,
+        'message' => 'Failed to change password. Please check your current password.'
+    );
+    echo json_encode($response);
+    return false; // Password change failed
+}
+
     
     
     

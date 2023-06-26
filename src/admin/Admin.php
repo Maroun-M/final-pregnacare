@@ -10,16 +10,18 @@ class Admin
 
     public function isAdmin($userId)
     {
-
         $query = "SELECT access_level FROM users WHERE id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $userId);
         $stmt->execute();
-        $stmt->bind_result($accessLevel);
-        $stmt->fetch();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $accessLevel = $row['access_level'];
         $stmt->close();
+        
         return ($accessLevel == 3);
     }
+    
     public function getUsersData($name = "", $page = 1, $perPage = 10)
     {
         // Validate and sanitize the page number

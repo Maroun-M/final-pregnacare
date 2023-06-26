@@ -239,6 +239,9 @@ class Patient
 
     // Validate BPM is within a reasonable range
     if ($bpm < 40 || $bpm > 200) {
+
+        header("LOCATION: ../../heartRate.php?error=invalidValue");
+
         return "Error: Invalid BPM value.";
     }
 
@@ -277,6 +280,8 @@ public function insert_bp($systolic, $diastolic, $user_id)
 
     // Validate systolic and diastolic are within reasonable range
     if ($systolic < 70 || $systolic > 200 || $diastolic < 40 || $diastolic > 120) {
+        header("LOCATION: ../../bloodPressure.php?error=invalidValue");
+
         return "Error: Invalid systolic or diastolic blood pressure value.";
     }
 
@@ -307,6 +312,8 @@ public function insert_bp($systolic, $diastolic, $user_id)
   {
     // Validate temperature
     if (!is_numeric($temperature) || $temperature < 34 || $temperature > 43) {
+        header("LOCATION: ../../temperature.php?error=invalidValue");
+
       return false;
     }
 
@@ -336,6 +343,8 @@ public function insert_bp($systolic, $diastolic, $user_id)
   {
     // Validate input
     if (!is_numeric($blood_oxygen) || $blood_oxygen < 0 || $blood_oxygen > 100) {
+        header("LOCATION: ../../bloodOxygen.php?error=invalidValue");
+
       return false; // Invalid input
     }
 
@@ -369,6 +378,8 @@ public function insert_bp($systolic, $diastolic, $user_id)
 
     // Validate blood glucose level
     if (!is_numeric($blood_glucose) || $blood_glucose < 0 || $blood_glucose > 100) {
+        header("LOCATION: ../../bloodGlucose.php?error=invalidValue");
+
       return false;
     }
 
@@ -395,11 +406,15 @@ public function insert_bp($systolic, $diastolic, $user_id)
 
     // Check that weight is a positive float or integer within a reasonable range
     if (!is_numeric($weight) || $weight <= 0 || $weight > 5000) {
+        header("LOCATION: ../../fetus.php?error=invalidValue");
+
       return false;
     }
 
     // Check that heart rate is a positive integer within a reasonable range
     if (!is_numeric($heart_rate) || $heart_rate <= 0 || $heart_rate > 200) {
+        header("LOCATION: ../../fetus.php?error=invalidValue");
+
       return false;
     }
 
@@ -536,7 +551,7 @@ public function insert_bp($systolic, $diastolic, $user_id)
     $user_id = $this->conn->real_escape_string($user_id);
 
     // Prepare and execute the query for each table
-    $tables = array('blood_glucose', 'blood_oxygen', 'fetus', 'blood_pressur', `heart_rate`, 'temperature', 'user_files');
+    $tables = array('blood_glucose', 'blood_oxygen', 'fetus', 'blood_pressure', 'temperature', 'user_files', 'heart_rate');
     $data = array();
 
     foreach ($tables as $table) {

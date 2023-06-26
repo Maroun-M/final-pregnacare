@@ -66,18 +66,28 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
 
         const bloodGlucoseData = data["blood_glucose"];
         const bloodOxygenData = data["blood_oxygen"];
+        const bloodPressureData = data["blood_pressure"];
+
         const fetusData = data["fetus"];
-        const hrBpData = data["hr_bp"];
+        const hrData = data["heart_rate"];
         const temperatureData = data["temperature"];
         const userFilesData = data["user_files"];
-
         const table = document.querySelector(".tests-container");
+        console.log(hrData);
         if (bloodGlucoseData.length !== 0) {
           let results = ``;
           results += `<div class="item">Blood Glucose</div>
               <div class="item">${bloodGlucoseData.glucose_level} mg/dl</div>
               <div class="item">${bloodGlucoseData.date}</div>
               <div class="item">${bloodGlucoseData.time}</div> `;
+          table.innerHTML += results;
+        }
+        if (bloodPressureData.length !== 0) {
+          let results = ``;
+          results += `<div class="item">Blood Pressure</div>
+              <div class="item">${bloodPressureData.systolic} mmHg || ${bloodPressureData.diastolic} mmHg</div>
+              <div class="item">${bloodPressureData.date}</div>
+              <div class="item">${bloodPressureData.time}</div> `;
           table.innerHTML += results;
         }
         if (bloodOxygenData.length !== 0) {
@@ -88,19 +98,13 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
               <div class="item">${bloodOxygenData.time}</div> `;
           table.innerHTML += oxygenResults;
         }
-        if (hrBpData.length !== 0) {
-          let hrData = ``;
-          hrData += `<div class="item">Heart Rate</div>
-      <div class="item">${hrBpData.bpm} BPM</div>
-      <div class="item">${hrBpData.date}</div>
-      <div class="item">${hrBpData.time}</div> `;
-          table.innerHTML += hrData;
-          let pressure = ``;
-          pressure += `<div class="item">Blood Pressure</div>
-      <div class="item">Diastolic: ${hrBpData.diastolic} mmHg || Systolic: ${hrBpData.systolic} mmHg</div>
-      <div class="item">${hrBpData.date}</div>
-      <div class="item">${hrBpData.time}</div> `;
-          table.innerHTML += pressure;
+        if (hrData.length !== 0) {
+          let hrDataContainer = ``;
+          hrDataContainer += `<div class="item">Heart Rate</div>
+          <div class="item">${hrData.BPM} BPM</div>
+          <div class="item">${hrData.date}</div>
+          <div class="item">${hrData.time}</div> `;
+          table.innerHTML += hrDataContainer;
         }
 
         const downloadLink = document.createElement("a");
@@ -125,8 +129,8 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
   <div class="item">${temperatureData.temp} °C </div>
   <div class="item">${temperatureData.date}</div>
   <div class="item">${temperatureData.time}</div> `;
-}
-table.innerHTML += tempData;
+          table.innerHTML += tempData;
+        }
 
         if (fetusData !== 0) {
           let fetusResults = ``;
@@ -391,7 +395,7 @@ if (window.location.pathname === "/ouvatech/doctorInfo.php") {
       .then((data) => {
         // Process the retrieved data here
         // Populate the inputs and select with the received data
-        if(data.length !== 0){
+        if (data.length !== 0) {
           document.getElementById("dob").value = data.date_of_birth;
           document.getElementById("location").value = data.location;
           document.getElementById("education").value = data.education;
