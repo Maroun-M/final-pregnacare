@@ -72,8 +72,8 @@
           <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
         </div>
         <div class="reset-login-container">
-          <a href="">
-            <p>Forgot Password?</p>
+          <a href="./forgotPassword.php">
+            <p >Forgot Password?</p>
           </a>
           <div class="login-btn-container">
             <button class="login-btn" id="loginBtn" disabled>LOGIN</button>
