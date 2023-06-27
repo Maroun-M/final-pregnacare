@@ -61,11 +61,11 @@
           <img src="./images/logo.jfif" alt="">
         </div>
         <h2>LOGIN</h2>
-        <p>Please enter your email and password</p>
+        <p>Please enter your email or phone number and password</p>
       </div>
       <form id="loginForm" action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
         <div class="input-container">
-          <input type="email" id="email" name="email" placeholder="Email" required> <br>
+          <input type="text" id="email" name="email" placeholder="Email" required> <br>
           <div id="emailError" class="error-message"></div>
           <input type="password" id="password" name="password" placeholder="Password" required><br>
           <div id="passwordError" class="error-message" style="color:purple;"></div>

@@ -122,17 +122,23 @@ class Registration
         // Validate form data
         $errors = $this->validate();
         if (!empty($errors)) {
-            return $errors;
+            header('Location: ../../index.php?registration=failed&error=invalidInput');
+
+            return false;
         }
 
         // Check for duplicate email
-        $email = $this->conn->real_escape_string($this->email);
-        $query = "SELECT id FROM users WHERE email='$email'";
-        $result = $this->conn->query($query);
+        $email = $this->email;
+        $phoneNumber = $this->phoneNumber;
+        $query = 'SELECT id FROM users WHERE email=? OR phone_number=?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ss", $email, $phoneNumber);
+        $stmt->execute();
+        $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $errors['email'] = "Email is already registered.";
-            echo $errors['email'];
-            return $errors;
+            header('Location: ../../index.php?registration=failed&error=duplicateEmailOrPass');
+
+            return false;
         }
 
         // Hash password
@@ -156,7 +162,7 @@ class Registration
         $query = "INSERT INTO users (first_name, last_name, phone_number, email, account_password, confirmation_code, access_level) 
               VALUES ('$firstName', '$lastName', '$phoneNumber', '$email', '$hashedPassword', '$confirmationCode', '$accessLevel')";
         $result = $this->conn->query($query);
-        $this->conn->close();
+        // $this->conn->close();
         // Send confirmation email  
 
         $mail = new PHPMailer(true);
@@ -179,8 +185,8 @@ class Registration
 
         } else {
             echo 'Message sent!';
+            return true;
         }
-        return true;
     }
 
     public function resendActivationEmail($email)
@@ -264,7 +270,7 @@ class Registration
                 );
                 header('Content-Type: application/json');
 
-                echo  json_encode($response);
+                echo json_encode($response);
             } else {
                 $response = array(
                     'message' => 'Activation email sent successfully!'

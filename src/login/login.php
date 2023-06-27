@@ -23,8 +23,8 @@ class Login
         $password = mysqli_real_escape_string($this->conn, $password);
 
         // Prepare query to select user by email
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ? OR phone_number = CONCAT('+961 ', ?)");
+        $stmt->bind_param("ss", $email, $email);
         $stmt->execute();
 
         // Get result set

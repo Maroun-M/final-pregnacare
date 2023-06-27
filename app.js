@@ -188,7 +188,7 @@ if (window.location.pathname === "/ouvatech/login.php") {
     var email = emailInput.value.trim();
     var password = passwordInput.value.trim();
 
-    var isEmailValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email.trim());
+    var isEmailValid = (/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(email.trim()) || /^\d{8}$/.test(email));
     var isPasswordValid = password.length >= 8;
 
     loginBtn.disabled = !(isEmailValid && isPasswordValid);
