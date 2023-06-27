@@ -72,9 +72,6 @@ class Patient
                WHERE user_id = $this->userId";
 
 
-
-
-
     // Execute the queries
     $this->conn->query($query2);
   }
@@ -207,7 +204,23 @@ class Patient
     $row = $result->fetch_assoc();
     return $row['hypertension'];
   }
-
+  public function getEDD()
+  {
+    $stmt = $this->conn->prepare("SELECT EDD FROM patients WHERE user_id = ?");
+    $stmt->bind_param("i", $this->userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['EDD'];
+  }  public function getGestationalAge()
+  {
+    $stmt = $this->conn->prepare("SELECT gestational_age FROM patients WHERE user_id = ?");
+    $stmt->bind_param("i", $this->userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['gestational_age'];
+  }
   // Setter for hypertension
   public function setHypertension($hypertension)
   {
@@ -223,7 +236,10 @@ class Patient
       'prevPreg' => $this->getPreviousPregnancies(),
       'LMP' => $this->getLMP(),
       'diabetic' => $this->getDiabetic(),
-      'hypertension' => $this->getHypertension()
+      'hypertension' => $this->getHypertension(),
+      'EDD' => $this->getEDD(),
+      'gest_age' => $this->getGestationalAge()
+
     );
     return $data;
   }

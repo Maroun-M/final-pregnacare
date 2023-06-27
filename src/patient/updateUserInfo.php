@@ -36,7 +36,7 @@ if(isset($_POST["dob"]) && isset($_POST["location"]) && isset($_POST["previous-p
         $patient->setHypertension(0);
     }
 
-        header("location: ../../patientMainMenu.php?update=successful");
+        header("location: ../../userInfo.php?update=successful");
 }
 
 

@@ -34,19 +34,35 @@ const insert = async () => {
       const prevPregNo = document.querySelector(
         "input[name='previous-pregnancies'][value='false']"
       );
-
+      console.log(patients);
       const diabetic = document.querySelector("input[name='diabetics']");
       const hypertension = document.querySelector("input[name='hypertension']");
       const LMP = document.querySelector("input[name='LMP']");
-      LMP.value = patients[3];
       dob.value = patients[0];
       location.value = patients[1];
-
       if (patients[2] === 0) {
         prevPregNo.checked = true;
       } else {
         prevPregYes.checked = true;
       }
+      LMP.value = patients[3];
+      console.log(LMP.value)
+      const info_data_container = document.querySelector(".form-labels");
+      const originalDate = patients[6]; // Date in "year-date-month" format
+
+      // Convert the original date string to a Date object
+      const dateParts = originalDate.split("-");
+      const year = parseInt(dateParts[0]);
+      const month = parseInt(dateParts[1]) - 1; // Month is zero-based
+      const day = parseInt(dateParts[2]);
+      const convertedDate = new Date(year, month, day);
+      const formattedDate = convertedDate.toLocaleDateString("en-GB");
+
+      info_data_container.insertAdjacentHTML("afterend", `<div class="form-labels">Gestational age: ${
+        patients[7] / 7
+      } weeks</div><div class="form-labels">Expected due date: ${formattedDate}</div>`);
+      // info_data_container.innerHTML += ``;
+
 
       if (patients[4] == 1) {
         diabetic.checked = true;
@@ -63,7 +79,6 @@ const insert = async () => {
 window.onload = load = () => {
   if (window.location.pathname === "/ouvatech/userInfo.php") {
     insert();
-
   }
 };
 

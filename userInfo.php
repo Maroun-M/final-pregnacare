@@ -172,7 +172,7 @@
               <div class="form-labels">
                 <label for="dob">Date of birth: <span class="red">*</span></label>
                 <input type="date" id="dob" name="dob" placeholder="" /> <br />
-
+  
                 <label for="location"> Location: <span class="red">*</span></label>
                 <select name="location" id="location">
                   <option value="" disabled selected>Select a city</option>
