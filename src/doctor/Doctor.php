@@ -197,9 +197,11 @@ class Doctor
 
   public function fetchDoctorsDataAsJson($userID)
 {
-    $query = "SELECT doctors.*, clinics.clinic_name, clinics.phone_number, clinics.clinic_location, clinics.clinic_id FROM doctors
-              LEFT JOIN clinics ON doctors.user_id = clinics.user_id
-              WHERE doctors.user_id = ?";
+    $query = "SELECT doctors.*, clinics.*, users.profile_picture
+    FROM users
+    JOIN doctors ON users.id = doctors.user_id
+    JOIN clinics ON doctors.user_id = clinics.user_id
+    WHERE users.id = ?;";
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("i", $userID);
     $stmt->execute();
@@ -215,6 +217,7 @@ class Doctor
         $data['education'] = $row['education'];
         $data['biography'] = $row['biography'];
         $data['date_of_birth'] = $row['date_of_birth'];
+        $data['profile_picture'] = $row['profile_picture'];
 
         // Check if the current row has clinic data
         if (!empty($row['clinic_name'])) {

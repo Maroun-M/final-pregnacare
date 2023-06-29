@@ -393,11 +393,13 @@ if (window.location.pathname === "/ouvatech/doctorInfo.php") {
         // Process the retrieved data here
         // Populate the inputs and select with the received data
         if (data.length !== 0) {
-          console.log(data);
+          const img = document.getElementById("profile_pic");
+          img.src = data.profile_picture;
           document.getElementById("dob").value = data.date_of_birth;
           document.getElementById("location").value = data.location;
           document.getElementById("education").value = data.education;
           document.getElementById("biography").value = data.biography;
+          
         }
         if (data.clinics !== 0) {
           const clinics_container = document.querySelector(
@@ -427,40 +429,54 @@ if (window.location.pathname === "/ouvatech/doctorInfo.php") {
 
           // Add event listener to the delete button
           var deleteBtn = document.querySelectorAll(".delete-clinic-btn");
+
           deleteBtn.forEach((btn) => {
             btn.addEventListener("click", () => {
-              // Get the record ID from the button's data attribute
-              var recordId = btn.dataset.id;
-              // Create a new XMLHttpRequest object
-              var xhr = new XMLHttpRequest();
-
-              // Configure the request
-              xhr.open("POST", "./src/doctor/deleteClinic.php", true);
-
-              // Set the Content-Type header for POST request
-              xhr.setRequestHeader(
-                "Content-Type",
-                "application/x-www-form-urlencoded"
+              const confirm_overlay = document.querySelector(
+                ".confirmation-overlay"
               );
+              confirm_overlay.style.display = "grid";
+              const no_btn = document.querySelector("#no-btn");
+              no_btn.addEventListener("click", () => {
+                confirm_overlay.style.display = "none";
+              });
+              // Get the data ID from the button
+              var dataId = btn.getAttribute("data-id");
+              const yes_btn = document.querySelector("#yes-btn");
+              yes_btn.addEventListener("click", () => {
+                // Get the record ID from the button's data attribute
+                var recordId = btn.dataset.id;
+                // Create a new XMLHttpRequest object
+                var xhr = new XMLHttpRequest();
 
-              // Define the request parameters
-              var params = "clinic_id=" + recordId;
+                // Configure the request
+                xhr.open("POST", "./src/doctor/deleteClinic.php", true);
 
-              // Send the request
-              xhr.send(params);
+                // Set the Content-Type header for POST request
+                xhr.setRequestHeader(
+                  "Content-Type",
+                  "application/x-www-form-urlencoded"
+                );
 
-              // Handle the response
-              xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                  if (xhr.status === 200) {
-                    // Deletion successful
-                    location.reload();
-                  } else {
-                    // Deletion failed
-                    console.error("Failed to delete record.");
+                // Define the request parameters
+                var params = "clinic_id=" + recordId;
+
+                // Send the request
+                xhr.send(params);
+
+                // Handle the response
+                xhr.onreadystatechange = function () {
+                  if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                      // Deletion successful
+                      location.reload();
+                    } else {
+                      // Deletion failed
+                      console.error("Failed to delete record.");
+                    }
                   }
-                }
-              };
+                };
+              });
             });
           });
 

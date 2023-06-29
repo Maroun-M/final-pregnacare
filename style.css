@@ -1840,3 +1840,30 @@ body {
 .user-info-container .doctor-clinics-container u{
     margin:15px 0;
 }
+.user-info-container .doctor-clinics-container input{
+    margin:5px 0;
+}
+.profile-picture-update-container{
+    padding:25px 0px 0px 0px !important;
+}
+.profile-pic-container{
+    display: grid;
+    padding:25px 0px !important;
+
+}
+
+.profile-pic-container img{
+    border-radius: 50%;
+    width:140px;
+    height:120px;
+}
+
+.profile-pic-upload-delete-container{
+    display: flex;
+    align-items: center;
+    padding:25px 0px;
+    gap:25px;
+}
+#delete-profile-btn{
+    cursor: pointer;
+}

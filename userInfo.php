@@ -14,6 +14,8 @@
     integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
   <script src="./patientApp.js" defer></script>
   <script src="./changePass.js" defer></script>
+  <script src="./profilePicture.js" defer></script>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
@@ -172,7 +174,7 @@
               <div class="form-labels">
                 <label for="dob">Date of birth: <span class="red">*</span></label>
                 <input type="date" id="dob" name="dob" placeholder="" /> <br />
-  
+
                 <label for="location"> Location: <span class="red">*</span></label>
                 <select name="location" id="location">
                   <option value="" disabled selected>Select a city</option>
@@ -233,8 +235,25 @@
               </div>
           </form>
 
+          <div class="profile-picture-update-container" style="margin-left:35px">
+            <p style="margin:unset; padding: unset;">Profile Picture: </p>
+            <div class="profile-pic-container">
+              <img id="profile_pic" src="" alt="">
+            </div>
+            <form method="POST" action="./src/data/updatePicture.php" enctype="multipart/form-data">
+              <input type="file" name="profile_picture" required accept="image/*">
+              <div class="profile-pic-upload-delete-container">
+                <div class="login-btn-container update-btn-container" style="padding:unset; margin:unset;">
+                  <button class="login-btn update-btn" style="padding:unset; margin:unset; padding:12px 20px;">Update
+                    Picture</button>
+                </div>
+                <u>
+                  <p id="delete-profile-btn">Remove Picture</p>
+                </u>
+              </div>
+            </form>
+          </div>
         </div>
-
       </div>
       <div class="change-password-container">
         <div class="user-info-header">
@@ -249,12 +268,25 @@
           <input type="password" name="confirm-new-pass" id="confirm-new-pass" style="height:20px;">
           <p class="change-pass-feedback" style="padding-left:0; margin-left:0; margin-top:15px"></p>
           <div class="login-btn-container update-btn-container" style="margin:0;">
-                <button class="login-btn update-btn change-password-btn" id="change-pass-btn" style="height:35px;">Change</button>
+            <button class="login-btn update-btn change-password-btn" id="change-pass-btn"
+              style="height:35px;">Change</button>
           </div>
         </div>
       </div>
     </div>
 
+  </div>
+  <div class="confirmation-overlay">
+    <div class="confirmation-container">
+      <div class="confirmation-description-container">
+        Are you sure you want to delete this clinic?
+      </div>
+      <div class="confirmation-buttons-container">
+        <button class="confirmation-btn" id="yes-btn">Yes</button>
+        <button class="confirmation-btn" id="no-btn">No</button>
+
+      </div>
+    </div>
   </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"

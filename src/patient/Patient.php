@@ -166,7 +166,15 @@ class Patient
     $row = $result->fetch_assoc();
     return $row['LMP'];
   }
-
+  public function getProfilePicture()
+  {
+    $stmt = $this->conn->prepare("SELECT profile_picture FROM users WHERE id = ?");
+    $stmt->bind_param("i", $this->userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row['profile_picture'];
+  }
   // Setter for pregnancy stage
   public function setPregnancyStage($pregnancyStage)
   {
@@ -238,7 +246,8 @@ class Patient
       'diabetic' => $this->getDiabetic(),
       'hypertension' => $this->getHypertension(),
       'EDD' => $this->getEDD(),
-      'gest_age' => $this->getGestationalAge()
+      'gest_age' => $this->getGestationalAge(),
+      'profile_picture' => $this->getProfilePicture()
 
     );
     return $data;

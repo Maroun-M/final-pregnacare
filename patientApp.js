@@ -59,7 +59,7 @@ const insert = async () => {
       const formattedDate = convertedDate.toLocaleDateString("en-GB");
 
       info_data_container.insertAdjacentHTML("afterend", `<div class="form-labels">Gestational age: ${
-        patients[7] / 7
+        (patients[7] / 7).toFixed()
       } weeks</div><div class="form-labels">Expected due date: ${formattedDate}</div>`);
       // info_data_container.innerHTML += ``;
 
@@ -70,6 +70,8 @@ const insert = async () => {
       if (patients[5] == 1) {
         hypertension.checked = true;
       }
+      const img = document.querySelector("#profile_pic");
+      img.src = patients[8];
     }
   } catch (error) {
     console.log(error);
