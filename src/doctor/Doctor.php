@@ -53,67 +53,89 @@ class Doctor
     return $result->num_rows > 0;
   }
 
-  public function insertDoctorData($user_id, $location, $education, $clinic_number, $clinic_name, $date_of_birth)
+  public function insertDoctorData($user_id, $location, $education, $biography, $date_of_birth, $clinic_names = [], $clinic_phone_numbers = [], $clinic_locations = [])
   {
     // Validate input fields
-    if (empty($user_id) || empty($location) || empty($education) || empty($clinic_number) || empty($clinic_name) || empty($date_of_birth)) {
-      // One or more fields are empty, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
-    }
+    $errors = [];
+
     if (empty($user_id) || !is_numeric($user_id) || $user_id <= 0) {
-      // User ID is not a positive integer, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
-    }
-    if (empty($location) || !is_string($location)) {
-      // Location is not a non-empty string, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
-    }
-    if (empty($education) || !is_string($education)) {
-      // Education is not a non-empty string, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
-    }
-    // Validate phone number
-    if (empty($clinic_number)) {
-      $errors['phoneNumber'] = "Phone number is required.";
-    } elseif (!preg_match("/^\+(?:[0-9] ?){6,14}[0-9]$/", $clinic_number)) {
-      $errors['phoneNumber'] = "Invalid phone number.";
-    }
-    if (empty($clinic_name) || !is_string($clinic_name)) {
-      // Clinic name is not a non-empty string, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
-    }
-    if (empty($date_of_birth) || !DateTime::createFromFormat('Y-m-d', $date_of_birth)) {
-      // Date of birth is not a valid date in the format YYYY-MM-DD, handle the error as appropriate (e.g. display an error message to the user)
-      return false;
+      $errors['user_id'] = "Invalid user ID.";
     }
 
+    if (empty($location) || !is_string($location)) {
+      $errors['location'] = "Invalid location.";
+    }
+
+    if (empty($education) || !is_string($education)) {
+      $errors['education'] = "Invalid education.";
+    }
+
+    if (empty($biography) || !is_string($biography)) {
+      $errors['biography'] = "Invalid biography.";
+    }
+
+    if (empty($date_of_birth) || !DateTime::createFromFormat('Y-m-d', $date_of_birth)) {
+      $errors['date_of_birth'] = "Invalid date of birth. Please use the format YYYY-MM-DD.";
+    }
+
+    // Handle validation errors
+    if (!empty($errors)) {
+      return $errors; // or throw an exception with the errors
+    }
+
+
+
     // Sanitize input fields
-    $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
     $location = filter_var($location, FILTER_SANITIZE_STRING);
     $education = filter_var($education, FILTER_SANITIZE_STRING);
-    $clinic_number = filter_var($clinic_number, FILTER_SANITIZE_STRING);
-    $clinic_name = filter_var($clinic_name, FILTER_SANITIZE_STRING);
+    $biography = filter_var($biography, FILTER_SANITIZE_STRING);
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
     // Check if a record with the given user_id already exists
     if ($this->has_doctor_record($user_id)) {
       // A record already exists, update it with the new data
-      $sql = "UPDATE doctors SET location = ?, education = ?, clinic_number = ?, clinic_name = ?, date_of_birth = ? WHERE user_id = ?";
+      $sql = "UPDATE doctors SET location = ?, education = ?, biography = ?, date_of_birth = ? WHERE user_id = ?";
       $stmt = $this->conn->prepare($sql);
-      $stmt->bind_param("sssssi", $location, $education, $clinic_number, $clinic_name, $date_of_birth, $user_id);
+      $stmt->bind_param("ssssi", $location, $education, $biography, $date_of_birth, $user_id);
     } else {
       // No record exists, insert a new one with the provided data
-      $sql = "INSERT INTO doctors (user_id, location, education, clinic_number, clinic_name, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)";
+      $sql = "INSERT INTO doctors (user_id, location, education, biography, date_of_birth) VALUES (?, ?, ?, ?, ?)";
       $stmt = $this->conn->prepare($sql);
-      $stmt->bind_param("isssss", $user_id, $location, $education, $clinic_number, $clinic_name, $date_of_birth);
+      $stmt->bind_param("issss", $user_id, $location, $education, $biography, $date_of_birth);
     }
-
+    
     // Execute the prepared statement
+    if ($stmt->execute() && $clinic_names != null && $clinic_phone_numbers != null && $clinic_locations != null) {
+      // Validate clinic inputs
+      if (empty($clinic_names) || !is_array($clinic_names) || count($clinic_names) === 0) {
+        return false;
+      }
+
+      if (empty($clinic_phone_numbers) || !is_array($clinic_phone_numbers) || count($clinic_phone_numbers) === 0) {
+        return false;
+      }
+
+      if (empty($clinic_locations) || !is_array($clinic_locations) || count($clinic_locations) === 0) {
+        return false;
+      }
+      // Insert doctor clinics
+      $clinic_count = min(count($clinic_names), count($clinic_phone_numbers), count($clinic_locations));
+      for ($i = 0; $i < $clinic_count; $i++) {
+        $clinic_name = $clinic_names[$i];
+        $clinic_phone_number = $clinic_phone_numbers[$i];
+        $clinic_location = $clinic_locations[$i];
+
+        $sql = "INSERT INTO clinics (user_id, clinic_name, phone_number, clinic_location) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("isss", $user_id, $clinic_name, $clinic_phone_number, $clinic_location);
+        $stmt->execute();
+      }
+
+      return true;
+    }
     if ($stmt->execute()) {
-      // Insert/update successful
       return true;
     } else {
-      // Insert/update failed, handle the error as appropriate (e.g. log the error or display an error message to the user)
       return false;
     }
   }
@@ -173,25 +195,116 @@ class Doctor
   }
 
 
-  public function fetchDoctorsDataAsJson($userID) {
-    $query = "SELECT * FROM doctors WHERE user_id = ?";
+  public function fetchDoctorsDataAsJson($userID)
+{
+    $query = "SELECT doctors.*, clinics.clinic_name, clinics.phone_number, clinics.clinic_location, clinics.clinic_id FROM doctors
+              LEFT JOIN clinics ON doctors.user_id = clinics.user_id
+              WHERE doctors.user_id = ?";
     $stmt = $this->conn->prepare($query);
     $stmt->bind_param("i", $userID);
     $stmt->execute();
     $result = $stmt->get_result();
 
     $data = array();
+    $clinics = array();
 
     while ($row = $result->fetch_assoc()) {
-      $data = $row;
+        $data['doctor_id'] = $row['doctor_id'];
+        $data['user_id'] = $row['user_id'];
+        $data['location'] = $row['location'];
+        $data['education'] = $row['education'];
+        $data['biography'] = $row['biography'];
+        $data['date_of_birth'] = $row['date_of_birth'];
+
+        // Check if the current row has clinic data
+        if (!empty($row['clinic_name'])) {
+            $clinic['clinic_name'] = $row['clinic_name'];
+            $clinic['clinic_number'] = $row['phone_number'];
+            $clinic['clinic_location'] = $row['clinic_location'];
+            $clinic['clinic_id'] = $row['clinic_id'];
+
+            $clinics[] = $clinic;
+        }
     }
+
+    // Assign clinics array to the data array
+    $data['clinics'] = $clinics;
 
     // Set the appropriate header for JSON response
     header('Content-Type: application/json');
 
     // Echo the data as JSON
     echo json_encode($data);
-  }
+}
+
+public function deleteClinicRecord($clinic_id, $user_id)
+{
+    // Prepare the delete query
+    $query = "DELETE FROM clinics WHERE clinic_id = ? AND user_id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("ii", $clinic_id, $user_id);
+
+    // Execute the delete query
+    if ($stmt->execute()) {
+        // Deletion successful
+        return true;
+    } else {
+        // Deletion failed
+        return false;
+    }
+}
+
+
+  public function updateClinicRecord($user_id, $clinic_id, $clinic_name, $phone_number, $clinic_location)
+{
+    // Validate input fields
+    $errors = [];
+
+    if (empty($user_id) || !is_numeric($user_id) || $user_id <= 0) {
+        $errors['user_id'] = "Invalid user ID.";
+    }
+
+    if (empty($clinic_id) || !is_numeric($clinic_id) || $clinic_id <= 0) {
+        $errors['clinic_id'] = "Invalid clinic ID.";
+    }
+
+    if (empty($clinic_name) || !is_string($clinic_name)) {
+        $errors['clinic_name'] = "Invalid clinic name.";
+    }
+
+    if (empty($phone_number) || !is_string($phone_number)) {
+        $errors['phone_number'] = "Invalid phone number.";
+    }
+
+    if (empty($clinic_location) || !is_string($clinic_location)) {
+        $errors['clinic_location'] = "Invalid clinic location.";
+    }
+
+    // Handle validation errors
+    if (!empty($errors)) {
+        return $errors; // or throw an exception with the errors
+    }
+
+    // Sanitize input fields
+    $clinic_name = filter_var($clinic_name, FILTER_SANITIZE_STRING);
+    $phone_number = filter_var($phone_number, FILTER_SANITIZE_STRING);
+    $clinic_location = filter_var($clinic_location, FILTER_SANITIZE_STRING);
+
+    // Update the clinic record
+    $query = "UPDATE clinics SET clinic_name = ?, phone_number = ?, clinic_location = ? WHERE user_id = ? AND clinic_id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("sssii", $clinic_name, $phone_number, $clinic_location, $user_id, $clinic_id);
+
+    if ($stmt->execute()) {
+        // Update successful
+        return true;
+    } else {
+        // Update failed
+        return false;
+    }
+}
+
+
 }
 
 ?>

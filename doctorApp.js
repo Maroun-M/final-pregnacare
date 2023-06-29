@@ -73,7 +73,6 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
         const temperatureData = data["temperature"];
         const userFilesData = data["user_files"];
         const table = document.querySelector(".tests-container");
-        console.log(hrData);
         if (bloodGlucoseData.length !== 0) {
           let results = ``;
           results += `<div class="item">Blood Glucose</div>
@@ -213,8 +212,6 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
         <div class="header ">Date</div>
         <div class="header ">Time</div>`;
         testsData.forEach((data) => {
-          console.log(data);
-
           if (dataType === "Blood Pressure") {
             results += `<div class="item">Diastolic: ${data.diastolic} mmHg Systolic: ${data.systolic} mmHg</div>
                   <div class="item">${data.date}</div>
@@ -396,11 +393,127 @@ if (window.location.pathname === "/ouvatech/doctorInfo.php") {
         // Process the retrieved data here
         // Populate the inputs and select with the received data
         if (data.length !== 0) {
+          console.log(data);
           document.getElementById("dob").value = data.date_of_birth;
           document.getElementById("location").value = data.location;
           document.getElementById("education").value = data.education;
-          document.getElementById("clinic_name").value = data.clinic_name;
-          document.getElementById("clinic_number").value = data.clinic_number;
+          document.getElementById("biography").value = data.biography;
+        }
+        if (data.clinics !== 0) {
+          const clinics_container = document.querySelector(
+            ".doctor-clinics-container"
+          );
+          let results = ``;
+          let index = 1;
+          data.clinics.forEach((clinic) => {
+            results += `
+            <p><u>Clinic ${index}:</u></p>
+
+            <label for="clinic_name">Clinic Name: </label>
+            <input type="text" id="clinic_name${clinic.clinic_id}" name="clinic_name" placeholder="" required value="${clinic.clinic_name}" /> <br />
+            <label for="clinic_number">Clinic Phone Number: </label>
+            <input type="text" id="clinic_number${clinic.clinic_id}" name="clinic_number" placeholder=""  required value="${clinic.clinic_number}"/> <br />
+            <label for="clinic_location">Clinic Location: </label>
+            <input type="text" id="clinic_location${clinic.clinic_id}" name="clinic_location" placeholder="" required value="${clinic.clinic_location}"/> <br />
+            <div class="edit-remove-btns-container">
+                <p ><u class="delete-clinic-btn" data-id="${clinic.clinic_id}">Delete</u></p>
+                <p ><u class="edit-clinic-btn" data-id="${clinic.clinic_id}">Edit</u></p>
+
+            </div>
+            `;
+            index++;
+          });
+          clinics_container.innerHTML = results;
+
+          // Add event listener to the delete button
+          var deleteBtn = document.querySelectorAll(".delete-clinic-btn");
+          deleteBtn.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              // Get the record ID from the button's data attribute
+              var recordId = btn.dataset.id;
+              // Create a new XMLHttpRequest object
+              var xhr = new XMLHttpRequest();
+
+              // Configure the request
+              xhr.open("POST", "./src/doctor/deleteClinic.php", true);
+
+              // Set the Content-Type header for POST request
+              xhr.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+              );
+
+              // Define the request parameters
+              var params = "clinic_id=" + recordId;
+
+              // Send the request
+              xhr.send(params);
+
+              // Handle the response
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                    // Deletion successful
+                    location.reload();
+                  } else {
+                    // Deletion failed
+                    console.error("Failed to delete record.");
+                  }
+                }
+              };
+            });
+          });
+
+          // Add event listener to the edit button
+          var editBtn = document.querySelectorAll(".edit-clinic-btn");
+          editBtn.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              // Get the record ID from the button's data attribute
+              var recordId = btn.dataset.id;
+
+              // Get the input field values
+              var clinicName = document.getElementById(
+                `clinic_name${recordId}`
+              ).value;
+              var clinicNumber = document.getElementById(
+                `clinic_number${recordId}`
+              ).value;
+              var clinicLocation = document.getElementById(
+                `clinic_location${recordId}`
+              ).value;
+              // Create a new XMLHttpRequest object
+              var xhr = new XMLHttpRequest();
+
+              // Configure the request
+              xhr.open("POST", "./src/doctor/updateClinic.php", true);
+
+              // Set the Content-Type header for POST request
+              xhr.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+              );
+
+              // Define the request parameters
+              var params = `clinic_id=${recordId}&clinic_name=${clinicName}&clinic_number=${clinicNumber}&clinic_location=${clinicLocation}`;
+
+              // Send the request
+              xhr.send(params);
+
+              // Handle the response
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                  if (xhr.status === 200) {
+                    // Update successful
+                    location.reload();
+                    // Reload the page or perform any necessary actions
+                  } else {
+                    // Update failed
+                    console.error("Failed to update record.");
+                  }
+                }
+              };
+            });
+          });
         }
       })
       .catch((error) => {
@@ -408,4 +521,52 @@ if (window.location.pathname === "/ouvatech/doctorInfo.php") {
         console.error("Error:", error);
       });
   });
+
+  function addClinicFields() {
+    var clinicsContainer = document.querySelector(".form-labels");
+
+    var brElement = document.createElement("br");
+
+    var nameLabel = document.createElement("label");
+    nameLabel.setAttribute("for", "clinic_name[]");
+    nameLabel.innerHTML = 'Clinic Name: <span class="red">*</span>';
+
+    var nameInput = document.createElement("input");
+    nameInput.setAttribute("type", "text");
+    nameInput.setAttribute("name", "clinic_name[]");
+    nameInput.setAttribute("required", "required");
+
+    var numberLabel = document.createElement("label");
+    numberLabel.setAttribute("for", "clinic_number[]");
+    numberLabel.innerHTML = 'Clinic Phone Number: <span class="red">*</span>';
+
+    var numberInput = document.createElement("input");
+    numberInput.setAttribute("type", "text");
+    numberInput.setAttribute("name", "clinic_number[]");
+    numberInput.setAttribute("required", "required");
+
+    var locationLabel = document.createElement("label");
+    locationLabel.setAttribute("for", "clinic_location[]");
+    locationLabel.innerHTML = 'Clinic Location: <span class="red">*</span>';
+
+    var locationInput = document.createElement("input");
+    locationInput.setAttribute("type", "text");
+    locationInput.setAttribute("name", "clinic_location[]");
+    locationInput.setAttribute("required", "required");
+
+    clinicsContainer.appendChild(brElement.cloneNode(false));
+    clinicsContainer.appendChild(nameLabel);
+    clinicsContainer.appendChild(nameInput);
+    clinicsContainer.appendChild(brElement.cloneNode(false));
+    clinicsContainer.appendChild(numberLabel);
+    clinicsContainer.appendChild(numberInput);
+    clinicsContainer.appendChild(brElement.cloneNode(false));
+    clinicsContainer.appendChild(locationLabel);
+    clinicsContainer.appendChild(locationInput);
+    clinicsContainer.appendChild(brElement);
+  }
+
+  const addClinicBtn = document.querySelector(".add-clinic-btn");
+  addClinicBtn.addEventListener("click", addClinicFields);
+  // delete clinic
 }

@@ -102,10 +102,10 @@
                         <div class="user-info-input">
                             <div class="form-labels">
                                 <label for="dob">Date of birth: <span class="red">*</span></label>
-                                <input type="date" id="dob" name="dob" placeholder="" /> <br />
+                                <input type="date" id="dob" name="dob" placeholder="" required /> <br />
 
                                 <label for="location"> Location: <span class="red">*</span></label>
-                                <select name="location" id="location">
+                                <select name="location" id="location" required>
                                     <option value="" disabled selected>Select a city</option>
                                     <option value="Beirut">Beirut</option>
                                     <option value="Tripoli">Tripoli</option>
@@ -134,26 +134,34 @@
                                     <option value="Baalbek">Baalbek</option>
                                 </select>
                                 <br />
-                                <label for="education">Education: <span class="red">*</span></label>
-                                <input type="text" id="education" name="education"><br>
+                                <label for="education">Education: <span class="red">*</span></label><br>
+                                <textarea type="text" id="education" name="education" required> </textarea><br>
+                                <label for="biography">Biography: <span class="red">*</span></label><br>
+                                <textarea type="text" id="biography" name="biography" required></textarea>
 
-                                <label for="clinic_name">Clinic Name: <span class="red">*</span></label>
-                                <input type="text" id="clinic_name" name="clinic_name"><br>
 
-                                <label for="clinic_number">Clinic Phone Number: <span class="red">*</span></label>
-                                <input type="text" id="clinic_number" name="clinic_number"><br>
+
+                                
 
 
                             </div>
 
 
                         </div>
+                        <span class="add-clinic-btn-container">
+                            <u>
+                                <p class="add-clinic-btn">Add New Clinic</p>
+                            </u>
+                        </span>
                         <div class="login-btn-container update-btn-container">
                             <button class="login-btn update-btn">Update</button>
                         </div>
                     </form>
+                    <div class="doctor-clinics-container form-labels" >
+    
+                    </div>
                 </div>
-
+                
                 <div class="change-password-container">
                     <div class="user-info-header">
                         <p>Change Password:</p>

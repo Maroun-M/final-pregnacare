@@ -163,20 +163,18 @@
             <div class="hamburger-container">
                 <i class="bi bi-list"></i>
             </div>
-            <div class="user-info-wrap card-display doctors-table" >
+            <div class="user-info-wrap card-display doctors-table">
                 <div class="doctor-list-data">
+                    <div class="grid-item grid-header">Profile</div>
+
                     <div class="grid-item grid-header">Name</div>
                     <div class="grid-item grid-header">Phone Number</div>
                     <div class="grid-item grid-header">Education</div>
-
-                    <div class="grid-item grid-header">Clinic Name</div>
-                    <div class="grid-item grid-header">Clinic Number</div>
                     <div class="grid-item grid-header">Location</div>
-
                     <div class="grid-item grid-header">Pick Doctor</div>
-                     
+
                 </div>
-               
+
                 <div class="page-btns-container">
 
                 </div>

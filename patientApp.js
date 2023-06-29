@@ -136,14 +136,14 @@ let displayDrs = (doctors) => {
   const doctorsData = document.querySelector(".doctor-list-data");
   let results = ``;
   if (doctors.length !== 0) {
+    console.log(doctors)
     doctors.forEach((dr) => {
-      results += `<div class="grid-item doctor-info">Dr. ${dr.name}</div>
+      results += `
+      <div class="grid-item doctor-info view-profile-btn" data-id="${dr.doctor_id}"><u>View Profile</u></div>
+
+      <div class="grid-item doctor-info" >Dr. ${dr.name}</div>
       <div class="grid-item doctor-info">${dr.phone_number}</div>
-      <div class="grid-item doctor-info">${dr.education}</div>
-  
-      <div class="grid-item doctor-info">${dr.clinic_name}</div>
-      <div class="grid-item doctor-info">${dr.clinic_number}</div>
-  
+      <div class="grid-item doctor-info">${dr.education}</div>  
       <div class="grid-item doctor-info">${dr.location}</div>
       <div class="grid-item doctor-info">
           <button class="choose-doctor-btn" data-id="${dr.doctor_id}">Choose</button>

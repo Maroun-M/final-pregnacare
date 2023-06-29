@@ -11,12 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the input fields from the form
     $user_id = $_SESSION["user_id"];
     $location = $_POST["location"];
+    $biography = $_POST["biography"];
     $education = $_POST["education"];
-    $clinic_number = $_POST["clinic_number"];
-    $clinic_name = $_POST["clinic_name"];
     $date_of_birth = $_POST["dob"];
+    $clinic_name = $_POST["clinic_name"];
+    $clinic_number = $_POST["clinic_number"];
+    $clinic_location = $_POST["clinic_location"];
     // Call the insertOrUpdateData method to insert or update the data in the database
-    if ($doctor->insertDoctorData($user_id, $location, $education, $clinic_number, $clinic_name, $date_of_birth)) {
+    if ($doctor->insertDoctorData($user_id, $location, $education, $biography, $date_of_birth, $clinic_name, $clinic_number, $clinic_location )) {
       header("location: ../../doctorInfo.php?update=success");
     } else {
       // Insert or update failed

@@ -515,7 +515,7 @@ body {
 
 }
 
-.user-info-container input, .user-info-container select {
+.user-info-container input, .user-info-container select, .user-info-container textarea {
     border-radius: 3px;
     border: 1px solid rgb(194, 186, 186);
     background-color: #f5e7e73a;
@@ -538,7 +538,7 @@ body {
 }
 
 .user-info-container form input[name="previous-pregnancies"] {
-    
+
     margin-left: 10px;
 }
 
@@ -853,6 +853,11 @@ body {
 
 .grid-container::-webkit-scrollbar, .doctor-list-data::-webkit-scrollbar {
     display: none;
+}
+
+.doctor-list-data {
+    grid-template-columns: repeat(6, auto);
+
 }
 
 .grid-item {
@@ -1339,7 +1344,7 @@ body {
 
 
 .ouvatech-img-container {
-    padding:0 20px;
+    padding: 0 20px;
     height: 100%;
     width: 100%;
     display: grid;
@@ -1382,12 +1387,14 @@ body {
     letter-spacing: 1px;
 }
 
-.nav-btns-container p , .nav-btns-mobile-container p{
-    font-family: unset;font-family: 'Roboto Condensed', sans-serif;
+.nav-btns-container p, .nav-btns-mobile-container p {
+    font-family: unset;
+    font-family: 'Roboto Condensed', sans-serif;
     cursor: pointer;
     position: relative;
     display: inline-block;
-  }
+}
+
 .nav-btns-container p:before {
     content: "";
     position: absolute;
@@ -1404,87 +1411,101 @@ body {
 .nav-btns-container p:hover:before {
     width: 100%;
 }
+
 .nav-btns-container p:hover {
-    color:#fff;
+    color: #fff;
 }
+
 .nav-link {
     padding: 0;
     margin: 0;
 }
+
 .nav-btns-container a, .nav-btns-container a:hover, .nav-btns-mobile-container a, .nav-btns-mobile-container a:hover {
-    all:unset;
+    all: unset;
 }
+
 .front {
     position: relative;
 }
-.home-list{
-    display:none;
-    color:white
+
+.home-list {
+    display: none;
+    color: white
 }
 
-.navbar-overlay{
+.navbar-overlay {
     display: none;
 }
 
 
 @media screen and (max-width:700px) {
-    .navbar-container{
-        padding: 10px 0 0 0 ;
+    .navbar-container {
+        padding: 10px 0 0 0;
     }
-    .nav-btns-container{
+
+    .nav-btns-container {
         justify-content: flex-end;
-        padding-right:15px;
+        padding-right: 15px;
     }
-    .nav-btns-container p{
-        display:none !important;
+
+    .nav-btns-container p {
+        display: none !important;
     }
-    .home-list{
-        display:block;
-        color:white;
+
+    .home-list {
+        display: block;
+        color: white;
         cursor: pointer;
     }
 
-    .navbar-overlay{
+    .navbar-overlay {
         display: block;
         position: fixed;
         width: 100%;
-        height:100%;
-        top:0;
-        left:0;
-        visibility:hidden;
+        height: 100%;
+        top: 0;
+        left: 0;
+        visibility: hidden;
         display: grid;
         grid-template-columns: 60% 40%;
         transition: visibility 0.3s ease-in-out;
     }
-    .navbar-mobile-container{
+
+    .navbar-mobile-container {
         background-color: #c019b5d9;
-        height:100vh;
+        height: 100vh;
         z-index: 3;
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
     }
-   .empty-div{
-    height: 100vh;
-   }
+
+    .empty-div {
+        height: 100vh;
+    }
+
     .nav-visible {
         visibility: visible;
     }
-    .nav-active{
-        
+
+    .nav-active {
+
         transform: translateX(0%);
     }
+
     .nav-btns-mobile-container {
         display: flex;
         flex-direction: column;
         padding: 25px 10px;
-        gap:12px;
-        margin:0;
+        gap: 12px;
+        margin: 0;
 
     }
-    .nav-link{
-        padding:0 !important;
-        
-        
+
+    .nav-link {
+        padding: 0 !important;
+
+
     }
 
     .navbar-overlay {
@@ -1492,11 +1513,11 @@ body {
         z-index: 1;
     }
 
-   
+
 }
 
 
-.navbar-wrap{
+.navbar-wrap {
     z-index: 6;
     position: fixed;
 }
@@ -1507,38 +1528,41 @@ body {
     grid-template-columns: repeat(6, 1fr);
 }
 
-.search-container{
+.search-container {
     padding: 15px 0 0 15px;
 }
 
-.search-container input{
+.search-container input {
     padding-left: 8px;
     border-radius: 3px;
-    width:200px;
-    height:25px;
-    border: 1px solid rgba(97, 43, 94, 0.525);;
+    width: 200px;
+    height: 25px;
+    border: 1px solid rgba(97, 43, 94, 0.525);
+    ;
 }
 
-.search-container input::placeholder{
-    color:gray;
+.search-container input::placeholder {
+    color: gray;
 }
-.admin-patients-container{
+
+.admin-patients-container {
     position: relative;
 }
-.pagination-container, .dr-pagination-container{
+
+.pagination-container, .dr-pagination-container {
     display: flex;
     justify-content: center;
     width: 100%;
-    height:75px;
+    height: 75px;
     position: absolute;
     bottom: 0;
-    padding:25px 0;
+    padding: 25px 0;
 }
 
-.pagination-container button, .dr-pagination-container button{
+.pagination-container button, .dr-pagination-container button {
     background-color: rgba(246, 209, 248, 0.26);
-    border:1px solid rgb(84, 12, 77);
-    padding:1px 4px;
+    border: 1px solid rgb(84, 12, 77);
+    padding: 1px 4px;
     border-radius: 2px;
     cursor: pointer;
 }
@@ -1546,25 +1570,27 @@ body {
 .item a {
     all: unset;
 }
-.admin-patients-holder, .admin-doctors-holder{
+
+.admin-patients-holder, .admin-doctors-holder {
     padding-bottom: 75px;
 }
+
 .admin-patients-container, .admin-doctors-container {
     min-height: 100vh;
     max-height: auto;
 }
 
-.admin-doctors-holder{
+.admin-doctors-holder {
     grid-template-columns: repeat(8, 1fr);
 }
 
-.admin-doctors-container{
+.admin-doctors-container {
     position: relative;
 }
 
 
 
-.confirmation-overlay{
+.confirmation-overlay {
     position: fixed;
     display: grid;
     grid-template-columns: 1fr;
@@ -1573,94 +1599,99 @@ body {
     width: 100%;
     height: 100%;
     background-color: #9593932d;
-    
+
     display: none;
 
 }
 
-.confirmation-container{
-    border:1px solid rgba(122, 119, 119, 0.452);
+.confirmation-container {
+    border: 1px solid rgba(122, 119, 119, 0.452);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
-    background: rgb(245, 243, 243);    border-radius: 5px;
-    width:25%;
-    height:25%;
-    color:purple;
-    padding:20px;
+    background: rgb(245, 243, 243);
+    border-radius: 5px;
+    width: 25%;
+    height: 25%;
+    color: purple;
+    padding: 20px;
     display: grid;
     justify-content: center;
 }
 
 @media screen and (max-width:1100px) {
     .confirmation-container {
-        width:45%;
+        width: 45%;
     }
 }
 
 @media screen and (max-width:600px) {
     .confirmation-container {
-        width:65%;
+        width: 65%;
     }
 }
+
 @media screen and (max-width:500px) {
     .confirmation-container {
-        width:75%;
+        width: 75%;
     }
 }
-.confirmation-buttons-container{
+
+.confirmation-buttons-container {
     display: flex;
-    gap:25px;
+    gap: 25px;
     justify-content: center;
 
 }
-.confirmation-btn{
-    width:35%;
+
+.confirmation-btn {
+    width: 35%;
     cursor: pointer;
-    height:50%;
-    border:1px solid black;
+    height: 50%;
+    border: 1px solid black;
     border-radius: 3px;
 }
 
-.confirmation-btn:nth-child(1){
+.confirmation-btn:nth-child(1) {
     background-color: rgb(34, 144, 34);
-    border:1px solid rgb(34, 144, 34);
-    color:white;
+    border: 1px solid rgb(34, 144, 34);
+    color: white;
     font-weight: 700;
     transition: 0.3s ease-in-out;
 }
 
-.confirmation-btn:nth-child(1):hover{
+.confirmation-btn:nth-child(1):hover {
     background-color: rgb(39, 126, 39);
 }
 
-.confirmation-btn:nth-child(2){
+.confirmation-btn:nth-child(2) {
     background-color: rgb(134, 4, 4);
-    color: white;;
+    color: white;
+    ;
     font-weight: 700;
     transition: 0.3s ease-in-out;
 
 }
 
-.confirmation-btn:nth-child(2):hover{
+.confirmation-btn:nth-child(2):hover {
     background-color: rgb(163, 43, 43);
 }
 
-.force-add-title{
+.force-add-title {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 50px;
 }
 
-.force-add-form-container{
-    padding-left:25px;
-    padding-top:35px;
+.force-add-form-container {
+    padding-left: 25px;
+    padding-top: 35px;
 }
 
-.force-add-form-container input, .force-add-form-container select{
-    padding:3px 25px 3px 5px;
+.force-add-form-container input, .force-add-form-container select {
+    padding: 3px 25px 3px 5px;
     margin: 3px 0 5px 0;
     border-radius: 4px;
-    border:1px solid rgb(160, 155, 155)
+    border: 1px solid rgb(160, 155, 155)
 }
 
 
@@ -1668,14 +1699,14 @@ body {
 
 .force-add-form-container #submit-btn-force {
     margin-top: 15px;
-    padding:0;
-    padding:10px 25px;
+    padding: 0;
+    padding: 10px 25px;
     background: rgb(174, 58, 184);
     border: 1px solid rgb(174, 58, 184);
     border-radius: 3px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
-    color:white
+    color: white
 }
 
 
@@ -1683,7 +1714,7 @@ body {
     background-color: rgb(115, 58, 121);
 }
 
-.patient-main-menu-table{
+.patient-main-menu-table {
     grid-template-columns: repeat(4, 1fr) !important;
 }
 
@@ -1691,10 +1722,10 @@ body {
     cursor: pointer;
     text-decoration: underline;
     color: purple;
-    
+
 }
 
-.confirm-error-handling{
+.confirm-error-handling {
     text-align: center;
     color: purple;
 
@@ -1702,53 +1733,110 @@ body {
 }
 
 
-.radio-btns-container{
+.radio-btns-container {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.update-info-form-container{
-    padding-top:50px;
+.update-info-form-container {
+    padding-top: 50px;
 }
 
 .change-password-container {
-    padding:0;
+    padding: 0;
     margin: 0;
     width: 100%;
-    padding-top:6px;
-    color:purple;
-    padding-left:25px;
+    padding-top: 6px;
+    color: purple;
+    padding-left: 25px;
 }
 
-.change-password-input-container{
-    padding-top:15px;
+.change-password-input-container {
+    padding-top: 15px;
 }
 
-.change-password-input-container input{
-    margin-top:10px;
+.change-password-input-container input {
+    margin-top: 10px;
 }
+
 @media screen and (min-width:1000px) {
-    .update-info-form-container .update-btn-container{
+    .update-info-form-container .update-btn-container {
         justify-content: left;
-        margin-left:35px;
-            
+        margin-left: 35px;
+
     }
 
-    .update-info-form-container{
+    .update-info-form-container {
         grid-template-columns: 1fr 1fr;
         align-items: unset;
-        padding-top:50px;
+        padding-top: 50px;
     }
 }
 
 .sidebar {
-    z-index:5;
-}
-.navbar-wrap{
-    z-index:1;  
-}
-.navbar-mobile-container{
     z-index: 5;
 }
 
+.navbar-wrap {
+    z-index: 1;
+}
+
+.navbar-mobile-container {
+    z-index: 5;
+}
+
+.view-profile-btn {
+    cursor: pointer;
+    color: purple;
+    transition: 0.3s ease-in-out;
+}
+
+.view-profile-btn:hover {
+    color: rgb(177, 82, 177);
+}
+
+.user-info-container textarea {
+    resize: none;
+    /* Disable manual resizing */
+    width: 80%;
+    height: 100px;
+    /* Set initial height to auto */
+    max-height: 200px;
+    /* Set maximum height to limit expansion */
+
+
+}
+
+ .add-clinic-btn{
+    all: unset;
+    cursor: pointer;
+}
+
+.update-info-form-container{
+    height: auto;
+    padding-bottom: 50px;
+}
+.doctor-clinics-container p{
+    margin:unset !important;
+}
+
+
+.edit-remove-btns-container{
+    display: flex;
+    gap:45px;
+    padding:5px 0 25px 0;
+}
+
+.edit-remove-btns-container u {
+    cursor: pointer;
+}
+
+.doctor-clinics-container{
+    padding:25px 0;
+    color :#842d74 ;
+}
+
+.user-info-container .doctor-clinics-container u{
+    margin:15px 0;
+}
