@@ -322,7 +322,7 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
       const dataValues1 = testsData.map((data) => data.systolic);
       const dataValues2 = testsData.map((data) => data.diastolic);
       const chart = new Chart(canvas, {
-        type: "bar",
+        type: "line",
         data: {
           labels: labels,
           datasets: [
@@ -336,8 +336,8 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
             {
               label: "Diastolic",
               data: dataValues2,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "blue",
+              borderColor: "blue",
               borderWidth: 1,
             },
           ],
@@ -353,7 +353,7 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
       const dataValues3 = testsData.map((data) => data.heart_rate);
 
       const chart = new Chart(canvas, {
-        type: "bar",
+        type: "line",
         data: {
           labels: labels,
           datasets: [
@@ -367,15 +367,15 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
             {
               label: "Weight",
               data: dataValues2,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "blue",
+              borderColor: "blue",
               borderWidth: 1,
             },
             {
               label: "Heart Rate",
               data: dataValues3,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "red",
+              borderColor: "red",
               borderWidth: 1,
             },
           ],
