@@ -1901,3 +1901,82 @@ body {
     color:#842d74;
     cursor: pointer;
 }
+
+.registration-page-wrap{
+display:grid;   
+grid-template-columns: 1.5fr 1fr;
+height: 100vh;
+}
+
+.registration-page-img-container {
+    height:90%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    border-left: 3px solid blue;
+}
+
+.registration-page-img-container img{
+    width: 100%;
+    height: 100%;
+    filter: blur(2px);
+
+}
+
+
+.registration-choices-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.registration-choices{
+    padding-left:85px ;
+    margin: 0;
+}
+.registration-choices label {
+    display: grid;
+    margin-bottom: 30px;
+    grid-template-columns: auto auto;
+    cursor: pointer;
+    width:250px;
+    margin-left: unset;
+}
+.registration-choices label input {
+    justify-self: flex-end;
+    cursor: pointer;
+}
+.registration-page-headings{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 45px;
+    font-size: 29px;
+
+}
+
+.gray-text{
+    font-weight: 500;
+    color:gray;
+    font-size: 14px;
+}
+
+
+
+#submit-reg-btn{
+    background-color: rgb(187, 84, 175);
+    border:1px solid rgb(103, 24, 91);
+    width:110px;
+    height:45px;
+    letter-spacing: 0.5px;
+    border-radius: 5px;
+    cursor: pointer;
+    color:rgb(251, 205, 244);
+    transition: 0.3s ease-in-out;
+}
+
+#submit-reg-btn:hover{
+    background-color:rgb(169, 83, 156);
+    color: white;
+}
