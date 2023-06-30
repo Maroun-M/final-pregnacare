@@ -111,7 +111,7 @@ class Admin
         $offset = ($page - 1) * $perPage;
 
         // Create the query to retrieve users
-        $query = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, TIMESTAMPDIFF(YEAR, d.date_of_birth, CURDATE()) AS age, d.location, u.phone_number, d.clinic_name, d.clinic_number, d.education, u.id FROM users u JOIN doctors d ON u.id = d.user_id WHERE u.access_level = 2";
+        $query = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, TIMESTAMPDIFF(YEAR, d.date_of_birth, CURDATE()) AS age, d.location, u.phone_number, d.education, u.id FROM users u JOIN doctors d ON u.id = d.user_id WHERE u.access_level = 2";
 
         $params = array();
         // Append search condition if name is provided
@@ -190,7 +190,7 @@ class Admin
 
         $query = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, 
                          TIMESTAMPDIFF(YEAR, d.date_of_birth, CURDATE()) AS age,
-                         d.specialization, u.phone_number
+                          u.phone_number
                   FROM doctors AS d
                   INNER JOIN users AS u ON d.user_id = u.id
                   LIMIT ?, ?";

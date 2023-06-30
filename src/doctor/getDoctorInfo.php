@@ -8,7 +8,11 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
+    if ($doctor->isDoctor($_SESSION['user_id'])){
+      $doctor->fetchDoctorsDataAsJson($_SESSION['user_id']);
+    } else {
+      $doctor->fetchDoctorsDataAsJson($_GET['dr_user_id']);
+    }
 
-    $doctor->fetchDoctorsDataAsJson($_SESSION['user_id']);
 
 ?>

@@ -34,7 +34,6 @@ const insert = async () => {
       const prevPregNo = document.querySelector(
         "input[name='previous-pregnancies'][value='false']"
       );
-      console.log(patients);
       const diabetic = document.querySelector("input[name='diabetics']");
       const hypertension = document.querySelector("input[name='hypertension']");
       const LMP = document.querySelector("input[name='LMP']");
@@ -46,7 +45,6 @@ const insert = async () => {
         prevPregYes.checked = true;
       }
       LMP.value = patients[3];
-      console.log(LMP.value)
       const info_data_container = document.querySelector(".form-labels");
       const originalDate = patients[6]; // Date in "year-date-month" format
 
@@ -58,11 +56,13 @@ const insert = async () => {
       const convertedDate = new Date(year, month, day);
       const formattedDate = convertedDate.toLocaleDateString("en-GB");
 
-      info_data_container.insertAdjacentHTML("afterend", `<div class="form-labels">Gestational age: ${
-        (patients[7] / 7).toFixed()
-      } weeks</div><div class="form-labels">Expected due date: ${formattedDate}</div>`);
+      info_data_container.insertAdjacentHTML(
+        "afterend",
+        `<div class="form-labels">Gestational age: ${(
+          patients[7] / 7
+        ).toFixed()} weeks</div><div class="form-labels">Expected due date: ${formattedDate}</div>`
+      );
       // info_data_container.innerHTML += ``;
-
 
       if (patients[4] == 1) {
         diabetic.checked = true;
@@ -138,12 +138,10 @@ let displayDrs = (doctors) => {
   const doctorsData = document.querySelector(".doctor-list-data");
   let results = ``;
   if (doctors.length !== 0) {
-    console.log(doctors)
     doctors.forEach((dr) => {
       results += `
-      <div class="grid-item doctor-info view-profile-btn" data-id="${dr.doctor_id}"><u>View Profile</u></div>
-
-      <div class="grid-item doctor-info" >Dr. ${dr.name}</div>
+      <div class="grid-item doctor-info view-profile-btn" data-id="${dr.user_id}"><u>View Profile</u></div>
+      <div class="grid-item doctor-info">Dr. ${dr.name}</div>
       <div class="grid-item doctor-info">${dr.phone_number}</div>
       <div class="grid-item doctor-info">${dr.education}</div>  
       <div class="grid-item doctor-info">${dr.location}</div>
@@ -152,6 +150,23 @@ let displayDrs = (doctors) => {
       </div>`;
     });
     doctorsData.innerHTML += results;
+
+    var viewBtns = document.querySelectorAll(".view-profile-btn");
+    viewBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        let doctorID = btn.dataset.id;
+        // Assuming you want to navigate to the "destination.html" page and add a parameter called "param" with a value of "example"
+        const destinationUrl = "./doctorProfile.php";
+        const parameterName = "ID";
+        const parameterValue = doctorID;
+
+        // Construct the new URL with the parameter
+        const urlWithParameter = `${destinationUrl}?${parameterName}=${parameterValue}`;
+
+        // Navigate to the new URL
+        window.location.href = urlWithParameter;
+      });
+    });
   }
 };
 
@@ -327,7 +342,7 @@ if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
       const dataValues1 = testsData.map((data) => data.systolic);
       const dataValues2 = testsData.map((data) => data.diastolic);
       const chart = new Chart(canvas, {
-        type: "bar",
+        type: "line",
         data: {
           labels: labels,
           datasets: [
@@ -341,8 +356,8 @@ if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
             {
               label: "Diastolic",
               data: dataValues2,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "blue",
+              borderColor: "blue",
               borderWidth: 1,
             },
           ],
@@ -358,15 +373,15 @@ if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
       const dataValues3 = testsData.map((data) => data.heart_rate);
 
       const chart = new Chart(canvas, {
-        type: "bar",
+        type: "line",
         data: {
           labels: labels,
           datasets: [
             {
               label: "Gestational Age",
               data: dataValues1,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "blue",
+              borderColor: "blue",
               borderWidth: 1,
             },
             {
@@ -379,8 +394,8 @@ if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
             {
               label: "Heart Rate",
               data: dataValues3,
-              backgroundColor: backgroundColor,
-              borderColor: borderColor,
+              backgroundColor: "red",
+              borderColor: "red",
               borderWidth: 1,
             },
           ],
@@ -442,8 +457,9 @@ let fetchTrimester = () => {
       const patientName = response.first_name + " " + response.last_name;
       if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
         const patientSection = document.querySelector("#patient-info-tab");
-        console.log(patientSection);
-        let results = `<p>Hello, ${patientName}!</p>
+        let results = `
+        <img class="profile_pic_display" src="${response.profile_picture}" alt="">
+        <p>Hello, ${patientName}!</p>
         <p>User ID: ${response.id}</p>`;
         if (response.doctor_name === null) {
           results += `<p>Current Doctor: Doctor not assigned yet</p>`;
@@ -724,7 +740,6 @@ if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
 if (window.location.pathname === "/ouvatech/fetus.php") {
   const btn = document.querySelector("#add-button");
   btn.disabled = true;
-  console.log(btn);
   function validateFetusData() {
     var fetusWeight = parseFloat(document.querySelector("#fetal-weight").value);
     var fetusHR = parseFloat(document.querySelector("#fetal-heart-rate").value);
@@ -748,3 +763,6 @@ if (window.location.pathname === "/ouvatech/fetus.php") {
 document.addEventListener("DOMContentLoaded", () => {
   fetchTrimester();
 });
+
+
+

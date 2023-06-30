@@ -11,12 +11,35 @@ if (window.location.pathname === "/ouvatech/doctorMainMenu.php") {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var patients = JSON.parse(xhr.responseText);
+        console.log(patients);
         let results = ``;
+        let hypertension;
+        let diabetic;
+        let prev_preg;
         patients.forEach((patient) => {
+          if(patient.hypertension === 1){
+            hypertension = "Hypertensive";
+          } else {
+            hypertension = "Non-hypertensive"
+          }
+          if(patient.diabetic === 1){
+            diabetic = "Diabetic";
+          } else {
+            diabetic = "Non-diabetic"
+          }
+          if(patient.previous_pregnancies === 1){
+            prev_preg = "Yes";
+          } else {
+            prev_preg = "None"
+          }
           results += `<div class="item">${patient.name}</div>
                     <div class="item">${patient.age}</div>
                     <div class="item">${patient.location}</div>
                     <div class="item">${patient.phone_number}</div>
+                    <div class="item">${patient.pregnancy_stage}</div>
+                    <div class="item">${diabetic}</div>
+                    <div class="item">${hypertension}</div>
+                    <div class="item">${prev_preg}</div>
                     
                     <div class="item "><u class="patient-records" data-id=${patient.id}>Records</u></div>`;
         });
@@ -121,8 +144,8 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
           <div class="item">${userFilesData.time}</div> `;
           table.innerHTML += filesData;
         }
-
-        if (temperatureData !== 0) {
+        console.log(temperatureData)
+        if (temperatureData.length !== 0) {
           let tempData = ``;
           tempData += `<div class="item">Temperature</div>
   <div class="item">${temperatureData.temp} °C </div>
@@ -131,7 +154,7 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
           table.innerHTML += tempData;
         }
 
-        if (fetusData !== 0) {
+        if (fetusData.length !== 0) {
           let fetusResults = ``;
           fetusResults += `<div class="item">Fetus </div>
           <div class="item">Gestational Age: ${(

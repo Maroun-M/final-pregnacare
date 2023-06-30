@@ -103,7 +103,7 @@ class Doctor
       $stmt = $this->conn->prepare($sql);
       $stmt->bind_param("issss", $user_id, $location, $education, $biography, $date_of_birth);
     }
-    
+
     // Execute the prepared statement
     if ($stmt->execute() && $clinic_names != null && $clinic_phone_numbers != null && $clinic_locations != null) {
       // Validate clinic inputs
@@ -197,51 +197,59 @@ class Doctor
 
   public function fetchDoctorsDataAsJson($userID)
 {
-    $query = "SELECT doctors.*, clinics.*, users.profile_picture
+  $query = "SELECT doctors.*, clinics.*, users.profile_picture, users.first_name, users.last_name, users.email
     FROM users
     JOIN doctors ON users.id = doctors.user_id
-    JOIN clinics ON doctors.user_id = clinics.user_id
-    WHERE users.id = ?;";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bind_param("i", $userID);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    LEFT JOIN clinics ON doctors.user_id = clinics.user_id
+    WHERE users.id = ?";
+  $stmt = $this->conn->prepare($query);
+  $stmt->bind_param("i", $userID);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-    $data = array();
-    $clinics = array();
+  $data = array();
+  $clinics = array();
 
-    while ($row = $result->fetch_assoc()) {
-        $data['doctor_id'] = $row['doctor_id'];
-        $data['user_id'] = $row['user_id'];
-        $data['location'] = $row['location'];
-        $data['education'] = $row['education'];
-        $data['biography'] = $row['biography'];
-        $data['date_of_birth'] = $row['date_of_birth'];
-        $data['profile_picture'] = $row['profile_picture'];
+  while ($row = $result->fetch_assoc()) {
+    $data['doctor_id'] = $row['doctor_id'];
+    $data['user_id'] = $row['user_id'];
+    $data['location'] = $row['location'];
+    $data['education'] = $row['education'];
+    $data['biography'] = $row['biography'];
+    $data['date_of_birth'] = $row['date_of_birth'];
+    $data['profile_picture'] = $row['profile_picture'];
+    $data['first_name'] = $row['first_name'];
+    $data['last_name'] = $row['last_name'];
+    $data['email'] = $row['email'];
 
-        // Check if the current row has clinic data
-        if (!empty($row['clinic_name'])) {
-            $clinic['clinic_name'] = $row['clinic_name'];
-            $clinic['clinic_number'] = $row['phone_number'];
-            $clinic['clinic_location'] = $row['clinic_location'];
-            $clinic['clinic_id'] = $row['clinic_id'];
+    // Check if the current row has clinic data
+    if (!empty($row['clinic_name'])) {
+      $clinic = array(); // Create a new clinic array
 
-            $clinics[] = $clinic;
-        }
+      $clinic['clinic_name'] = $row['clinic_name'];
+      $clinic['clinic_number'] = $row['phone_number'];
+      $clinic['clinic_location'] = $row['clinic_location'];
+      $clinic['clinic_id'] = $row['clinic_id'];
+
+      $clinics[] = $clinic; // Add the clinic to the clinics array
     }
+  }
 
-    // Assign clinics array to the data array
+  // Assign clinics array to the data array if it's not empty
+  if (!empty($clinics)) {
     $data['clinics'] = $clinics;
+  }
 
-    // Set the appropriate header for JSON response
-    header('Content-Type: application/json');
+  // Set the appropriate header for JSON response
+  header('Content-Type: application/json');
 
-    // Echo the data as JSON
-    echo json_encode($data);
+  // Echo the data as JSON
+  echo json_encode($data);
 }
 
-public function deleteClinicRecord($clinic_id, $user_id)
-{
+
+  public function deleteClinicRecord($clinic_id, $user_id)
+  {
     // Prepare the delete query
     $query = "DELETE FROM clinics WHERE clinic_id = ? AND user_id = ?";
     $stmt = $this->conn->prepare($query);
@@ -249,43 +257,43 @@ public function deleteClinicRecord($clinic_id, $user_id)
 
     // Execute the delete query
     if ($stmt->execute()) {
-        // Deletion successful
-        return true;
+      // Deletion successful
+      return true;
     } else {
-        // Deletion failed
-        return false;
+      // Deletion failed
+      return false;
     }
-}
+  }
 
 
   public function updateClinicRecord($user_id, $clinic_id, $clinic_name, $phone_number, $clinic_location)
-{
+  {
     // Validate input fields
     $errors = [];
 
     if (empty($user_id) || !is_numeric($user_id) || $user_id <= 0) {
-        $errors['user_id'] = "Invalid user ID.";
+      $errors['user_id'] = "Invalid user ID.";
     }
 
     if (empty($clinic_id) || !is_numeric($clinic_id) || $clinic_id <= 0) {
-        $errors['clinic_id'] = "Invalid clinic ID.";
+      $errors['clinic_id'] = "Invalid clinic ID.";
     }
 
     if (empty($clinic_name) || !is_string($clinic_name)) {
-        $errors['clinic_name'] = "Invalid clinic name.";
+      $errors['clinic_name'] = "Invalid clinic name.";
     }
 
     if (empty($phone_number) || !is_string($phone_number)) {
-        $errors['phone_number'] = "Invalid phone number.";
+      $errors['phone_number'] = "Invalid phone number.";
     }
 
     if (empty($clinic_location) || !is_string($clinic_location)) {
-        $errors['clinic_location'] = "Invalid clinic location.";
+      $errors['clinic_location'] = "Invalid clinic location.";
     }
 
     // Handle validation errors
     if (!empty($errors)) {
-        return $errors; // or throw an exception with the errors
+      return $errors; // or throw an exception with the errors
     }
 
     // Sanitize input fields
@@ -299,13 +307,13 @@ public function deleteClinicRecord($clinic_id, $user_id)
     $stmt->bind_param("sssii", $clinic_name, $phone_number, $clinic_location, $user_id, $clinic_id);
 
     if ($stmt->execute()) {
-        // Update successful
-        return true;
+      // Update successful
+      return true;
     } else {
-        // Update failed
-        return false;
+      // Update failed
+      return false;
     }
-}
+  }
 
 
 }

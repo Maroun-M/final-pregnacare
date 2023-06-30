@@ -97,11 +97,16 @@
         <i class="bi bi-list"></i>
       </div>
       <div class="patients-tables-container card-display ">
-      <div class="dr-container data-container patients-container">
+      <div class="dr-container data-container patients-container" style="grid-template-columns: repeat(9, auto);">
         <div class="header">Name</div>
         <div class="header">Age</div>
         <div class="header">Location</div>
         <div class="header">Phone Number</div>
+        <div class="header">Trimester</div>
+        <div class="header">Diabetic</div>
+        <div class="header">Hypertension</div>
+        <div class="header">Previous<br>Pregnancies</div>
+
         <div class="header">Medical Record</div>
       </div>
       

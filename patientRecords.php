@@ -60,14 +60,14 @@ if ($doctor->isDoctor($_SESSION['user_id'])) {
       <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
     </div>
     <hr class="sidebar-divider">
-    <div class="sidebar-nav-container active" onclick="window.location.href = './patientMainMenu.php'">
-      <div class="sidebar-nav-logo">
-        <i class="bi bi-house-fill"></i>
+    <div class="sidebar-nav-container active" onclick="window.location.href = './doctorMainMenu.php'">
+        <div class="sidebar-nav-logo">
+        <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="sidebar-nav-name ">
+          <p >Patients</p>
+        </div>
       </div>
-      <div class="sidebar-nav-name ">
-        <p>Home</p>
-      </div>
-    </div>
     <hr class="sidebar-divider">
 
     <div class="sidebar-header">

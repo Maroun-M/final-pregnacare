@@ -542,7 +542,7 @@ public function insert_bp($systolic, $diastolic, $user_id)
 
     // Prepare the SQL statement to join the tables and retrieve the patient data
     $stmt = $this->conn->prepare("
-    SELECT u.id, p.location, CONCAT(u.first_name, ' ', u.last_name) AS name, u.phone_number, TIMESTAMPDIFF(YEAR, p.date_of_birth, CURDATE()) AS age FROM patients p JOIN patient_doctor pd ON p.patient_id = pd.patient_id JOIN users u ON p.user_id = u.id JOIN doctors d ON pd.doctor_id = d.doctor_id WHERE d.user_id = ?;
+    SELECT u.id, p.location, CONCAT(u.first_name, ' ', u.last_name) AS name, u.phone_number,p.diabetic, p.hypertension, p.previous_pregnancies, p.pregnancy_stage, TIMESTAMPDIFF(YEAR, p.date_of_birth, CURDATE()) AS age FROM patients p JOIN patient_doctor pd ON p.patient_id = pd.patient_id JOIN users u ON p.user_id = u.id JOIN doctors d ON pd.doctor_id = d.doctor_id WHERE d.user_id = ?;
     
     ");
     // Bind the doctor ID parameter to the SQL statement
@@ -938,7 +938,7 @@ public function insert_bp($systolic, $diastolic, $user_id)
     $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
 
     // Prepare and execute the database query
-    $stmt = $this->conn->prepare("SELECT id, pregnancy_stage, first_name, last_name FROM patients, users WHERE users.id = patients.user_id AND user_id = ?");
+    $stmt = $this->conn->prepare("SELECT id, pregnancy_stage, first_name, last_name, profile_picture FROM patients, users WHERE users.id = patients.user_id AND user_id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
