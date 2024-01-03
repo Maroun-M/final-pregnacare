@@ -52,7 +52,7 @@
     }
 
 
-
+    
 
     ?>
 
@@ -61,115 +61,162 @@
     <div class="dashboard-wrapper">
 
         <!--  sidebar section -->
-        <div class="sidebar">
-            <div class="sidebar-close-btn">
-                <i class="bi bi-x-circle"></i>
-            </div>
-            <div class="sidebar-logo-container">
-                <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
-            </div>
-            <hr class="sidebar-divider">
-            <div class="sidebar-nav-container " onclick="window.location.href = './patientMainMenu.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-house-fill"></i>
+        <?php
+            if($admin->isAdmin($_SESSION['user_id'])) { ?>
+                <div class="sidebar">
+                <div class="sidebar-close-btn">
+                  <i class="bi bi-x-circle"></i>
                 </div>
-                <div class="sidebar-nav-name ">
-                    <p>Home</p>
+                <div class="sidebar-logo-container">
+                  <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
                 </div>
-            </div>
-            <hr class="sidebar-divider">
-            <div class="sidebar-header">
-                <p>TESTS</p>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './heartRate.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-heart-pulse-fill"></i>
+                <hr class="sidebar-divider">
+                <div class="sidebar-nav-container active" onclick="window.location.href = './admin.php'">
+                  <div class="sidebar-nav-logo">
+                    <i class="bi bi-people-fill"></i>
+                  </div>
+                  <div class="sidebar-nav-name ">
+                    <p>Manage Users</p>
+                  </div>
                 </div>
-                <div class="sidebar-nav-name">
-                    <p>Heart Rate</p>
+                <div class="sidebar-nav-container" onclick="window.location.href = './manageUsers.php'">
+                  <div class="sidebar-nav-logo">
+                  <i class="bi bi-plus-square-dotted"></i>
+                  </div>
+                  <div class="sidebar-nav-name ">
+                    <p>Add Users</p>
+                  </div>
                 </div>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/blood_pressure_monitor.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Blood Pressure</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container " onclick="window.location.href = './temperature.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-thermometer-half"></i>
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Temperature</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './bloodGlucose.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/diabetes.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Blood Glucose</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './bloodOxygen.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/o2-oxygen-icon.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Blood Oxygen</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './fetus.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/embryo-pregnancy-icon.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Fetus</p>
-                </div>
-            </div>
-            <hr class="sidebar-divider">
-            <div class="sidebar-header">
-                <p>LAB TESTS</p>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './labTests.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/labtest.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Upload Tests</p>
-                </div>
-            </div>
-            <hr class="sidebar-divider">
-            <div class="sidebar-header">
-                <p>PROFILE</p>
-            </div>
-            <div class="sidebar-nav-container" onclick="window.location.href = './userInfo.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/details.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Update Profile</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container active" onclick="window.location.href = './chooseDoctor.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-hand-index"></i>
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Choose Doctor</p>
-                </div>
-            </div>
-            <div class="sidebar-nav-container logout-btn">
-                <div class="sidebar-nav-logo">
+                <hr class="sidebar-divider">
+          
+          
+          
+                <div class="sidebar-nav-container logout-btn">
+                  <div class="sidebar-nav-logo">
                     <img src="./icons/logout.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
+                  </div>
+                  <div class="sidebar-nav-name">
                     <p>Logout</p>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
+              <?php
+            } else { ?>
+                echo `<div class="sidebar">
+                <div class="sidebar-close-btn">
+                    <i class="bi bi-x-circle"></i>
+                </div>
+                <div class="sidebar-logo-container">
+                    <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-nav-container " onclick="window.location.href = './patientMainMenu.php'">
+                    <div class="sidebar-nav-logo">
+                        <i class="bi bi-house-fill"></i>
+                    </div>
+                    <div class="sidebar-nav-name ">
+                        <p>Home</p>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-header">
+                    <p>TESTS</p>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './heartRate.php'">
+                    <div class="sidebar-nav-logo">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Heart Rate</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './bloodPressure.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/blood_pressure_monitor.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Blood Pressure</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container " onclick="window.location.href = './temperature.php'">
+                    <div class="sidebar-nav-logo">
+                        <i class="bi bi-thermometer-half"></i>
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Temperature</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './bloodGlucose.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/diabetes.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Blood Glucose</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './bloodOxygen.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/o2-oxygen-icon.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Blood Oxygen</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './fetus.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/embryo-pregnancy-icon.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Fetus</p>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-header">
+                    <p>LAB TESTS</p>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './labTests.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/labtest.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Upload Tests</p>
+                    </div>
+                </div>
+                <hr class="sidebar-divider">
+                <div class="sidebar-header">
+                    <p>PROFILE</p>
+                </div>
+                <div class="sidebar-nav-container" onclick="window.location.href = './userInfo.php'">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/details.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Update Profile</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container active" onclick="window.location.href = './chooseDoctor.php'">
+                    <div class="sidebar-nav-logo">
+                        <i class="bi bi-hand-index"></i>
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Choose Doctor</p>
+                    </div>
+                </div>
+                <div class="sidebar-nav-container logout-btn">
+                    <div class="sidebar-nav-logo">
+                        <img src="./icons/logout.svg" alt="">
+                    </div>
+                    <div class="sidebar-nav-name">
+                        <p>Logout</p>
+                    </div>
+                </div>
+            </div>`;
+            <?php } 
+        
+        ?>
+
+
+        
 
         <!-- PAGE CONTENT -->
         <div class="content-wrap ">
