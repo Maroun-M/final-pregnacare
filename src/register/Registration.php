@@ -30,11 +30,11 @@ class Registration
         $this->type = $type;
 
 
-        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+        $this->conn = new mysqli('localhost', 'root', 'password', 'PregnaCare');
     }
     private function initializeConnection()
     {
-        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+        $this->conn = new mysqli('localhost', 'root', 'password', 'PregnaCare');
     }
 
     // New constructor with no parameters
@@ -46,7 +46,7 @@ class Registration
     }
     public function __constructWithoutParams()
     {
-        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+        $this->conn = new mysqli('localhost', 'root', 'password', 'PregnaCare');
     }
 
     public function validate()
@@ -136,9 +136,9 @@ class Registration
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            header('Location: ../../index.php?registration=failed&error=duplicateEmailOrPass');
-
-            return false;
+            header('Location: ../../index.php?registration=failed&error=duplicateEmailOrPhonenb');
+        
+            exit();
         }
 
         // Hash password
@@ -174,12 +174,12 @@ class Registration
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
         $to = $this->email;
-        $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
+        $mail->setFrom('maroun233245@gmail.com', 'PregnaCare');
         $mail->addAddress($to);
         $mail->isHTML(true);
         $mail->Subject = "Confirm your registration";
         $mail->Body = "Thank you for registering! Your confirmation code is: <p color='blue'><bold>$confirmationCode</bold></p> Or confirm by clicking on the link below:";
-        $mail->Body .= "http://localhost/ouvatech/src/login/userLogin.php?email=$email&confirmationCode=$confirmationCode";
+        $mail->Body .= "http://localhost/PregnaCare/src/login/confirm.php?email=$email&confirmationCode=$confirmationCode";
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
 
@@ -258,12 +258,12 @@ class Registration
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $to = $email;
-            $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
+            $mail->setFrom('maroun233245@gmail.com', 'PregnaCare');
             $mail->addAddress($to);
             $mail->isHTML(true);
             $mail->Subject = "Confirm your registration";
             $mail->Body = "Thank you for registering! Your confirmation code is: <p color='blue'><bold>$newConfirmationCode</bold></p> Or confirm by clicking on the link below:";
-            $mail->Body .= "http://localhost/ouvatech/src/login/confirm.php?email=$email&confirmationCode=$newConfirmationCode";
+            $mail->Body .= "http://localhost/PregnaCare/src/login/confirm.php?email=$email&confirmationCode=$newConfirmationCode";
             if (!$mail->send()) {
                 $response = array(
                     'message' => 'Failed to send the activation email.'

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ouvatech</title>
+        <title>PregnaCare</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,30 +25,29 @@
     <?php
     session_start();
     include_once("./src/patient/Patient.php");
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
     $patient = new Patient($conn);
     if($patient->isUserConfirmed($_SESSION['user_id'])){
         header("Location: ./src/login/userLogin.php");
     }
 
     ?>
-    <div class="wrapper  gradient-custom-login">
+    <div class="wrapper  gradient-background">
 
 
 
         <div class="login-form-container">
             <div class="header">
                 <div class="logo-img-container">
-                    <img src="./images/logo.jfif" alt="">
+                    <img src="./images/pregnaCareLogo.png" alt="">
                 </div>
                 <h2>Confirm Your Account: </h2>
                 <p>Enter the confirmation code that was sent to your email:</p>
             </div>
             <form action="./src/login/confirm.php" method="POST" enctype="multipart/form-data">
                 <div class="input-container">
-                    <input type="confirmation-email" name="confirmation-email" value="<?php echo
-                    $_SESSION['user_email'];
-                    ?>" hidden>
+                    <input type="text" name="confirmation-email" value="<?php echo
+                    $_SESSION['user_email'];?>" hidden required>
                     <input type="text" name="confirmation-code" placeholder="Code" required> <br>
                     <p class="resend-btn">Resend Confirmation Email</p>
                 </div>

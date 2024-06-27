@@ -1,5 +1,5 @@
 // Call the getPatients function when the page is ready
-if (window.location.pathname === "/ouvatech/doctorMainMenu.php") {
+if (window.location.pathname === "/PregnaCare/doctorMainMenu.php") {
   // Function to get the patient data from the server
 
   const patient_row = document.querySelector(".data-container");
@@ -64,7 +64,7 @@ if (window.location.pathname === "/ouvatech/doctorMainMenu.php") {
   //end of patients data for the dr.
 }
 
-if (window.location.pathname === "/ouvatech/patientRecords.php") {
+if (window.location.pathname === "/PregnaCare/patientRecords.php") {
   // Get the current URL
   const url = new URL(window.location.href);
 
@@ -182,7 +182,7 @@ if (window.location.pathname === "/ouvatech/patientRecords.php") {
   });
 }
 
-if (window.location.pathname === "/ouvatech/patientGraphs.php") {
+if (window.location.pathname === "/PregnaCare/patientGraphs.php") {
   // Get the current URL
   const url = new URL(window.location.href);
 
@@ -408,7 +408,7 @@ if (window.location.pathname === "/ouvatech/patientGraphs.php") {
   }
 }
 
-if (window.location.pathname === "/ouvatech/doctorInfo.php") {
+if (window.location.pathname === "/PregnaCare/doctorInfo.php") {
   document.addEventListener("DOMContentLoaded", function () {
     fetch("./src/doctor/getDoctorInfo.php")
       .then((response) => response.json())

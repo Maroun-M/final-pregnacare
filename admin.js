@@ -1,4 +1,4 @@
-if (window.location.pathname === "/ouvatech/admin.php") {
+if (window.location.pathname === "/PregnaCare/admin.php") {
   // Function to make an AJAX request to the server
   function getUsersData(page, perPage, name) {
     // Prepare the AJAX request

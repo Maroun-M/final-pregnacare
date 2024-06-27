@@ -5,7 +5,7 @@ class Admin
 
     public function __construct()
     {
-        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+        $this->conn = new mysqli('localhost', 'root', 'password', 'PregnaCare');
     }
 
     public function isAdmin($userId)

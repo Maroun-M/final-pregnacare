@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ouvatech</title>
+        <title>PregnaCare</title>
     <link rel="stylesheet" href="style.css" />
     <link
         href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
@@ -19,7 +20,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
 
-    <link rel="icon" type="image/png" href="./images/logo-removebg-preview.png">
+    <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
 
 </head>
 
@@ -27,7 +28,7 @@
     <?php
     session_start();
     include_once("./src/patient/Patient.php");
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
     $patient = new Patient($conn);
     include_once("./src/admin/Admin.php");
     $admin = new Admin();
@@ -63,12 +64,12 @@
         <!--  sidebar section -->
         <?php
             if($admin->isAdmin($_SESSION['user_id'])) { ?>
-                <div class="sidebar">
+                <div class="sidebar gradient-background">
                 <div class="sidebar-close-btn">
                   <i class="bi bi-x-circle"></i>
                 </div>
                 <div class="sidebar-logo-container">
-                  <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
+                  <img src="./images/pregnaCareLogo.png" alt="" onclick="window.location.href = './index.php'">
                 </div>
                 <hr class="sidebar-divider">
                 <div class="sidebar-nav-container active" onclick="window.location.href = './admin.php'">
@@ -102,12 +103,12 @@
               </div>
               <?php
             } else { ?>
-                echo `<div class="sidebar">
+                echo `<div class="sidebar gradient-background">
                 <div class="sidebar-close-btn">
                     <i class="bi bi-x-circle"></i>
                 </div>
                 <div class="sidebar-logo-container">
-                    <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
+                    <img src="./images/pregnaCareLogo.png" alt="" onclick="window.location.href = './index.php'">
                 </div>
                 <hr class="sidebar-divider">
                 <div class="sidebar-nav-container " onclick="window.location.href = './patientMainMenu.php'">

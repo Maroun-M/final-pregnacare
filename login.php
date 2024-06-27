@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ouvatech</title>
+      <title>PregnaCare</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +22,7 @@
 </head>
 
 <body>
-  <div class="wrapper  gradient-custom-login">
+  <div class="wrapper  gradient-background">
 
     <?php
     include_once("./src/login/login.php");
@@ -58,14 +59,14 @@
     <div class="login-form-container">
       <div class="header">
         <div class="logo-img-container">
-          <img src="./images/logo.jfif" alt="">
+          <img src="./images/pregnaCareLogo.png" alt="">
         </div>
         <h2>LOGIN</h2>
         <p>Please enter your email or phone number and password</p>
       </div>
       <form id="loginForm" action="./src/login/userLogin.php" method="POST" enctype="multipart/form-data">
         <div class="input-container">
-          <input type="text" id="email" name="email" placeholder="Email" required> <br>
+          <input type="text" id="email" name="email" placeholder="Email OR Password" required> <br>
           <div id="emailError" class="error-message"></div>
           <input type="password" id="password" name="password" placeholder="Password" required><br>
           <div id="passwordError" class="error-message" style="color:purple;"></div>

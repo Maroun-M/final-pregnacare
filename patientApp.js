@@ -79,12 +79,12 @@ const insert = async () => {
 };
 
 window.onload = load = () => {
-  if (window.location.pathname === "/ouvatech/userInfo.php") {
+  if (window.location.pathname === "/PregnaCare/userInfo.php") {
     insert();
   }
 };
 
-if (window.location.pathname === "/ouvatech/chooseDoctor.php") {
+if (window.location.pathname === "/PregnaCare/chooseDoctor.php") {
   document.addEventListener("DOMContentLoaded", () => {
     fetchDoctors(1);
     fetchTotal();
@@ -209,7 +209,7 @@ let chooseDr = () => {
 
 // };
 
-if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
+if (window.location.pathname === "/PregnaCare/patientMainMenu.php") {
   const weeklyBtn = document.getElementById("weekly-btn");
   const monthlyBtn = document.getElementById("monthly-btn");
   const yearlyBtn = document.getElementById("yearly-btn");
@@ -455,7 +455,7 @@ let fetchTrimester = () => {
       response = JSON.parse(response);
       const pregnancyStage = response.pregnancy_stage;
       const patientName = response.first_name + " " + response.last_name;
-      if (window.location.pathname === "/ouvatech/patientMainMenu.php") {
+      if (window.location.pathname === "/PregnaCare/patientMainMenu.php") {
         const patientSection = document.querySelector("#patient-info-tab");
         let results = `
         <img class="profile_pic_display" src="${response.profile_picture}" alt="">
@@ -469,20 +469,20 @@ let fetchTrimester = () => {
         patientSection.innerHTML = results;
       }
 
-      if (window.location.pathname === "/ouvatech/heartRate.php") {
+      if (window.location.pathname === "/PregnaCare/heartRate.php") {
         validateHR(pregnancyStage);
       }
-      if (window.location.pathname === "/ouvatech/temperature.php") {
+      if (window.location.pathname === "/PregnaCare/temperature.php") {
         validateTemperature(pregnancyStage);
       }
-      if (window.location.pathname === "/ouvatech/bloodGlucose.php") {
+      if (window.location.pathname === "/PregnaCare/bloodGlucose.php") {
         validateGlucose();
       }
 
-      if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
+      if (window.location.pathname === "/PregnaCare/bloodOxygen.php") {
         validateOxygen(pregnancyStage);
       }
-      if (window.location.pathname === "/ouvatech/bloodPressure.php") {
+      if (window.location.pathname === "/PregnaCare/bloodPressure.php") {
         validateBP(pregnancyStage);
       }
     }
@@ -491,7 +491,7 @@ let fetchTrimester = () => {
   xhr.send();
 };
 
-if (window.location.pathname === "/ouvatech/heartRate.php") {
+if (window.location.pathname === "/PregnaCare/heartRate.php") {
   function validateHR(pregnancyStage) {
     // Clear previous error message
     const hrError = document.getElementById("heart-rate-error");
@@ -542,7 +542,7 @@ if (window.location.pathname === "/ouvatech/heartRate.php") {
     addButton.disabled = !valid;
   };
 }
-if (window.location.pathname === "/ouvatech/bloodPressure.php") {
+if (window.location.pathname === "/PregnaCare/bloodPressure.php") {
   function validateBP(pregnancyStage) {
     // Clear previous error message
     const bpError = document.getElementById("blood-pressure-error");
@@ -641,7 +641,7 @@ if (window.location.pathname === "/ouvatech/bloodPressure.php") {
   };
 }
 
-if (window.location.pathname === "/ouvatech/temperature.php") {
+if (window.location.pathname === "/PregnaCare/temperature.php") {
   function validateTemperature(pregnancyStage) {
     var error = document.querySelector("#temp-error");
     var input = document.querySelector("#temperature");
@@ -676,7 +676,7 @@ if (window.location.pathname === "/ouvatech/temperature.php") {
   }
 }
 
-if (window.location.pathname === "/ouvatech/bloodGlucose.php") {
+if (window.location.pathname === "/PregnaCare/bloodGlucose.php") {
   function validateGlucose() {
     const glucoseInput = document.getElementById("glucose");
     const addButton = document.getElementById("add-button");
@@ -709,7 +709,7 @@ if (window.location.pathname === "/ouvatech/bloodGlucose.php") {
   }
 }
 
-if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
+if (window.location.pathname === "/PregnaCare/bloodOxygen.php") {
   function validateOxygen(pregnancyStage) {
     var error = document.querySelector("#oxygen-error");
     var input = document.querySelector("#oxygen");
@@ -737,7 +737,7 @@ if (window.location.pathname === "/ouvatech/bloodOxygen.php") {
   }
 }
 
-if (window.location.pathname === "/ouvatech/fetus.php") {
+if (window.location.pathname === "/PregnaCare/fetus.php") {
   const btn = document.querySelector("#add-button");
   btn.disabled = true;
   function validateFetusData() {

@@ -1,4 +1,4 @@
-if (window.location.pathname === "/ouvatech/doctorProfile.php") {
+if (window.location.pathname === "/PregnaCare/doctorProfile.php") {
   // Get the ID parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("ID");
@@ -32,12 +32,12 @@ if (window.location.pathname === "/ouvatech/doctorProfile.php") {
       let results = ``;
       console.log(data);
       results = `
-        <p class="user-profile-info">Dr. ${data.first_name} ${data.last_name}</p>
-        <p class="user-profile-info"><u>Education:</u> ${data.education}</p>
-        <p class="user-profile-info"><u>Biography:</u> ${data.biography}</p>
-        <p class="user-profile-info"><u>Age:</u> ${age}</p>
-        <p class="user-profile-info"><u>Location:</u> ${data.location}</p>
-        <p class="user-profile-info"><u>Email:</u> ${data.email}</p>
+        <p class="user-profile-info">Dr. ${data.first_name} ${data.last_name}</p><br>
+        <p class="user-profile-info"><u>Education:</u> ${data.education}</p><br>
+        <p class="user-profile-info"><u>Biography:</u> ${data.biography}</p><br>
+        <p class="user-profile-info"><u>Age:</u> ${age}</p><br>
+        <p class="user-profile-info"><u>Location:</u> ${data.location}</p><br>
+        <p class="user-profile-info"><u>Email:</u> ${data.email}</p><br>
         
         `;
         try {

@@ -6,6 +6,7 @@ session_start();
 $login = new Login();
 
 
+var_dump($_POST);
 if (isset($_POST['confirmation-email']) && isset($_POST['confirmation-code'])) {
     $login->confirmUser($_POST['confirmation-email'], $_POST['confirmation-code']);
 

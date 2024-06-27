@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ouvatech</title>
+        <title>PregnaCare</title>
     <link rel="stylesheet" href="style.css" />
     <link
         href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
@@ -18,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
 
-    <link rel="icon" type="image/png" href="./images/logo-removebg-preview.png">
+    <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
     <script src="./doctorApp.js" defer></script>
     <script src="./profilePicture.js" defer></script>
 
@@ -28,7 +29,7 @@
     <?php
     session_start();
     include_once("./src/doctor/Doctor.php");
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
     $doctor = new Doctor();
     if (!isset($_SESSION['user_id']) || !$doctor->isDoctor($_SESSION['user_id'])) { // Check if the user is logged in and is doctor
         echo "You don't have access to this page.";
@@ -48,45 +49,56 @@
     <div class="dashboard-wrapper">
 
         <!--  sidebar section -->
-        <div class="sidebar">
+        <div class="sidebar gradient-background">
             <div class="sidebar-close-btn">
                 <i class="bi bi-x-circle"></i>
             </div>
             <div class="sidebar-logo-container">
-                <img src="./images/logo-removebg-preview.png" alt="" onclick="window.location.href = './index.php'">
+                <img src="./images/pregnaCareLogo.png" alt="" onclick="window.location.href = './index.php'">
             </div>
             <hr class="sidebar-divider">
             <div class="sidebar-nav-container " onclick="window.location.href = './doctorMainMenu.php'">
-                <div class="sidebar-nav-logo">
-                    <i class="bi bi-house-fill"></i>
-                </div>
-                <div class="sidebar-nav-name ">
-                    <p>Home</p>
-                </div>
-            </div>
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-header">
-                <p>PROFILE</p>
-            </div>
-            <div class="sidebar-nav-container active" onclick="window.location.href = './doctorInfo.php'">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/details.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Update Profile</p>
-                </div>
-            </div>
-
-            <div class="sidebar-nav-container logout-btn">
-                <div class="sidebar-nav-logo">
-                    <img src="./icons/logout.svg" alt="">
-                </div>
-                <div class="sidebar-nav-name">
-                    <p>Logout</p>
-                </div>
-            </div>
+            <div class="sidebar-nav-logo">
+        <i class="bi bi-people-fill"></i>
         </div>
+        <div class="sidebar-nav-name ">
+          <p >Patients</p>
+        </div>
+      </div>
+      <hr class="sidebar-divider">
+      <div class="sidebar-header">
+        <p>Chatting</p>
+      </div>
+      <div class="sidebar-nav-container " onclick="window.location.href = './doctorMessage.php'">
+        <div class="sidebar-nav-logo">
+          <img src="./icons/message-svgrepo-com.svg" alt="">
+        </div>
+        <div class="sidebar-nav-name">
+          <p>Chat</p>
+        </div>
+      </div>
+      <hr class="sidebar-divider">
+      <div class="sidebar-header">
+        <p>PROFILE</p>
+      </div>
+      <div class="sidebar-nav-container" onclick="window.location.href = './doctorInfo.php'">
+        <div class="sidebar-nav-logo">
+          <img src="./icons/details.svg" alt="">
+        </div>
+        <div class="sidebar-nav-name">
+          <p>Update Profile</p>
+        </div>
+      </div>
+      
+      <div class="sidebar-nav-container logout-btn">
+        <div class="sidebar-nav-logo">
+          <img src="./icons/logout.svg" alt="">
+        </div>
+        <div class="sidebar-nav-name">
+          <p>Logout</p>
+        </div>
+      </div>
+    </div>
 
         <!-- PAGE CONTENT -->
         <div class="content-wrap ">

@@ -17,7 +17,7 @@ if(isset($_GET['page'])){
 
 // assign doctor 
 include("../patient/Patient.php");
-$conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+$conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 $patient = new patient($conn);
 if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
     $data = json_decode(file_get_contents('php://input'), true);

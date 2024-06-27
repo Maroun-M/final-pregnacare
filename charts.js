@@ -1,6 +1,6 @@
 const headers = new Headers();
 
-if (window.location.pathname === "/ouvatech/bloodGlucose.php") {
+if (window.location.pathname === "/PregnaCare/bloodGlucose.php") {
   // Get references to the HTML elements
   const weeklyBtn = document.getElementById('weekly-btn');
   const monthlyBtn = document.getElementById('monthly-btn');

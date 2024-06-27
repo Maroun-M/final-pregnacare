@@ -26,7 +26,7 @@ if (isset($_FILES["lab-tests"])) {
                 $fileNameNew = $_SESSION['user_id'] . '_' . uniqid('IMG-', true) . '.' . $fileExt;
                 $fileDestination = './tests/' . $fileNameNew;
                 move_uploaded_file($fileTmpName, $fileDestination);                
-                $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+                $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
                 // Prepare and bind the statement
                 $stmt = mysqli_prepare($conn, "INSERT INTO user_files (user_id, file_path) VALUES (?, ?)");
                 mysqli_stmt_bind_param($stmt, "is", $_SESSION['user_id'], $fileDestination);

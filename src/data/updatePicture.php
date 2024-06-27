@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     // Move the uploaded file to the destination
                     if (move_uploaded_file($file["tmp_name"], $uploadDestination)) {
-                        $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+                        $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
                         session_start();
 
                         // Get the previous image path from the database

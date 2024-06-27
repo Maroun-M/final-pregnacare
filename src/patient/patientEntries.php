@@ -1,6 +1,6 @@
 <?php include_once("./Patient.php");
 session_start();
-$conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+$conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 $patient = new Patient($conn);
 
 if (!isset($_SESSION['user_id'])) {

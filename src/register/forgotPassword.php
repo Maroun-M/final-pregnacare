@@ -35,7 +35,7 @@ function initiateForgetPassword($emailOrPhone) {
 }
 // Function to retrieve the email address of a user based on phone number or email
 function getEmailByPhoneOrEmail($phoneOrEmail) {
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 
     $query = "SELECT email FROM users WHERE phone_number = CONCAT('+961 ', ?) OR email = ?";
     $stmt = $conn->prepare($query);
@@ -53,7 +53,7 @@ function getEmailByPhoneOrEmail($phoneOrEmail) {
 
 // Function to check if email exists in the database
 function checkEmailExistsInDatabase($email) {
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 
     $query = "SELECT COUNT(*) as count FROM users WHERE email = ?";
     $stmt = $conn->prepare($query);
@@ -66,7 +66,7 @@ function checkEmailExistsInDatabase($email) {
 
 // Function to check if phone number exists in the database
 function checkPhoneExistsInDatabase($phone) {
-    $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+    $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
     $phone = trim($phone);
     $phone = "+961 " . $phone;
     $query = "SELECT COUNT(*) as count FROM users WHERE phone_number = ?";
@@ -99,7 +99,7 @@ function sendVerificationCodeEmail($recipient, $confirmationCode) {
         $mail->Port = 587;
         $to = getEmailByPhoneOrEmail($recipient);
         echo getEmailByPhoneOrEmail($recipient);
-        $mail->setFrom('maroun233245@gmail.com', 'Ouvatech');
+        $mail->setFrom('maroun233245@gmail.com', 'PregnaCare');
         $mail->addAddress($to);
 
         // Email content
@@ -137,7 +137,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['codeVerification']) &&
         }
 
                 $newPasswordHash = password_hash($pass, PASSWORD_DEFAULT);
-                $conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+                $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 
                 // Update the user's password in the database
                 $updateQuery = "UPDATE users SET account_password = ? WHERE email = ?";

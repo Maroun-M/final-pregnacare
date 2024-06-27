@@ -6,7 +6,7 @@ class Login
     // constructor takes a database connection object as parameter
     public function __construct()
     {
-        $this->conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+        $this->conn = new mysqli('localhost', 'root', 'password', 'PregnaCare');
         ;
 
     }
@@ -63,7 +63,6 @@ class Login
         if (!$result || $result->num_rows == 0) {
             return false;
         }
-
         // Update the confirmation status
         $query = "UPDATE users SET confirmed = 1 WHERE email = ?";
         $stmt = $this->conn->prepare($query);

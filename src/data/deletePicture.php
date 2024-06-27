@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'password', 'Ouvatech');
+$conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
 session_start();
 // Check if the server request is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

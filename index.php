@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ouvatech</title>
+      <title>PregnaCare</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,10 +18,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
   <script src="./app.js" defer></script>
-  <link rel="icon" type="image/png" href="./images/logo-removebg-preview.png">
+  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
     integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -46,15 +48,14 @@
 
 
   <div class="front">
-    <div class="ouvatech-img-container">
-      <!-- <img src="./images/logo-removebg-preview.png" alt="" /> -->
-      <div class="ouvatech-description-container">
-        <h1>Ouvatech</h1>
+    <div class="PregnaCare-img-container">
+      <div class="PregnaCare-description-container">
+        <h1>PregnaCare</h1>
         <h3 class="col-sm-12 col-lg-6 content">Empowering pregnant women to monitor their health and well-being through
           innovative technology and compassionate care, we are dedicated to
           improving maternal and fetal health outcomes and promoting a safe and
           fulfilling pregnancy experience for all women. <br />
-          <button class="m-5 px-5 py-2 btn-ouva-purple" onClick="document.querySelector('.vh-150').scrollIntoView();">
+          <button class="m-5 px-5 py-2 btn-ouva-purple" onClick="document.querySelector('.signup-form').scrollIntoView();">
             Sign Up Now!
           </button>
         </h3>
@@ -65,7 +66,7 @@
   <div class="navbar-wrap">
     <div class="navbar-container">
       <div class="nav-logo-container">
-        <a href="./index.php"> <img src="./images/logo-removebg-preview.png" alt=""></a>
+        <a href="./index.php"> <img src="./images/pregnaCareLogo.png" alt=""></a>
       </div>
       <div class="nav-btns-container">
         <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
@@ -74,22 +75,22 @@
         <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
           FEATURES
         </p>
-        <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
+        <p class="nav-link" onClick="document.querySelector('.slider-container').scrollIntoView();">
           INFO
         </p>
-        <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
+        <p class="nav-link" onClick="document.querySelector('.signup-section').scrollIntoView();">
           REGISTER
         </p>
         <p class="nav-link login-nav-btn"><a href="./login.php">LOGIN</a></p>
-        <p class="nav-link account-nav-btn" ><a href="./src/login/userLogin.php">ACCOUNT</a></p>
-        <p class="nav-link logout-nav-btn" ><a href="./src/login/logout.php">LOGOUT</a></p>
+        <p class="nav-link account-nav-btn"><a href="./src/login/userLogin.php">ACCOUNT</a></p>
+        <p class="nav-link logout-nav-btn"><a href="./src/login/logout.php">LOGOUT</a></p>
         <i class="bi bi-list home-list"></i>
       </div>
     </div>
   </div>
   <div class="navbar-overlay">
     <div class="navbar-mobile-container">
-    
+
       <div class="nav-btns-mobile-container">
         <p class="nav-link" class="nav-link active" onClick="document.querySelector('.front').scrollIntoView();">
           Home
@@ -97,21 +98,21 @@
         <p class="nav-link" onClick="document.querySelector('.logos-wrap').scrollIntoView();">
           Features
         </p>
-        <p class="nav-link" onClick="document.querySelector('.info-wrapper').scrollIntoView();">
+        <p class="nav-link" onClick="document.querySelector('.slider-container').scrollIntoView();">
           Info
         </p>
-        <p class="nav-link" onClick="document.querySelector('.vh-150').scrollIntoView();">
+        <p class="nav-link" onClick="document.querySelector('.signup-section').scrollIntoView();">
           Register
         </p>
         <p class="nav-link login-nav-btn-mobile"><a href="./login.php">Login</a></p>
-        <p class="nav-link account-nav-btn" ><a href="./src/login/userLogin.php">Account</a></p>
-        <p class="nav-link logout-nav-btn" ><a href="./src/login/logout.php">Logout</a></p>
+        <p class="nav-link account-nav-btn"><a href="./src/login/userLogin.php">Account</a></p>
+        <p class="nav-link logout-nav-btn"><a href="./src/login/logout.php">Logout</a></p>
       </div>
-      
+
     </div>
     <div class="empty-div">
-        
-      </div>
+
+    </div>
   </div>
   <!-- features wrapper -->
   <div class="logos-wrap">
@@ -124,7 +125,7 @@
         <p>
           Take charge of your pregnancy journey with our innovative femtech
           platform. From personalized fitness plans to emotional wellness
-          resources, Ouvatech will help you stay healthy and happy throughout
+          resources, PregnaCare will help you stay healthy and happy throughout
           your pregnancy.
         </p>
       </div>
@@ -137,7 +138,7 @@
         <h2>Preventions</h2>
         <p>
           From gestational diabetes to preeclampsia, there are many high-risk
-          complications that can occur during pregnancy. With Ouvatech
+          complications that can occur during pregnancy. With PregnaCare
           platform, you can stay informed and take action to prevent them.
         </p>
       </div>
@@ -149,7 +150,7 @@
       <div class="header-container">
         <h2>Care</h2>
         <p>
-          Ouvatech enables you to provide remote care and use advanced triage
+          PregnaCare enables you to provide remote care and use advanced triage
           methods for a safer, more personalized pregnancy experience.
         </p>
       </div>
@@ -161,7 +162,7 @@
       <div class="header-container">
         <h2>Affordability</h2>
         <p>
-          By covering remote monitoring with ouvatech platform, medical
+          By covering remote monitoring with PregnaCare platform, medical
           insurance companies can reduce the cost of high-risk complications
           providing thus more affordable healthcare for pregnant women.
         </p>
@@ -198,7 +199,7 @@
         </div>
     </div> -->
 
-  <div class="info-wrapper">
+  <!-- <div class="info-wrapper">
     <div class="info-col-container">
       <div class="info-img-container">
         <img src="./images/Picture1.png" alt="" />
@@ -247,94 +248,95 @@
         <p>Medical Triage</p>
       </div>
     </div>
+  </div> -->
+
+  <!-- image slider  start -->
+  <div class="slider-container">
+  <div class="slider">
+    <div class="slide" id="ai-slide">
+      <p class="left-description" >Your Virtual Companion: Meet the PregnaCare AI chatbot, your reliable companion throughout your pregnancy journey. Access instant assistance, helpful tips, and answers to your questions, 24/7, ensuring peace of mind and support whenever you need it.</p>
+    </div>
+    <div class="slide" id="woman-slide">
+      <p class="right-description" >Experience Seamless Care: Navigate through PregnaCare's user-friendly interface effortlessly, accessing personalized tools and resources to support you through every stage of your pregnancy.</p>
+    </div>
+    <div class="slide" id="final-slide">
+      <p class="left-description" >Expert Guidance, Anytime, Anywhere: Connect with trusted healthcare professionals through PregnaCare's telemedicine feature, ensuring convenient access to expert guidance and support from the comfort of your home.</p>
+    </div>
   </div>
+  <div class="buttons-container">
+    <div class="arrow-left-container">
+      <i class="bi bi-arrow-left arrows"></i>
+    </div>
+    <div class="arrow-right-container">
+      <i class="bi bi-arrow-right arrows"></i>
+    </div>
+  </div>
+</div>
+
+  <!-- image slider end -->
+
 
   <!-- start of sign up div -->
-  <section class="vh-150 registration-form z-0">
-    <div class="container py-5 h-100 z-0">
-      <div class="row justify-content-center align-items-center h-100 z-0">
-        <div class="col-12 col-lg-9 col-xl-7 z-0">
-          <div class="card shadow-2-strong card-registration " style="border-radius: 15px; z-index: 0;">
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-              <form action="./registration.php" method="POST" enctype="multipart/form-data"
-                onsubmit="validateForm(event)">
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="firstName" name="firstName"  class="form-control form-control-lg"
-                        required />
-                      <label class="form-label" for="firstName" >First Name</label>
-                    </div>
-                    <div id="firstName-error" class="error-message"></div>
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" required />
-                      <label class="form-label" for="lastName">Last Name</label>
-                    </div>
-                    <div id="lastName-error" class="error-message"></div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-                    <div class="form-outline">
-                      <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg"
-                        required />
-                      <label class="form-label" for="emailAddress">Email</label>
-                    </div>
-                    <div id="emailAddress-error" class="error-message"></div>
-                  </div>
-                  <div class="col-md-6 mb-4 pb-2">
-                    <div class="form-outline">
-                      <input type="tel" id="phoneNumber" name="phoneNumber" value="+961 "
-                        class="form-control form-control-lg" required />
-                      <label class="form-label" for="phoneNumber">Phone Number</label>
-                    </div>
-                    <div id="phoneNumber-error" class="error-message"></div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-                    <div class="form-outline">
-                      <input type="password" id="password" name="password" class="form-control form-control-lg"
-                        required />
-                      <label class="form-label" for="password">Password</label>
-                    </div>
-                    <div id="password-error" class="error-message"></div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-                    <div class="form-outline">
-                      <input type="password" id="confirm-password" name="confirm-password"
-                        class="form-control form-control-lg" required />
-                      <label class="form-label" for="confirm-password">Confirm Password</label>
-                    </div>
-                    <div id="confirm-password-error" class="error-message"></div>
-                  </div>
-                </div>
-
-                <div class="mt-4 pt-2">
-                  <input class="btn btn-primary btn-lg" type="submit" value="Submit" name="submit-registration" />
-                </div>
-              </form>
-
-            </div>
+  <div class="signup-section">
+    <div class="signup-form">
+      <h2>Registration</h2>
+      <form action="./registration.php" method="POST" enctype="multipart/form-data" onsubmit="validateForm(event)">
+        <div class="f-l-name">
+          <div class="break-inputs">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required placeholder="Mary">
+            <p id="firstName-error" class="error-message" hidden></p>
+          </div>
+  
+          <div class="break-inputs">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required placeholder="Jane">
+            <p id="lastName-error" class="error-message" hidden></p>
           </div>
         </div>
-      </div>
+
+        <div class="break-inputs">
+          <label for="emailAddress">Email</label>
+          <input type="email" id="emailAddress" name="emailAddress" required placeholder="MaryJane@gmail.com">
+          <p id="emailAddress-error" class="error-message" hidden></p>
+        </div>
+
+        <div class="break-inputs">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="tel" id="phoneNumber" name="phoneNumber" value="+961" required>
+          <p id="phoneNumber-error" class="error-message" hidden></p>
+        </div>
+
+        <div class="break-inputs">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="********">
+          <p id="password-error" class="error-message" hidden></p>
+        </div>
+
+        <div class="break-inputs">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" required placeholder="********">
+          <p id="confirm-password-error" class="error-message" hidden></p>
+        </div>
+
+        <div>
+          <input type="submit" value="SUBMIT" name="submit-registration" class="first-signup-btn">
+        </div>
+      </form>
     </div>
-  </section>
+    <div class="signup-gif-container">
+      <video autoplay loop muted playsinline class="homeVid">
+        <source src="./images/homeGif2.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
   <!-- end of sign up div -->
 
   <!-- footer container -->
-  <hr />
   <div class="footer-container">
+    <hr />
     <div class="footer-content">
-      <p>Ouvatech© 2023. All rights reserved.</p>
+      <p>PregnaCare© 2024. All rights reserved.</p>
     </div>
   </div>
   <!-- footer container end -->

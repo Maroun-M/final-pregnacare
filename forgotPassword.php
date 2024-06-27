@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>  <link rel="icon" type="image/png" href="./images/pregnaCareLogo.png">
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ouvatech</title>
+        <title>PregnaCare</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,17 +27,17 @@
 
 
     ?>
-    <div class="wrapper  gradient-custom-login">
+    <div class="wrapper  gradient-background">
 
 
 
         <div class="login-form-container">
             <div class="header">
                 <div class="logo-img-container">
-                    <img src="./images/logo.jfif" alt="">
+                    <img src="./images/pregnaCareLogo.png" alt="">
                 </div>
                 <h2>Reset Your Password: </h2>
-                <p>Enter your email or password:</p>
+                <p>Enter your email:</p>
             </div>
             <form action="./src/register/forgotPassword.php" method="POST" enctype="multipart/form-data">
                 <div class="input-container">

@@ -1,6 +1,6 @@
 if (
-  window.location.pathname === "/ouvatech/index.php" ||
-  window.location.pathname === "/ouvatech/"
+  window.location.pathname === "/PregnaCare/index.php" ||
+  window.location.pathname === "/PregnaCare/"
 ) {
   document.addEventListener("DOMContentLoaded", () => {
     const logged_in = document.querySelector(".login-status");
@@ -35,6 +35,11 @@ if (
     });
   });
 
+  var homeVid = document.querySelector(".homeVid");
+  console.log(window.innerWidth)
+  if(window.innerWidth <= 500) {
+    homeVid.src = "./images/vidMobile.mp4";
+  }
   // Get the URL of the current page
   var url = window.location.href;
   // Create a URL object with the URL
@@ -45,7 +50,7 @@ if (
   var parameterValue = searchParams.get("register");
 
   if (searchParams.get("register") === "") {
-    document.querySelector(".vh-150").scrollIntoView();
+    document.querySelector(".signup-section").scrollIntoView();
   }
 
   // Get the target element
@@ -55,10 +60,15 @@ if (
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const navbar = document.querySelector(".navbar-wrap");
+      const navbar_container = document.querySelector(".navbar-container")
       if (!entry.isIntersecting) {
-        navbar.style.backgroundColor = "#c019b5d9";
+        navbar.style.background = "url('./images/nav-bg.png') no-repeat";
+
+        console.log(navbar_container)
+
       } else if (entry.isIntersecting) {
-        navbar.style.backgroundColor = "";
+
+        navbar.style.background = "";
       }
     });
   });
@@ -176,7 +186,7 @@ if (
 }
 
 // login form validation
-if (window.location.pathname === "/ouvatech/login.php") {
+if (window.location.pathname === "/PregnaCare/login.php") {
   var emailInput = document.getElementById("email");
   var passwordInput = document.getElementById("password");
   var loginBtn = document.getElementById("loginBtn");
@@ -207,7 +217,7 @@ if (window.location.pathname === "/ouvatech/login.php") {
   });
 }
 
-if (window.location.pathname === "/ouvatech/confirm.php") {
+if (window.location.pathname === "/PregnaCare/confirm.php") {
   const resend_btn = document.querySelector(".resend-btn");
   resend_btn.addEventListener("click", function eventListenerFunction() {
     // Disable the event listener
@@ -239,3 +249,46 @@ if (window.location.pathname === "/ouvatech/confirm.php") {
     xhr.send();
   });
 }
+const timer = 9000;
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let intervalId;
+
+function showSlides() {
+  const offset = -100 * slideIndex;
+  document.querySelector('.slider').style.transform = `translateX(${offset}%)`;
+}
+
+function nextSlide() {
+  slideIndex++;
+  if (slideIndex >= totalSlides) {
+    slideIndex = 0;
+  }
+  resetTimer();
+  showSlides();
+}
+
+function prevSlide() {
+  slideIndex--;
+  if (slideIndex < 0) {
+    slideIndex = totalSlides - 1;
+  }
+  resetTimer();
+  showSlides();
+}
+
+function resetTimer() {
+  clearInterval(intervalId); // Stop the current timer
+  intervalId = setInterval(nextSlide, timer); // Start a new timer
+}
+
+resetTimer(); // Start the initial timer
+
+document.addEventListener("DOMContentLoaded", function() {
+  const leftArrow = document.querySelector(".arrow-left-container");
+  const rightArrow = document.querySelector(".arrow-right-container");
+  
+  leftArrow.addEventListener("click", prevSlide);
+  rightArrow.addEventListener("click", nextSlide);
+});

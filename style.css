@@ -7,11 +7,10 @@
 }
 
 .front {
-    background: url("preg.jpeg") no-repeat;
-    background-size: auto;
+    background: url("./images/landing.png") no-repeat;
+    background-size: 100% 100%;
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
-    height: 120vh;
     max-width: 100% !important;
 
 }
@@ -28,7 +27,7 @@
 }
 
 .btn-ouva-purple {
-    background: rgb(179, 0, 255);
+    background:#066467;
     color: white;
     border: 0;
     box-shadow: 10px 10px 8px #88888888;
@@ -37,7 +36,7 @@
 
 .btn-ouva-purple:hover {
     background: transparent;
-    color: rgb(179, 0, 255);
+    color: #066467;
     border: 2px solid black rgb(179, 0, 255);
     box-shadow: 10px 10px 8px #88888800;
 
@@ -796,17 +795,25 @@ body {
     padding: 10px;
     margin: 10px;
     cursor: pointer;
-    box-sizing: border-box;
-
-}
-
-.registration-choice-form label:hover {
+  }
+  
+  .registration-choice-form label:hover {
     border-color: #51667b;
-}
-
-.registration-choice-form input:checked+label+.labels-container {
-    border: 2px solid#70a4db;
-}
+  }
+  
+  .registration-choice-form input[type="radio"] {
+    display: none; /* Hide the default radio button */
+  }
+  
+  .registration-choice-form input[type="radio"]:checked + label {
+    border-color: black; /* Change border color when checked */
+    background-color: black; /* Change background color when checked */
+    color: white; /* Change text color when checked */
+  }
+  
+  
+  
+  
 
 
 
@@ -1191,6 +1198,10 @@ body {
     padding-bottom: 5px;
 }
 
+.visible {
+    display: block !important;
+}
+
 @media screen and (max-width:700px) {
     .form-inputs-container {
         width: 90%;
@@ -1343,7 +1354,7 @@ body {
 
 
 
-.ouvatech-img-container {
+.PregnaCare-img-container {
     padding: 0 20px;
     height: 100%;
     width: 100%;
@@ -1351,7 +1362,7 @@ body {
     align-items: center;
 }
 
-.ouvatech-img-container h1 {
+.PregnaCare-img-container h1 {
     padding-top: 10px;
     padding-left: 10px;
 
@@ -1366,7 +1377,6 @@ body {
 .navbar-container {
     display: grid;
     grid-template-columns: auto 1fr;
-    padding: 5px 0 5px 20px;
 
 }
 
@@ -1510,7 +1520,7 @@ body {
 
     .navbar-overlay {
         background-color: #d123b16f;
-        z-index: 1;
+        z-index: 3;
     }
 
 
@@ -1779,7 +1789,7 @@ body {
 }
 
 .navbar-wrap {
-    z-index: 1;
+    z-index: 3;
 }
 
 .navbar-mobile-container {
@@ -1903,6 +1913,8 @@ body {
 }
 
 .registration-page-wrap{
+    background:url("./images/registrationPNG.png") no-repeat;
+    background-size:100% 100%;
 display:grid;   
 grid-template-columns: 1.5fr 1fr;
 height: 100vh;
@@ -1979,4 +1991,549 @@ height: 100vh;
 #submit-reg-btn:hover{
     background-color:rgb(169, 83, 156);
     color: white;
+}
+
+.PregnaCare-description-container h1 {
+    font-size: 55px;
+    font-family: "Roboto Slab", serif;
+}
+.header-container h2 {
+    font-family: "Roboto Slab", serif;
+
+}
+.navbar-container {
+    padding: 10px 0 10px 40px;
+
+}
+.nav-logo-container img {
+    height:75px;
+    width:80px;
+}
+
+.logo-img-container { 
+    margin-bottom: 10px;
+}
+
+.logo-img-container img {
+    width: 70px;
+    height:70px;
+}
+
+.front {
+    height: 100vh;
+}
+
+.gradient-background {
+    background: url("./images/nav-bg.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.signup-section{    
+    height: auto;
+    width:100%;
+    margin:80px 0;
+    padding-top:40px;
+}
+
+.signup-section h2 {
+    color:#066467;
+    font-family: "Roboto Slab", serif;
+
+}
+
+.signup-gif-container {
+    width: 100%;
+    position: relative;
+    z-index: -1;
+}
+
+.signup-gif-container video {
+    width: 100%;
+    height: 100%;
+}
+
+
+.signup-form {
+    position:absolute;
+    z-index: 0;
+    padding:10px 0 10px 40px;
+}
+
+.signup-form label {
+    font-size: 19px;
+    margin-right: 10px;
+}
+
+.signup-form input {
+    padding: 0 5px;
+    border: 1px solid #066467;
+    color: #066467;
+    border-radius: 3px;
+    width: auto;
+    height: 50px;
+
+}
+
+.signup-form label, .signuo-form input {
+    font-family: "Roboto Slab", serif;
+    color: #066467;
+    font-weight: 400;
+}
+
+.f-l-name {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+}
+
+.break-inputs {
+    display: flex;
+    flex-direction: column;
+    margin-top:15px;
+}
+
+.first-signup-btn{
+    width:130px !important;
+    height:35px;
+    margin-top: 15px;
+    cursor: pointer;
+    color :#066467;
+    font-family: "Roboto Slab", serif;
+    border: 1px solid #891b5f !important;
+    background: #f9009e6f;
+    transition: 0.3s background ease-in-out;
+}
+
+.first-signup-btn:hover {
+    background: #a32274;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ensure the slider container takes up the full viewport height */
+    overflow: hidden;
+  }
+  
+  .slider {
+    position: relative;
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%; /* Ensure slider takes up full height */
+  }
+  
+  .slide {
+    width: 100%;
+    flex-shrink: 0;
+    position: relative; /* Ensure position for child elements */
+    justify-content: center; /* Center the paragraph */
+    align-items: center; /* Center the paragraph */
+    height: 100%; /* Ensure slide takes up full height */
+
+  }
+  
+  #ai-slide {
+    background: url("./images/3.png");
+    background-size: 100% 100%;
+    background-position: center;
+    display: grid;
+    justify-content: left;
+
+
+  }
+  .slide p {
+    font-family: "Roboto Slab", serif !important;
+
+  }
+  #woman-slide {
+    background: url("./images/2.png"); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: right;
+
+  }
+  
+  #final-slide {
+    background: url("./images/1.png"); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    justify-content: left;
+  }
+  
+  .left-description {
+    padding: 0px 0 0 60px;
+    font-size:30px;
+    color: white; /* Ensure text is visible */
+    width: 40%;
+  }
+  .right-description {
+    padding: 0px 50px 0 0px;
+    font-size:30px;
+    color: white; /* Ensure text is visible */
+    width: 40%;
+  }
+  
+  .buttons-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1; /* Ensure buttons are stacked on top */
+  }
+  
+  .arrow-left-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+    background: linear-gradient(to right, rgba(128, 128, 128, 0.2), rgba(255, 255, 255, 0)); /* Transparent gray gradient from right to left */
+    transition: background 0.3s ease, border-radius 0.3s ease; /* Add transition effect for background and border-radius */
+    border-top-left-radius: 10px; /* Adjust the radius as needed */
+    border-bottom-left-radius: 10px; /* Adjust the radius as needed */
+  }
+  
+  .arrow-left-container:hover {
+    background: linear-gradient(to right, rgba(128, 128, 128, 0.5), rgba(255, 255, 255, 0)); /* Change background color on hover */
+  }
+  
+  .arrow-right-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px 0 0;
+    cursor: pointer;
+    background: linear-gradient(to left, rgba(128, 128, 128, 0.2), rgba(255, 255, 255, 0)); /* Transparent gray gradient from left to right */
+    transition: background 0.3s ease, border-radius 0.3s ease; /* Add transition effect for background and border-radius */
+    border-top-right-radius: 10px; /* Adjust the radius as needed */
+    border-bottom-right-radius: 10px; /* Adjust the radius as needed */
+  }
+  
+  .arrow-right-container:hover {
+    background: linear-gradient(to left, rgba(128, 128, 128, 0.5), rgba(255, 255, 255, 0)); /* Change background color on hover */
+  }
+  
+  .arrows {
+    padding:0 !important;
+    font-size: 34px; /* Increase arrow size */
+    color: #64235a84; /* Arrow color */
+  }
+  
+
+
+
+  .chat-container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background-color: #ee51b2;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-family: "Roboto Slab", serif;
+    font-size: 20px;
+}
+
+.chat-window {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%;
+    font-family: "Roboto Slab", serif;
+    word-wrap: break-word; /* Ensures long words break onto a new line */
+    word-break: break-word; /* Ensures long words break onto a new line */
+    font-size: 18px;
+}
+
+.user-message {
+    width: 45%;
+    background-color: #d12d95;
+    color: #fff;
+    align-self: flex-end;
+    text-align: right; /* Align text to the right */
+}
+
+.bot-message {
+    width: 45%;
+    background-color: #e1e1e1;
+    color: #000;
+    align-self: flex-start;
+    text-align: left; /* Align text to the left */
+}
+
+.chat-input-container {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+#chat-input {
+    flex: 1;
+    border: none;
+    padding: 15px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
+    border-radius: 0;
+    font-family: "Roboto Slab", serif !important;
+    color: #2c7476;
+}
+
+#chat-input:focus {
+    outline: none; /* Remove border when input is focused */
+}
+
+#send-button {
+    background-color: #ee51b2;
+    color: #fff;
+    border: none;
+    padding: 15px 25px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #d12d95; /* Slightly darken on hover for visual feedback */
+}
+
+
+.messaging-container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.messaging-header {
+    background-color: #ee51b2;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-family: "Roboto Slab", serif;
+    font-size: 20px;
+}
+
+.messaging-window {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 80%;
+    font-family: "Roboto Slab", serif;
+    word-wrap: break-word; /* Ensures long words break onto a new line */
+    word-break: break-word; /* Ensures long words break onto a new line */
+    font-size: 18px;
+}
+
+.message-sent {
+    width: 45%;
+    background-color: #d12d95;
+    color: #fff;
+    align-self: flex-end;
+    text-align: right; /* Align text to the right */
+}
+
+.message-received {
+    width: 45%;
+    background-color: #e1e1e1;
+    color: #000;
+    align-self: flex-start;
+    text-align: left; /* Align text to the left */
+}
+
+.messaging-input-container {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+#messaging-input {
+    flex: 1;
+    border: none;
+    padding: 15px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
+    border-radius: 0;
+    font-family: "Roboto Slab", serif !important;
+    color: #2c7476;
+}
+
+#messaging-input:focus {
+    outline: none; /* Remove border when input is focused */
+}
+
+#send-button {
+    background-color: #ee51b2;
+    color: #fff;
+    border: none;
+    padding: 15px 25px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #d12d95; /* Slightly darken on hover for visual feedback */
+}
+
+
+.PregnaCare-description-container {
+    width:60%;
+
+}
+
+.content {
+    all: unset;
+    width: 100%;
+
+
+}
+
+.PregnaCare-description-container  h3 {
+    font-size: 26px;
+    font-weight: 400;
+    
+}
+
+.PregnaCare-description-container h1 { 
+    padding:0;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width:900px){
+    .PregnaCare-description-container  h3 {
+        font-size: 22px;
+        
+    }
+}
+
+@media screen and (max-width:500px) {
+    
+    .front {
+        background: url("./images/frontMobile.png");
+        background-size: cover;
+        height:100vh;
+    }
+    
+    .PregnaCare-description-container {
+        width:100%;
+    }
+    .left-description {
+        all: unset;
+        height: 0%;
+        color : rgb(58, 58, 58);
+        font-size: 28px;
+        padding: 100px 20px;
+    }
+
+    .right-description {
+        all:unset;
+        color : rgb(58, 58, 58);
+        font-size: 28px;
+        padding: 100px 20px;
+
+        height:100%;
+    }
+    #ai-slide {
+        background: url("./images/3mobile.png");
+        background-size: 100% 100%;
+        display: grid;
+        justify-items: center;
+    }
+
+    #woman-slide {
+        background: url("./images/2mobile.png");
+        display: grid;
+        background-size: 100% 100%;
+
+    }
+
+    #final-slide {
+        background: url("./images//1mobile.png");
+        background-size: 100% 100%;
+
+    }
+
+    .slider-container {
+        height: 150vh;
+    }
+
+    .signup-section {
+        background: url("./images/vidMobile.mp4");
+        width: 100%;
+        height: 120vh;
+    }
+
+    .signup-form {
+        padding :0; 
+        margin: 0;
+        margin: 0 15px;
+    }
+    .signup-form input {
+        height: 35px;
+        width:95%;   
+    }
+
+    .footer-container {
+        display: block;
+        margin-top:450px;
+    }
+
+}
+
+.doctor-message-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+
+
+/* Example CSS styles for patient list */
+.patient-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Add a line between each patient */
+}
+
+.patient-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Rounded profile picture */
+    margin-right: 10px;
+}
+
+.patient-name {
+    margin: 0;
 }
