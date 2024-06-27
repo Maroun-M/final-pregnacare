@@ -29,7 +29,8 @@ if (isset($_FILES["lab-tests"])) {
                 $conn = new mysqli('localhost', 'id22338592_pregnacare', 'Pregna@@00', 'id22338592_pregnacare');
                 // Prepare and bind the statement
                 $stmt = mysqli_prepare($conn, "INSERT INTO user_files (user_id, file_path) VALUES (?, ?)");
-                mysqli_stmt_bind_param($stmt, "is", $_SESSION['user_id'], $fileDestination);
+                $new_path = "src/patient/tests/" . $fileNameNew;
+                mysqli_stmt_bind_param($stmt, "is", $_SESSION['user_id'], $new_path);
 
                 // Execute the statement
                 if (mysqli_stmt_execute($stmt)) {
